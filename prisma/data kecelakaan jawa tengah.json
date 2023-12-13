@@ -1,0 +1,1262 @@
+[
+ {
+   "wilayah": "Cilacap",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 753,
+   "meninggal": 208,
+   "luka_berat": 2,
+   "luka_ringan": 1147,
+   "kerugian": 709300000
+ },
+ {
+   "wilayah": "Banyumas",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 940,
+   "meninggal": 220,
+   "luka_berat": 1,
+   "luka_ringan": 1030,
+   "kerugian": 609790000
+ },
+ {
+   "wilayah": "Purbalingga",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 498,
+   "meninggal": 104,
+   "luka_berat": 1,
+   "luka_ringan": 633,
+   "kerugian": 280700000
+ },
+ {
+   "wilayah": "Banjarnegara",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 409,
+   "meninggal": 96,
+   "luka_berat": 3,
+   "luka_ringan": 486,
+   "kerugian": 405800000
+ },
+ {
+   "wilayah": "Kebumen",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 356,
+   "meninggal": 129,
+   "luka_berat": 0,
+   "luka_ringan": 468,
+   "kerugian": 588980000
+ },
+ {
+   "wilayah": "Purworejo",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 475,
+   "meninggal": 107,
+   "luka_berat": 1,
+   "luka_ringan": 511,
+   "kerugian": 230650000
+ },
+ {
+   "wilayah": "Wonosobo",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 223,
+   "meninggal": 58,
+   "luka_berat": 16,
+   "luka_ringan": 239,
+   "kerugian": 197967000
+ },
+ {
+   "wilayah": "Magelang",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 901,
+   "meninggal": 170,
+   "luka_berat": 1,
+   "luka_ringan": 1024,
+   "kerugian": 358240000
+ },
+ {
+   "wilayah": "Boyolali",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 748,
+   "meninggal": 112,
+   "luka_berat": 2,
+   "luka_ringan": 843,
+   "kerugian": 178100000
+ },
+ {
+   "wilayah": "Klaten",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 919,
+   "meninggal": 164,
+   "luka_berat": 10,
+   "luka_ringan": 1448,
+   "kerugian": 1215060000
+ },
+ {
+   "wilayah": "Sukoharjo",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 565,
+   "meninggal": 103,
+   "luka_berat": 0,
+   "luka_ringan": 650,
+   "kerugian": 476450000
+ },
+ {
+   "wilayah": "Wonogiri",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 638,
+   "meninggal": 97,
+   "luka_berat": 1,
+   "luka_ringan": 673,
+   "kerugian": 324800000
+ },
+ {
+   "wilayah": "Karanganyar",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 847,
+   "meninggal": 119,
+   "luka_berat": 3,
+   "luka_ringan": 951,
+   "kerugian": 395000000
+ },
+ {
+   "wilayah": "Sragen",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 1043,
+   "meninggal": 136,
+   "luka_berat": 0,
+   "luka_ringan": 1249,
+   "kerugian": 829300000
+ },
+ {
+   "wilayah": "Grobogan",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 521,
+   "meninggal": 163,
+   "luka_berat": 0,
+   "luka_ringan": 533,
+   "kerugian": 268450000
+ },
+ {
+   "wilayah": "Blora",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 421,
+   "meninggal": 65,
+   "luka_berat": 11,
+   "luka_ringan": 547,
+   "kerugian": 224250000
+ },
+ {
+   "wilayah": "Rembang",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 437,
+   "meninggal": 132,
+   "luka_berat": 0,
+   "luka_ringan": 475,
+   "kerugian": 657050000
+ },
+ {
+   "wilayah": "Pati",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 1121,
+   "meninggal": 186,
+   "luka_berat": 0,
+   "luka_ringan": 1342,
+   "kerugian": 657100000
+ },
+ {
+   "wilayah": "Kudus",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 712,
+   "meninggal": 114,
+   "luka_berat": 0,
+   "luka_ringan": 780,
+   "kerugian": 317395000
+ },
+ {
+   "wilayah": "Jepara",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 305,
+   "meninggal": 103,
+   "luka_berat": 4,
+   "luka_ringan": 317,
+   "kerugian": 138900000
+ },
+ {
+   "wilayah": "Demak",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 587,
+   "meninggal": 141,
+   "luka_berat": 4,
+   "luka_ringan": 604,
+   "kerugian": 225550000
+ },
+ {
+   "wilayah": "Semarang",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 499,
+   "meninggal": 158,
+   "luka_berat": 3,
+   "luka_ringan": 493,
+   "kerugian": 206300000
+ },
+ {
+   "wilayah": "Temanggung",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 329,
+   "meninggal": 60,
+   "luka_berat": 1,
+   "luka_ringan": 370,
+   "kerugian": 429400000
+ },
+ {
+   "wilayah": "Kendal",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 289,
+   "meninggal": 105,
+   "luka_berat": 1,
+   "luka_ringan": 270,
+   "kerugian": 138175000
+ },
+ {
+   "wilayah": "Batang",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 366,
+   "meninggal": 109,
+   "luka_berat": 5,
+   "luka_ringan": 418,
+   "kerugian": 570500000
+ },
+ {
+   "wilayah": "Pekalongan",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 249,
+   "meninggal": 64,
+   "luka_berat": 8,
+   "luka_ringan": 257,
+   "kerugian": 252200000
+ },
+ {
+   "wilayah": "Pemalang",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 343,
+   "meninggal": 136,
+   "luka_berat": 2,
+   "luka_ringan": 348,
+   "kerugian": 274050000
+ },
+ {
+   "wilayah": "Tegal",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 476,
+   "meninggal": 157,
+   "luka_berat": 0,
+   "luka_ringan": 516,
+   "kerugian": 202650000
+ },
+ {
+   "wilayah": "Brebes",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 615,
+   "meninggal": 211,
+   "luka_berat": 6,
+   "luka_ringan": 753,
+   "kerugian": 1025600000
+ },
+ {
+   "wilayah": "Kota Magelang",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 167,
+   "meninggal": 33,
+   "luka_berat": 0,
+   "luka_ringan": 185,
+   "kerugian": 63800000
+ },
+ {
+   "wilayah": "Surakarta",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 834,
+   "meninggal": 61,
+   "luka_berat": 1,
+   "luka_ringan": 883,
+   "kerugian": 404550000
+ },
+ {
+   "wilayah": "Salatiga",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 113,
+   "meninggal": 31,
+   "luka_berat": 4,
+   "luka_ringan": 103,
+   "kerugian": 75650000
+ },
+ {
+   "wilayah": "Kota Semarang",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 1008,
+   "meninggal": 189,
+   "luka_berat": 5,
+   "luka_ringan": 1086,
+   "kerugian": 1026900000
+ },
+ {
+   "wilayah": "Kota Pekalongan",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 91,
+   "meninggal": 32,
+   "luka_berat": 1,
+   "luka_ringan": 84,
+   "kerugian": 12175000
+ },
+ {
+   "wilayah": "Kota Tegal",
+   "tahun": 2018,
+   "jumlah_kecelakaan": 218,
+   "meninggal": 42,
+   "luka_berat": 0,
+   "luka_ringan": 251,
+   "kerugian": 167850000
+ },
+ {
+   "wilayah": "Cilacap",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 898,
+   "meninggal": 189,
+   "luka_berat": 0,
+   "luka_ringan": 1263,
+   "kerugian": 874150000
+ },
+ {
+   "wilayah": "Banyumas",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 1050,
+   "meninggal": 224,
+   "luka_berat": 7,
+   "luka_ringan": 1149,
+   "kerugian": 685580000
+ },
+ {
+   "wilayah": "Purbalingga",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 579,
+   "meninggal": 77,
+   "luka_berat": 0,
+   "luka_ringan": 715,
+   "kerugian": 344600000
+ },
+ {
+   "wilayah": "Banjarnegara",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 490,
+   "meninggal": 93,
+   "luka_berat": 5,
+   "luka_ringan": 569,
+   "kerugian": 413250000
+ },
+ {
+   "wilayah": "Kebumen",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 694,
+   "meninggal": 161,
+   "luka_berat": 0,
+   "luka_ringan": 838,
+   "kerugian": 915700000
+ },
+ {
+   "wilayah": "Purworejo",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 576,
+   "meninggal": 119,
+   "luka_berat": 3,
+   "luka_ringan": 644,
+   "kerugian": 262750000
+ },
+ {
+   "wilayah": "Wonosobo",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 295,
+   "meninggal": 45,
+   "luka_berat": 25,
+   "luka_ringan": 311,
+   "kerugian": 152155000
+ },
+ {
+   "wilayah": "Magelang",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 1235,
+   "meninggal": 169,
+   "luka_berat": 5,
+   "luka_ringan": 1440,
+   "kerugian": 352150000
+ },
+ {
+   "wilayah": "Boyolali",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 898,
+   "meninggal": 98,
+   "luka_berat": 1,
+   "luka_ringan": 1245,
+   "kerugian": 272750000
+ },
+ {
+   "wilayah": "Klaten",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 1408,
+   "meninggal": 161,
+   "luka_berat": 5,
+   "luka_ringan": 2308,
+   "kerugian": 1318350000
+ },
+ {
+   "wilayah": "Sukoharjo",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 1279,
+   "meninggal": 107,
+   "luka_berat": 3,
+   "luka_ringan": 1486,
+   "kerugian": 972400000
+ },
+ {
+   "wilayah": "Wonogiri",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 874,
+   "meninggal": 86,
+   "luka_berat": 0,
+   "luka_ringan": 955,
+   "kerugian": 401400000
+ },
+ {
+   "wilayah": "Karanganyar",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 1467,
+   "meninggal": 124,
+   "luka_berat": 2,
+   "luka_ringan": 1687,
+   "kerugian": 565552000
+ },
+ {
+   "wilayah": "Sragen",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 1225,
+   "meninggal": 141,
+   "luka_berat": 0,
+   "luka_ringan": 1564,
+   "kerugian": 809220000
+ },
+ {
+   "wilayah": "Grobogan",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 716,
+   "meninggal": 145,
+   "luka_berat": 0,
+   "luka_ringan": 773,
+   "kerugian": 183800000
+ },
+ {
+   "wilayah": "Blora",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 460,
+   "meninggal": 83,
+   "luka_berat": 2,
+   "luka_ringan": 560,
+   "kerugian": 193850000
+ },
+ {
+   "wilayah": "Rembang",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 543,
+   "meninggal": 113,
+   "luka_berat": 0,
+   "luka_ringan": 585,
+   "kerugian": 562150000
+ },
+ {
+   "wilayah": "Pati",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 1525,
+   "meninggal": 208,
+   "luka_berat": 0,
+   "luka_ringan": 1754,
+   "kerugian": 1102300000
+ },
+ {
+   "wilayah": "Kudus",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 964,
+   "meninggal": 98,
+   "luka_berat": 1,
+   "luka_ringan": 1072,
+   "kerugian": 368710000
+ },
+ {
+   "wilayah": "Jepara",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 581,
+   "meninggal": 116,
+   "luka_berat": 0,
+   "luka_ringan": 626,
+   "kerugian": 231600000
+ },
+ {
+   "wilayah": "Demak",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 696,
+   "meninggal": 161,
+   "luka_berat": 0,
+   "luka_ringan": 721,
+   "kerugian": 229500000
+ },
+ {
+   "wilayah": "Semarang",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 565,
+   "meninggal": 130,
+   "luka_berat": 1,
+   "luka_ringan": 665,
+   "kerugian": 332800000
+ },
+ {
+   "wilayah": "Temanggung",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 458,
+   "meninggal": 86,
+   "luka_berat": 1,
+   "luka_ringan": 600,
+   "kerugian": 647400000
+ },
+ {
+   "wilayah": "Kendal",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 358,
+   "meninggal": 125,
+   "luka_berat": 2,
+   "luka_ringan": 330,
+   "kerugian": 194500000
+ },
+ {
+   "wilayah": "Batang",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 516,
+   "meninggal": 155,
+   "luka_berat": 13,
+   "luka_ringan": 655,
+   "kerugian": 985000000
+ },
+ {
+   "wilayah": "Pekalongan",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 256,
+   "meninggal": 64,
+   "luka_berat": 7,
+   "luka_ringan": 276,
+   "kerugian": 471550000
+ },
+ {
+   "wilayah": "Pemalang",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 424,
+   "meninggal": 138,
+   "luka_berat": 0,
+   "luka_ringan": 467,
+   "kerugian": 439900000
+ },
+ {
+   "wilayah": "Tegal",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 619,
+   "meninggal": 161,
+   "luka_berat": 0,
+   "luka_ringan": 636,
+   "kerugian": 266330000
+ },
+ {
+   "wilayah": "Brebes",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 886,
+   "meninggal": 182,
+   "luka_berat": 3,
+   "luka_ringan": 1006,
+   "kerugian": 1143480000
+ },
+ {
+   "wilayah": "Kota Magelang",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 265,
+   "meninggal": 27,
+   "luka_berat": 0,
+   "luka_ringan": 309,
+   "kerugian": 67200000
+ },
+ {
+   "wilayah": "Surakarta",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 1086,
+   "meninggal": 65,
+   "luka_berat": 0,
+   "luka_ringan": 1150,
+   "kerugian": 523950000
+ },
+ {
+   "wilayah": "Salatiga",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 296,
+   "meninggal": 39,
+   "luka_berat": 8,
+   "luka_ringan": 294,
+   "kerugian": 134500000
+ },
+ {
+   "wilayah": "Kota Semarang",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 1365,
+   "meninggal": 193,
+   "luka_berat": 2,
+   "luka_ringan": 1434,
+   "kerugian": 1306480000
+ },
+ {
+   "wilayah": "Kota Pekalongan",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 122,
+   "meninggal": 35,
+   "luka_berat": 0,
+   "luka_ringan": 115,
+   "kerugian": 16400000
+ },
+ {
+   "wilayah": "Kota Tegal",
+   "tahun": 2019,
+   "jumlah_kecelakaan": 293,
+   "meninggal": 23,
+   "luka_berat": 0,
+   "luka_ringan": 353,
+   "kerugian": 116360000
+ },
+ {
+   "wilayah": "Cilacap",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 851,
+   "meninggal": 172,
+   "luka_berat": 1,
+   "luka_ringan": 1035,
+   "kerugian": 620700000
+ },
+ {
+   "wilayah": "Banyumas",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 1574,
+   "meninggal": 217,
+   "luka_berat": 1,
+   "luka_ringan": 1765,
+   "kerugian": 952820000
+ },
+ {
+   "wilayah": "Purbalingga",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 439,
+   "meninggal": 75,
+   "luka_berat": 0,
+   "luka_ringan": 497,
+   "kerugian": 239100000
+ },
+ {
+   "wilayah": "Banjarnegara",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 451,
+   "meninggal": 75,
+   "luka_berat": 4,
+   "luka_ringan": 528,
+   "kerugian": 518650000
+ },
+ {
+   "wilayah": "Kebumen",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 618,
+   "meninggal": 121,
+   "luka_berat": 0,
+   "luka_ringan": 732,
+   "kerugian": 891200000
+ },
+ {
+   "wilayah": "Purworejo",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 505,
+   "meninggal": 87,
+   "luka_berat": 0,
+   "luka_ringan": 561,
+   "kerugian": 373200000
+ },
+ {
+   "wilayah": "Wonosobo",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 276,
+   "meninggal": 53,
+   "luka_berat": 2,
+   "luka_ringan": 319,
+   "kerugian": 186765000
+ },
+ {
+   "wilayah": "Magelang",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 782,
+   "meninggal": 135,
+   "luka_berat": 2,
+   "luka_ringan": 941,
+   "kerugian": 254050000
+ },
+ {
+   "wilayah": "Boyolali",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 761,
+   "meninggal": 91,
+   "luka_berat": 1,
+   "luka_ringan": 1087,
+   "kerugian": 278400000
+ },
+ {
+   "wilayah": "Klaten",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 1003,
+   "meninggal": 142,
+   "luka_berat": 7,
+   "luka_ringan": 1712,
+   "kerugian": 1153540000
+ },
+ {
+   "wilayah": "Sukoharjo",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 994,
+   "meninggal": 80,
+   "luka_berat": 1,
+   "luka_ringan": 1186,
+   "kerugian": 647700000
+ },
+ {
+   "wilayah": "Wonogiri",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 686,
+   "meninggal": 65,
+   "luka_berat": 0,
+   "luka_ringan": 754,
+   "kerugian": 269900000
+ },
+ {
+   "wilayah": "Karanganyar",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 1074,
+   "meninggal": 99,
+   "luka_berat": 4,
+   "luka_ringan": 1208,
+   "kerugian": 388300000
+ },
+ {
+   "wilayah": "Sragen",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 872,
+   "meninggal": 126,
+   "luka_berat": 0,
+   "luka_ringan": 909,
+   "kerugian": 790550000
+ },
+ {
+   "wilayah": "Grobogan",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 554,
+   "meninggal": 123,
+   "luka_berat": 2,
+   "luka_ringan": 577,
+   "kerugian": 159150000
+ },
+ {
+   "wilayah": "Blora",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 313,
+   "meninggal": 70,
+   "luka_berat": 6,
+   "luka_ringan": 357,
+   "kerugian": 131120000
+ },
+ {
+   "wilayah": "Rembang",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 376,
+   "meninggal": 93,
+   "luka_berat": 0,
+   "luka_ringan": 397,
+   "kerugian": 453850000
+ },
+ {
+   "wilayah": "Pati",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 1236,
+   "meninggal": 153,
+   "luka_berat": 1,
+   "luka_ringan": 1446,
+   "kerugian": 679880000
+ },
+ {
+   "wilayah": "Kudus",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 831,
+   "meninggal": 109,
+   "luka_berat": 0,
+   "luka_ringan": 890,
+   "kerugian": 317200000
+ },
+ {
+   "wilayah": "Jepara",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 357,
+   "meninggal": 97,
+   "luka_berat": 0,
+   "luka_ringan": 363,
+   "kerugian": 149000000
+ },
+ {
+   "wilayah": "Demak",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 593,
+   "meninggal": 154,
+   "luka_berat": 5,
+   "luka_ringan": 582,
+   "kerugian": 209900000
+ },
+ {
+   "wilayah": "Semarang",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 484,
+   "meninggal": 121,
+   "luka_berat": 1,
+   "luka_ringan": 539,
+   "kerugian": 283100000
+ },
+ {
+   "wilayah": "Temanggung",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 309,
+   "meninggal": 59,
+   "luka_berat": 0,
+   "luka_ringan": 350,
+   "kerugian": 369400000
+ },
+ {
+   "wilayah": "Kendal",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 463,
+   "meninggal": 114,
+   "luka_berat": 2,
+   "luka_ringan": 426,
+   "kerugian": 240450000
+ },
+ {
+   "wilayah": "Batang",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 405,
+   "meninggal": 118,
+   "luka_berat": 3,
+   "luka_ringan": 453,
+   "kerugian": 1060450000
+ },
+ {
+   "wilayah": "Pekalongan",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 237,
+   "meninggal": 53,
+   "luka_berat": 1,
+   "luka_ringan": 254,
+   "kerugian": 652000000
+ },
+ {
+   "wilayah": "Pemalang",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 461,
+   "meninggal": 100,
+   "luka_berat": 1,
+   "luka_ringan": 507,
+   "kerugian": 248550000
+ },
+ {
+   "wilayah": "Tegal",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 500,
+   "meninggal": 134,
+   "luka_berat": 0,
+   "luka_ringan": 506,
+   "kerugian": 316800000
+ },
+ {
+   "wilayah": "Brebes",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 881,
+   "meninggal": 171,
+   "luka_berat": 1,
+   "luka_ringan": 972,
+   "kerugian": 867300000
+ },
+ {
+   "wilayah": "Kota Magelang",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 188,
+   "meninggal": 25,
+   "luka_berat": 0,
+   "luka_ringan": 227,
+   "kerugian": 103250000
+ },
+ {
+   "wilayah": "Surakarta",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 817,
+   "meninggal": 50,
+   "luka_berat": 0,
+   "luka_ringan": 852,
+   "kerugian": 293200000
+ },
+ {
+   "wilayah": "Salatiga",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 222,
+   "meninggal": 33,
+   "luka_berat": 0,
+   "luka_ringan": 264,
+   "kerugian": 149500000
+ },
+ {
+   "wilayah": "Kota Semarang",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 939,
+   "meninggal": 121,
+   "luka_berat": 1,
+   "luka_ringan": 539,
+   "kerugian": 427950000
+ },
+ {
+   "wilayah": "Kota Pekalongan",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 116,
+   "meninggal": 25,
+   "luka_berat": 2,
+   "luka_ringan": 117,
+   "kerugian": 13400000
+ },
+ {
+   "wilayah": "Kota Tegal",
+   "tahun": 2020,
+   "jumlah_kecelakaan": 228,
+   "meninggal": 17,
+   "luka_berat": 0,
+   "luka_ringan": 254,
+   "kerugian": 56200000
+ },
+ {
+   "wilayah": "Cilacap",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 867,
+   "meninggal": 183,
+   "luka_berat": 2,
+   "luka_ringan": 1057,
+   "kerugian": 714600000
+ },
+ {
+   "wilayah": "Banyumas",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 1595,
+   "meninggal": 216,
+   "luka_berat": 13,
+   "luka_ringan": 1816,
+   "kerugian": 1121220000
+ },
+ {
+   "wilayah": "Purbalingga",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 443,
+   "meninggal": 56,
+   "luka_berat": 0,
+   "luka_ringan": 508,
+   "kerugian": 187500000
+ },
+ {
+   "wilayah": "Banjarnegara",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 482,
+   "meninggal": 60,
+   "luka_berat": 5,
+   "luka_ringan": 598,
+   "kerugian": 388500000
+ },
+ {
+   "wilayah": "Kebumen",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 649,
+   "meninggal": 129,
+   "luka_berat": 0,
+   "luka_ringan": 760,
+   "kerugian": 157685000
+ },
+ {
+   "wilayah": "Purworejo",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 482,
+   "meninggal": 98,
+   "luka_berat": 0,
+   "luka_ringan": 540,
+   "kerugian": 357300000
+ },
+ {
+   "wilayah": "Wonosobo",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 298,
+   "meninggal": 62,
+   "luka_berat": 2,
+   "luka_ringan": 316,
+   "kerugian": 187500000
+ },
+ {
+   "wilayah": "Magelang",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 827,
+   "meninggal": 164,
+   "luka_berat": 2,
+   "luka_ringan": 912,
+   "kerugian": 319920000
+ },
+ {
+   "wilayah": "Boyolali",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 838,
+   "meninggal": 109,
+   "luka_berat": 1,
+   "luka_ringan": 1335,
+   "kerugian": 250770000
+ },
+ {
+   "wilayah": "Klaten",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 1260,
+   "meninggal": 148,
+   "luka_berat": 5,
+   "luka_ringan": 2029,
+   "kerugian": 1314070000
+ },
+ {
+   "wilayah": "Sukoharjo",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 1135,
+   "meninggal": 103,
+   "luka_berat": 3,
+   "luka_ringan": 1332,
+   "kerugian": 784250000
+ },
+ {
+   "wilayah": "Wonogiri",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 770,
+   "meninggal": 77,
+   "luka_berat": 0,
+   "luka_ringan": 830,
+   "kerugian": 300400000
+ },
+ {
+   "wilayah": "Karanganyar",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 1142,
+   "meninggal": 112,
+   "luka_berat": 2,
+   "luka_ringan": 1251,
+   "kerugian": 534000000
+ },
+ {
+   "wilayah": "Sragen",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 1000,
+   "meninggal": 117,
+   "luka_berat": 0,
+   "luka_ringan": 1066,
+   "kerugian": 1026550000
+ },
+ {
+   "wilayah": "Grobogan",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 564,
+   "meninggal": 122,
+   "luka_berat": 0,
+   "luka_ringan": 565,
+   "kerugian": 124850000
+ },
+ {
+   "wilayah": "Blora",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 374,
+   "meninggal": 79,
+   "luka_berat": 2,
+   "luka_ringan": 396,
+   "kerugian": 428500000
+ },
+ {
+   "wilayah": "Rembang",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 377,
+   "meninggal": 87,
+   "luka_berat": 0,
+   "luka_ringan": 392,
+   "kerugian": 406750000
+ },
+ {
+   "wilayah": "Pati",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 1096,
+   "meninggal": 195,
+   "luka_berat": 0,
+   "luka_ringan": 1248,
+   "kerugian": 877500000
+ },
+ {
+   "wilayah": "Kudus",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 841,
+   "meninggal": 85,
+   "luka_berat": 2,
+   "luka_ringan": 914,
+   "kerugian": 372300000
+ },
+ {
+   "wilayah": "Jepara",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 436,
+   "meninggal": 116,
+   "luka_berat": 0,
+   "luka_ringan": 453,
+   "kerugian": 268500000
+ },
+ {
+   "wilayah": "Demak",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 570,
+   "meninggal": 126,
+   "luka_berat": 5,
+   "luka_ringan": 582,
+   "kerugian": 243500000
+ },
+ {
+   "wilayah": "Semarang",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 493,
+   "meninggal": 146,
+   "luka_berat": 1,
+   "luka_ringan": 563,
+   "kerugian": 341900000
+ },
+ {
+   "wilayah": "Temanggung",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 320,
+   "meninggal": 68,
+   "luka_berat": 6,
+   "luka_ringan": 360,
+   "kerugian": 586200000
+ },
+ {
+   "wilayah": "Kendal",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 434,
+   "meninggal": 127,
+   "luka_berat": 1,
+   "luka_ringan": 411,
+   "kerugian": 220650000
+ },
+ {
+   "wilayah": "Batang",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 456,
+   "meninggal": 138,
+   "luka_berat": 0,
+   "luka_ringan": 470,
+   "kerugian": 1293000000
+ },
+ {
+   "wilayah": "Pekalongan",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 179,
+   "meninggal": 52,
+   "luka_berat": 3,
+   "luka_ringan": 164,
+   "kerugian": 289300000
+ },
+ {
+   "wilayah": "Pemalang",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 489,
+   "meninggal": 119,
+   "luka_berat": 16,
+   "luka_ringan": 572,
+   "kerugian": 642050000
+ },
+ {
+   "wilayah": "Tegal",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 603,
+   "meninggal": 137,
+   "luka_berat": 4,
+   "luka_ringan": 643,
+   "kerugian": 656600000
+ },
+ {
+   "wilayah": "Brebes",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 837,
+   "meninggal": 197,
+   "luka_berat": 1,
+   "luka_ringan": 913,
+   "kerugian": 1098470000
+ },
+ {
+   "wilayah": "Kota Magelang",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 239,
+   "meninggal": 22,
+   "luka_berat": 1,
+   "luka_ringan": 281,
+   "kerugian": 36950000
+ },
+ {
+   "wilayah": "Surakarta",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 898,
+   "meninggal": 53,
+   "luka_berat": 0,
+   "luka_ringan": 947,
+   "kerugian": 331700000
+ },
+ {
+   "wilayah": "Salatiga",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 246,
+   "meninggal": 48,
+   "luka_berat": 0,
+   "luka_ringan": 293,
+   "kerugian": 171250000
+ },
+ {
+   "wilayah": "Kota Semarang",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 906,
+   "meninggal": 147,
+   "luka_berat": 0,
+   "luka_ringan": 931,
+   "kerugian": 716800000
+ },
+ {
+   "wilayah": "Kota Pekalongan",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 103,
+   "meninggal": 21,
+   "luka_berat": 0,
+   "luka_ringan": 104,
+   "kerugian": 11650000
+ },
+ {
+   "wilayah": "Kota Tegal",
+   "tahun": 2021,
+   "jumlah_kecelakaan": 272,
+   "meninggal": 31,
+   "luka_berat": 0,
+   "luka_ringan": 295,
+   "kerugian": 73750000
+ }
+]

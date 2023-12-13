@@ -10,11 +10,73 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model accidents {
-    id String @id @default(auto()) @map("_id") @db.ObjectId
-    STATE Float
-    ST_CASE Float
-    LATITUDE Float
-    LONGITUD Float
-    DATETIME_CRASH DateTime
+// model Account {
+//     id                String  @id @default(auto()) @map("_id") @db.ObjectId
+//     userId            String  @db.ObjectId
+//     type              String
+//     provider          String
+//     providerAccountId String
+//     refresh_token     String? @db.String
+//     access_token      String? @db.String
+//     expires_at        Int?
+//     token_type        String?
+//     scope             String?
+//     id_token          String? @db.String
+//     session_state     String?
+
+//     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+//     @@unique([provider, providerAccountId])
+// }
+
+// model Session {
+//     id           String   @id @default(auto()) @map("_id") @db.ObjectId
+//     sessionToken String   @unique
+//     userId       String   @db.ObjectId
+//     expires      DateTime
+//     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+// }
+
+model User {
+    id            String    @id @default(auto()) @map("_id") @db.ObjectId
+    name          String?
+    email         String?   @unique
+    emailVerified DateTime?
+    password      String
+    salt          String
+    image         String?
+    // accounts      Account[]
+    // sessions      Session[]
+}
+
+// model VerificationToken {
+//     id         String   @id @default(auto()) @map("_id") @db.ObjectId
+//     identifier String
+//     token      String   @unique
+//     expires    DateTime
+
+//     @@unique([identifier, token])
+// }
+
+model GeoLocation {
+    id       String    @id @default(auto()) @map("_id") @db.ObjectId
+    geoId    Int
+    geoId2   Int?
+    name     String
+    name2    String?
+    geojs    Json
+    geodatas GeoData[]
+}
+
+model GeoData {
+    id                String      @id @default(auto()) @map("_id") @db.ObjectId
+    geoloc_id         String      @db.ObjectId
+    geoloc            GeoLocation @relation(fields: [geoloc_id], references: [id], onDelete: Cascade)
+    wilayah           String
+    tahun             Int
+    jumlah_kecelakaan Float
+    meninggal         Float
+    luka_berat        Float
+    luka_ringan       Float
+    kerugian          Float
 }
