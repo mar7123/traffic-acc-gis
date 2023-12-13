@@ -40,20 +40,10 @@ export async function getGeoDataByName(name: string, take: number, page: number)
             skip: (page - 1) * take,
             take: take,
             where: {
-                OR: [
-                    {
-                        wilayah: {
-                            startsWith: name,
-                            mode: "insensitive"
-                        }
-                    },
-                    {
-                        wilayah: {
-                            endsWith: name,
-                            mode: "insensitive"
-                        }
-                    }
-                ]
+                wilayah: {
+                    contains: name,
+                    mode: "insensitive"
+                }
             },
             orderBy: [
                 {
@@ -66,21 +56,11 @@ export async function getGeoDataByName(name: string, take: number, page: number)
         });
         const count = await prisma.geoData.count({
             where: {
-                OR: [
-                    {
-                        wilayah: {
-                            startsWith: name,
-                            mode: "insensitive"
-                        }
-                    },
-                    {
-                        wilayah: {
-                            endsWith: name,
-                            mode: "insensitive"
-                        }
-                    }
-                ]
-            }
+                wilayah: {
+                    contains: name,
+                    mode: "insensitive"
+                }
+            },
         });
         return { res, count };
     } catch (error) {

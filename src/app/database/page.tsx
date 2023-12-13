@@ -3,7 +3,7 @@ import React from 'react';
 
 async function DBPage() {
     return (
-        <div className='h-[3029px] w-full px-[7vw] bg-cover bg-top' style={{ backgroundImage: "url('/assets/bg/bg-landing.png')" }}>
+        <div className='flex flex-col items-center min-h-screen h-fit w-full lg:px-[15vw] sm:px-[7vw] lg:py-20 sm:py-10 bg-gray-100'>
             <DatabaseComponent/>
         </div>
     );

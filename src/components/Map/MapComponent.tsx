@@ -32,12 +32,13 @@ const MapComponent = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [geolocs, setGeolocs] = useState<Geolocs[]>([]);
     const [yearDD, setYearDD] = useState<{ tahun: number }[]>([]);
-    const [calculations, setCalculations] = useState({
+    const [filters, setFilters] = useState({
+        year: 0,
         mean: 0,
         std: 0,
         n: 0,
+        toggle: true
     });
-    const [year, setYear] = useState<number>(0);
 
     const mean = (data: Geolocs[], calc: { count: number, mean: number }) => {
         let count = 0;
@@ -97,7 +98,7 @@ const MapComponent = () => {
             count: 0,
             mean: 0,
             std: 0,
-            n: 1.8,
+            n: filters.n <= 0 ? 1.8 : filters.n,
             upper: { val: 0, exist: false },
             lower: { val: 0, exist: false },
         };
@@ -108,7 +109,7 @@ const MapComponent = () => {
         std(data, calc_var);
         let tries = 0;
         let temp = data;
-        while ((!calc_var.upper.exist || !calc_var.lower.exist) && tries != 8) {
+        while ((!calc_var.upper.exist || !calc_var.lower.exist) && tries != 4) {
             calc_var.upper.val = calc_var.mean + (calc_var.n * calc_var.std);
             calc_var.lower.val = calc_var.mean - (calc_var.n * calc_var.std);
             temp = assignColor(data, calc_var);
@@ -118,7 +119,7 @@ const MapComponent = () => {
             }
             tries += 1;
         }
-        setCalculations({ mean: (Number(calc_var.mean.toFixed(3)) == undefined ? calc_var.mean : Number(calc_var.mean.toFixed(3))), std: (Number(calc_var.std.toFixed(3)) == undefined ? calc_var.std : Number(calc_var.std.toFixed(3))), n: calc_var.n });
+        setFilters({ ...filters, mean: (Number(calc_var.mean.toFixed(3)) == undefined ? calc_var.mean : Number(calc_var.mean.toFixed(3))), std: (Number(calc_var.std.toFixed(3)) == undefined ? calc_var.std : Number(calc_var.std.toFixed(3))), n: calc_var.n });
         const result = temp;
         return result;
     }
@@ -128,11 +129,8 @@ const MapComponent = () => {
             method: "GET",
         })
         const { data: yearjson }: { data: { tahun: number }[] } = await yearDB.json()
-        // if (yearDD.length == 0) {
-        //     console.log(yearjson);
-        // }
         setYearDD(yearjson);
-        const year_q = year == 0 ? yearjson[0].tahun : year;
+        const year_q = filters.year == 0 ? yearjson[0].tahun : filters.year;
         const res = await fetch('/api/geoloc?' + new URLSearchParams({
             year: year_q.toString(),
         }), {
@@ -141,13 +139,13 @@ const MapComponent = () => {
         const { data }: { data: Geolocs[] } = await res.json()
         const result = calculate(data);
         setGeolocs(result);
-        setTimeout(() => { setLoading(false) }, 500);
+        setLoading(false);
     }
 
     useEffect(() => {
         setLoading(true)
         geolocsAPI()
-    }, [year])
+    }, [filters.toggle])
 
     return (
         <div className="relative flex flex-col items-center h-full">
@@ -205,11 +203,26 @@ const MapComponent = () => {
                         <div className="text-left max-w-xl">
                             <p className="text-base md:text-md">
                                 <span className="inline-block lg:w-20 sm:w-15 ">Mean</span>
-                                <span className="">: {calculations.mean}</span><br />
+                                <span className="">: {filters.mean}</span><br />
                                 <span className="inline-block lg:w-20 sm:w-15 ">Std</span>
-                                <span className="">: {calculations.std}</span><br />
+                                <span className="">: {filters.std}</span><br />
                                 <span className="inline-block lg:w-20 sm:w-15 ">n</span>
-                                <span className="">: {calculations.n}</span><br />
+                                <span>: </span>
+                                <input
+                                    type="number"
+                                    min={0}
+                                    placeholder="Enter Longitude"
+                                    className="w-1/2 rounded border-stroke bg-transparent font-small outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                                    value={filters.n}
+                                    step={0.1}
+                                    onChange={({ target }) => { setFilters({ ...filters, n: Number(target.value) }) }}
+                                    onKeyDown={(e: any) => {
+                                        if (e.key == "Enter") {
+                                            setFilters({ ...filters, toggle: !filters.toggle })
+                                        }
+                                    }
+                                    }
+                                />
                             </p>
                         </div>
                     </div>
@@ -217,8 +230,8 @@ const MapComponent = () => {
                         <Dropdown label="Year" style={{ backgroundColor: "black", color: "white" }} dismissOnClick={false}>
                             {yearDD?.map((item, idx) => {
                                 return (
-                                    <li key={idx} className="" onClick={() => setYear(item.tahun)}>
-                                        <button type="button" className={"flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-full dark:text-gray-200 dark:hover:bg-gray-600 focus:outline-none dark:hover:text-white dark:focus:bg-gray-600 dark:focus:text-white" + (year == item.tahun ? " text-white bg-black" : " text-gray-700 bg-white hover:bg-gray-100")} tabIndex={-1}>
+                                    <li key={idx} className="" onClick={() => setFilters({ ...filters, year: item.tahun, toggle: !filters.toggle })}>
+                                        <button type="button" className={"flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-full dark:text-gray-200 dark:hover:bg-gray-600 focus:outline-none dark:hover:text-white dark:focus:bg-gray-600 dark:focus:text-white" + (filters.year == item.tahun ? " text-white bg-black" : " text-gray-700 bg-white hover:bg-gray-100")} tabIndex={-1}>
                                             {item.tahun}
                                         </button>
                                     </li>
