@@ -16,7 +16,7 @@ const SignIn: React.FC = async () => {
         redirect("/")
     }
     return (
-        <div className="h-screen w-screen px-[7vw] grid content-center">
+        <div className="min-h-screen w-full flex items-center lg:px-[15vw] sm:px-[7vw] py-40 bg-gray-100">
             <LoginForm />
         </div>
     );

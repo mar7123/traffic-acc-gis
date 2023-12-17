@@ -16,7 +16,7 @@ interface GeoDatas {
     luka_ringan: number,
     kerugian: number,
 }
-function DatabaseComponent() {
+function DataComponent() {
     const [loading, setLoading] = useState<boolean>(true);
 
     // Fetch Data
@@ -142,7 +142,7 @@ function DatabaseComponent() {
                                             <Table.Cell>{item.meninggal}</Table.Cell>
                                             <Table.Cell>{item.luka_berat}</Table.Cell>
                                             <Table.Cell>{item.luka_ringan}</Table.Cell>
-                                            <Table.Cell>{item.kerugian}</Table.Cell>
+                                            <Table.Cell>{item.kerugian.toLocaleString()}</Table.Cell>
                                             <Table.Cell>
                                                 <Link href={"/detaildata?id=" + item.id} className="hover:text-primary">
                                                     <svg
@@ -178,4 +178,4 @@ function DatabaseComponent() {
         </>
     );
 };
-export default DatabaseComponent;
+export default DataComponent;

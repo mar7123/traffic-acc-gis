@@ -20,20 +20,20 @@ function NavbarComponent({ scrollHeaderClick }: { scrollHeaderClick: () => void 
                             <span className="ml-2 self-center whitespace-nowrap text-2xl font-semibold dark:text-white">TARGIS</span>
                         </Navbar.Brand>
                         <div className="flex md:order-2">
-                            <Button href="/" className="custom-link bg-transparent text-white">
-                                <span className="text-lg">Contact Us</span>
+                            <Button href="/" className="custom-link bg-transparent focus:ring-0 text-white">
+                                <span className="text-md mx-4">Contact Us</span>
                             </Button>
                             <Navbar.Toggle />
                         </div>
                         <Navbar.Collapse>
-                            <Button href="/" className="custom-link bg-transparent hover:text-white text-gray-400">
-                                <span className="text-lg">Home</span>
+                            <Button href="/" className={`custom-link bg-transparent focus:ring-0 hover:text-white text-gray-400 ${pathname == '/' && "text-white"}`}>
+                                <span className="text-md mx-4">Home</span>
                             </Button>
-                            <Button href="/map" className="custom-link bg-transparent hover:text-white text-gray-400">
-                                <span className="text-lg">Map</span>
+                            <Button href="/map" className={`custom-link bg-transparent focus:ring-0 hover:text-white text-gray-400 ${pathname == "/map" && "text-white"}`}>
+                                <span className="text-md mx-4">Map</span>
                             </Button>
-                            <Button href="/database" className="custom-link bg-transparent hover:text-white text-gray-400">
-                                <span className="text-lg">Data</span>
+                            <Button href="/data" className={`custom-link bg-transparent focus:ring-0 hover:text-white text-gray-400 ${pathname == "/data" && "text-white"}`}>
+                                <span className="text-md mx-4">Data</span>
                             </Button>
                         </Navbar.Collapse>
                     </Navbar>
@@ -41,7 +41,7 @@ function NavbarComponent({ scrollHeaderClick }: { scrollHeaderClick: () => void 
                 {pathname == "/" ? (
                     <div className='h-full px-[7vw] grid grid-cols-1 lg:grid-cols-2 gap-0 content-center'>
                         <div className='p-12'>
-                            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">Traffic Accident Risk Analysis</h1>
+                            <h1 className="text-4xl xl:text-6xl font-bold text-white mb-4">Traffic Accident Risk Analysis</h1>
                             <p className="text-lg md:text-xl text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut </p>
                             <Button onClick={scrollHeaderClick} className="mt-4 bg-transparent border-white hover:bg-white hover:text-black w-full md:w-auto md:inline-block py-1 font-semibold text-white">Get Started</Button>
                         </div>

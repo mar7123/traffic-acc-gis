@@ -1,6 +1,5 @@
 import { getGeoLocs } from "@/lib/prisma/geoloc";
 import { NextRequest } from "next/server";
-import { setTimeout } from "timers/promises";
 
 export async function GET(request: NextRequest) {
     try {

@@ -74,6 +74,9 @@ export async function getGeoDataYear() {
             distinct: ['tahun'],
             select: {
                 tahun: true,
+            },
+            orderBy: {
+                tahun: 'asc',
             }
         })
         return { res };
