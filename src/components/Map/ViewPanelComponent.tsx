@@ -1,0 +1,116 @@
+import { Label, Select, TextInput } from "flowbite-react";
+import { ChangeEvent } from "react";
+
+const ViewPanelComponent = ({
+    filters,
+    year,
+    selectYear,
+    selectN
+}: {
+    filters: {
+        count: {
+            data: number,
+            high: number,
+            med: number,
+            low: number,
+        },
+        mean: number,
+        std: number,
+        n: number,
+        upper: {
+            val: number,
+            exist: boolean
+        },
+        lower: {
+            val: number,
+            exist: boolean
+        },
+        mode: "view" | "report",
+        toggle: boolean
+    },
+    year: {
+        selected: number,
+        yearDD:
+        {
+            tahun: number
+        }[]
+    },
+    selectYear: (e: ChangeEvent<HTMLSelectElement>) => void,
+    selectN: (target: EventTarget & HTMLInputElement) => void
+}) => {
+    return (
+        <>
+            <div className="bg-gray-900 py-2 px-4">
+                <span className="text-white text-md">
+                    Data View Panel
+                </span>
+            </div>
+            <div className="overflow-y-auto">
+                <div className="grid grid-cols-1 gap-3 py-2 px-4">
+                    <div className="w-full">
+                        <div className="mb-2">
+                            <Label htmlFor="year" value="Select year" />
+                        </div>
+                        <Select id="year" value={year.selected} onChange={(e) => {
+                            selectYear(e);
+                        }} required>
+                            {year.yearDD?.map((item, idx) => {
+                                return (<option key={idx} value={item.tahun}>{item.tahun}</option>)
+                            })}
+                        </Select>
+                    </div>
+                    <div className="flex items-center w-full">
+                        <div className="lg:w-20 sm:w-15 ">
+                            <Label htmlFor="nval" value="n" />
+                        </div>
+                        <TextInput id="nval" type="number" value={filters.n} min={0.1} onChange={({ target }) => {
+                            selectN(target);
+                        }} step={0.1} shadow />
+                    </div>
+                    <div className="flex items-center w-full">
+                        <div className="h-full lg:w-20 sm:w-15">
+                            <div className="h-full w-1/2 bg-red-200 border-2 border-black">
+                            </div>
+                        </div>
+                        <div className="mx-2">
+                            <Label htmlFor="mean" value={`High Risk (count : ${filters.count.high})`} />
+                            <span></span>
+                        </div>
+                    </div>
+                    <div className="flex items-center w-full">
+                        <div className="h-full lg:w-20 sm:w-15">
+                            <div className="h-full w-1/2 bg-yellow-200 border-2 border-black">
+                            </div>
+                        </div>
+                        <div className="mx-2">
+                            <Label htmlFor="mean" value={`Moderate Risk (count : ${filters.count.med})`} />
+                        </div>
+                    </div>
+                    <div className="flex items-center w-full">
+                        <div className="h-full lg:w-20 sm:w-15">
+                            <div className="h-full w-1/2 bg-green-200 border-2 border-black">
+                            </div>
+                        </div>
+                        <div className="mx-2">
+                            <Label htmlFor="mean" value={`Low Risk (count : ${filters.count.low})`} />
+                        </div>
+                    </div>
+                    <div className="flex items-center w-full">
+                        <div className="lg:w-20 sm:w-15 ">
+                            <Label htmlFor="mean" value="Mean" />
+                        </div>
+                        <TextInput id="mean" type="number" value={filters.mean} shadow disabled />
+                    </div>
+                    <div className="flex items-center w-full">
+                        <div className="lg:w-20 sm:w-15 ">
+                            <Label htmlFor="std" value="Std" />
+                        </div>
+                        <TextInput id="std" type="number" value={filters.std} shadow disabled />
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default ViewPanelComponent;

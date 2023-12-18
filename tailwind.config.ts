@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require('tailwindcss/colors');
 const config: Config = {
     content: [
         './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -48,6 +49,7 @@ const config: Config = {
             success: "#219653",
             danger: "#D34053",
             warning: "#FFA70B",
+            ...defaultTheme.colors
         },
         screens: {
             "2xsm": "375px",
@@ -56,6 +58,7 @@ const config: Config = {
             ...defaultTheme.screens,
         },
         extend: {
+            colors: colors,
             fontSize: {
                 "title-xxl": ["44px", "55px"],
                 "title-xl": ["36px", "45px"],

@@ -12,14 +12,14 @@ const MapOne = dynamic(() => import("@/components/Maps/MapOne"), {
     ssr: false,
 });
 
-const Dashboard: React.FC = () => {
+const Dashboard: React.FC = () => { 
     const { data: session, status } = useSession();
     if (status == "unauthenticated") {
         redirect("/")
     }
     return (
-        <div className="w-full px-[7vw] pt-[4vw]">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+        <div className="flex flex-col items-center min-h-screen h-fit w-full lg:px-[15vw] sm:px-[7vw] lg:py-20 sm:py-10 bg-gray-100">
+            {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
                 <CardDataStats title="Deforestasi Hutan" total="3.000ha" rate="" >
                     <svg
                         className="fill-primary dark:fill-white"
@@ -96,7 +96,7 @@ const Dashboard: React.FC = () => {
 
             <div className="mt-4 grid grid-cols-6 w-full gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
                 <ChartOne />
-            </div>
+            </div> */}
         </div>
     );
 };
