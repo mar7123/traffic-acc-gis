@@ -14,8 +14,14 @@ async function DetailData({
                     <div className="text-left">
                         <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Detail Data</h1>
                         <p className="text-base md:text-lg text-gray-600 mb-6">
-                            <span className="inline-block w-50 font-semibold">Tahun</span>
-                            <span className="font-semibold">: {res.tahun}</span><br />
+                            <span className="inline-block w-50 font-semibold">Nama</span>
+                            <span className="font-semibold">: {res.name}</span><br />
+                            <span className="inline-block w-50 font-semibold">Latitude</span>
+                            <span className="font-semibold">: {res.latitude}</span><br />
+                            <span className="inline-block w-50 font-semibold">Longitude</span>
+                            <span className="font-semibold">: {res.longitude}</span><br />
+                            <span className="inline-block w-50 font-semibold">Waktu</span>
+                            <span className="font-semibold">: {res.datetime_crash.toISOString()}</span><br />
                             <span className="inline-block w-50 font-semibold">Wilayah</span>
                             <span className="font-semibold">: {res.wilayah}</span><br />
                             <span className="inline-block w-50 font-semibold">Jumlah Kecelakaan</span>

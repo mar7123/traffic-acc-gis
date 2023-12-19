@@ -21,7 +21,7 @@ function CardComponent() {
                 <p className="font-normal text-gray-700 dark:text-gray-400">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
                 </p>
-                <Button href='/map' className='text-white bg-black'>
+                <Button href='/map?mode=view' className='text-white bg-black'>
                     Map
                     <svg className="-mr-1 ml-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path

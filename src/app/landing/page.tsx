@@ -1,6 +1,6 @@
 import React from 'react';
 import CardComponent from '@/components/LandingPage/CardComponent';
-import TextareaComponent from '@/components/LandingPage/TextareaComponent';
+import TextareaComponent from '@/components/LandingPage/AccidentReportComponent';
 
 function Landing() {
     return (

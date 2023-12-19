@@ -24,6 +24,7 @@
         "@/hooks/*": ["./src/hooks/*"],
         "@/js/*": ["./src/js/*"],
         "@/types/*": ["./src/types/*"],
+        "@/interfaces/*": ["./src/interfaces/*"],
         "@/lib/*": ["./lib/*"],
     }
   },

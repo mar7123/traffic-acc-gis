@@ -61,9 +61,9 @@ model User {
 model GeoLocation {
     id       String    @id @default(auto()) @map("_id") @db.ObjectId
     geoId    Int
-    geoId2   Int?
+    geoId2   Int
     name     String
-    name2    String?
+    name2    String
     geojs    Json
     geodatas GeoData[]
 }
@@ -72,8 +72,24 @@ model GeoData {
     id                String      @id @default(auto()) @map("_id") @db.ObjectId
     geoloc_id         String      @db.ObjectId
     geoloc            GeoLocation @relation(fields: [geoloc_id], references: [id], onDelete: Cascade)
+    name              String
+    latitude          Float
+    longitude         Float
     wilayah           String
-    tahun             Int
+    datetime_crash    DateTime
+    jumlah_kecelakaan Float
+    meninggal         Float
+    luka_berat        Float
+    luka_ringan       Float
+    kerugian          Float
+}
+
+model Reports {
+    id                String   @id @default(auto()) @map("_id") @db.ObjectId
+    name              String
+    latitude          Float
+    longitude         Float
+    datetime_crash    DateTime
     jumlah_kecelakaan Float
     meninggal         Float
     luka_berat        Float

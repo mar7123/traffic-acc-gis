@@ -7,7 +7,7 @@ export async function getGeoDatas(take: number, page: number) {
             take: take,
             orderBy: [
                 {
-                    tahun: 'asc',
+                    datetime_crash: 'asc',
                 },
                 {
                     id: 'asc',
@@ -40,14 +40,22 @@ export async function getGeoDataByName(name: string, take: number, page: number)
             skip: (page - 1) * take,
             take: take,
             where: {
-                wilayah: {
-                    contains: name,
-                    mode: "insensitive"
-                }
+                OR: [{
+                    wilayah: {
+                        contains: name,
+                        mode: "insensitive"
+                    }
+                }, {
+                    name: {
+                        contains: name,
+                        mode: "insensitive"
+                    }
+                },
+                ]
             },
             orderBy: [
                 {
-                    tahun: 'asc',
+                    datetime_crash: 'asc',
                 },
                 {
                     id: 'asc',
@@ -56,10 +64,18 @@ export async function getGeoDataByName(name: string, take: number, page: number)
         });
         const count = await prisma.geoData.count({
             where: {
-                wilayah: {
-                    contains: name,
-                    mode: "insensitive"
-                }
+                OR: [{
+                    wilayah: {
+                        contains: name,
+                        mode: "insensitive"
+                    }
+                }, {
+                    name: {
+                        contains: name,
+                        mode: "insensitive"
+                    }
+                },
+                ]
             },
         });
         return { res, count };
@@ -70,15 +86,27 @@ export async function getGeoDataByName(name: string, take: number, page: number)
 
 export async function getGeoDataYear() {
     try {
-        const res = await prisma.geoData.findMany({
-            distinct: ['tahun'],
-            select: {
-                tahun: true,
-            },
-            orderBy: {
-                tahun: 'asc',
-            }
-        })
+        const res = await prisma.geoData.aggregateRaw({
+            pipeline: [
+                {
+                    $project: {
+                        "year": {
+                            $year: "$datetime_crash"
+                        },
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$year"
+                    }
+                },
+                {
+                    $sort: {
+                        _id: 1,
+                    }
+                }
+            ]
+        });
         return { res };
     } catch (error) {
         return { error };

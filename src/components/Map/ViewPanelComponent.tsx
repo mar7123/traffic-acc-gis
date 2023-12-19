@@ -25,14 +25,14 @@ const ViewPanelComponent = ({
             val: number,
             exist: boolean
         },
-        mode: "view" | "report",
+        mode: string,
         toggle: boolean
     },
     year: {
         selected: number,
         yearDD:
         {
-            tahun: number
+            _id: number
         }[]
     },
     selectYear: (e: ChangeEvent<HTMLSelectElement>) => void,
@@ -55,7 +55,7 @@ const ViewPanelComponent = ({
                             selectYear(e);
                         }} required>
                             {year.yearDD?.map((item, idx) => {
-                                return (<option key={idx} value={item.tahun}>{item.tahun}</option>)
+                                return (<option key={idx} value={item._id}>{item._id}</option>)
                             })}
                         </Select>
                     </div>

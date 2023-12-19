@@ -3,12 +3,15 @@ import bcrypt from "bcrypt";
 import ind_kabkota from "./INDKabKota.json";
 import data_kecelakaan from "./data kecelakaan jawa tengah.json";
 import { Prisma } from "@prisma/client";
-import { writeFileSync } from "fs";
+// import { writeFileSync } from "fs";
 
 
 interface GeoDataInput {
+    name: string,
+    latitude: number,
+    longitude: number,
     wilayah: string,
-    tahun: number,
+    datetime_crash: string,
     jumlah_kecelakaan: number,
     meninggal: number,
     luka_berat: number,
@@ -55,8 +58,11 @@ function datakecjson() {
     const data = data_kecelakaan;
     const res = data.map((item) => {
         const temp: GeoDataInput = {
+            name: item.name,
+            latitude: item.latitude,
+            longitude: item.longitude,
             wilayah: item.wilayah,
-            tahun: item.tahun,
+            datetime_crash: new Date(String(item.tahun) + "-12-31").toISOString(),
             jumlah_kecelakaan: item.jumlah_kecelakaan,
             meninggal: item.meninggal,
             luka_berat: item.luka_berat,

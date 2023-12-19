@@ -29,7 +29,7 @@ function NavbarComponent({ scrollHeaderClick }: { scrollHeaderClick: () => void 
                             <Button href="/" className={`custom-link bg-transparent focus:ring-0 hover:text-white text-gray-400 ${pathname == '/' && "text-white"}`}>
                                 <span className="text-md mx-4">Home</span>
                             </Button>
-                            <Button href="/map" className={`custom-link bg-transparent focus:ring-0 hover:text-white text-gray-400 ${pathname == "/map" && "text-white"}`}>
+                            <Button href="/map?mode=view" className={`custom-link bg-transparent focus:ring-0 hover:text-white text-gray-400 ${pathname.includes("/map") && "text-white"}`}>
                                 <span className="text-md mx-4">Map</span>
                             </Button>
                             <Button href="/data" className={`custom-link bg-transparent focus:ring-0 hover:text-white text-gray-400 ${pathname == "/data" && "text-white"}`}>
@@ -43,7 +43,9 @@ function NavbarComponent({ scrollHeaderClick }: { scrollHeaderClick: () => void 
                         <div className='p-12'>
                             <h1 className="text-4xl xl:text-6xl font-bold text-white mb-4">Traffic Accident Risk Analysis</h1>
                             <p className="text-lg md:text-xl text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut </p>
-                            <Button onClick={scrollHeaderClick} className="mt-4 bg-transparent border-white hover:bg-white hover:text-black w-full md:w-auto md:inline-block py-1 font-semibold text-white">Get Started</Button>
+                            <Button type='submit' as='a' onClick={scrollHeaderClick} className="mt-4 py-1 bg-transparent hover:bg-white border-white hover:text-black w-full md:w-auto md:inline-block py-1 font-semibold text-white">
+                                Get Started
+                            </Button>
                         </div>
                     </div>
                 ) : (null)}

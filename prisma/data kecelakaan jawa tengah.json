@@ -6,7 +6,10 @@
    "meninggal": 208,
    "luka_berat": 2,
    "luka_ringan": 1147,
-   "kerugian": 709300000
+   "kerugian": 709300000,
+   "name": "Polres Kabupaten Cilacap",
+   "latitude": -7.692972,
+   "longitude": 109.025262
  },
  {
    "wilayah": "Banyumas",
@@ -15,7 +18,10 @@
    "meninggal": 220,
    "luka_berat": 1,
    "luka_ringan": 1030,
-   "kerugian": 609790000
+   "kerugian": 609790000,
+   "name": "Polres Kabupaten Banyumas",
+   "latitude": -7.403973,
+   "longitude": 109.2317552
  },
  {
    "wilayah": "Purbalingga",
@@ -24,7 +30,10 @@
    "meninggal": 104,
    "luka_berat": 1,
    "luka_ringan": 633,
-   "kerugian": 280700000
+   "kerugian": 280700000,
+   "name": "Polres Kabupaten Purbalingga",
+   "latitude": -7.3991943,
+   "longitude": 109.3496587
  },
  {
    "wilayah": "Banjarnegara",
@@ -33,7 +42,10 @@
    "meninggal": 96,
    "luka_berat": 3,
    "luka_ringan": 486,
-   "kerugian": 405800000
+   "kerugian": 405800000,
+   "name": "Polres Kabupaten Banjarnegara",
+   "latitude": -7.3967058,
+   "longitude": 109.7002658
  },
  {
    "wilayah": "Kebumen",
@@ -42,7 +54,10 @@
    "meninggal": 129,
    "luka_berat": 0,
    "luka_ringan": 468,
-   "kerugian": 588980000
+   "kerugian": 588980000,
+   "name": "Polres Kabupaten Kebumen",
+   "latitude": -7.6767372,
+   "longitude": 109.6701049
  },
  {
    "wilayah": "Purworejo",
@@ -51,7 +66,10 @@
    "meninggal": 107,
    "luka_berat": 1,
    "luka_ringan": 511,
-   "kerugian": 230650000
+   "kerugian": 230650000,
+   "name": "Polres Kabupaten Purworejo",
+   "latitude": -7.7268155,
+   "longitude": 109.9707674
  },
  {
    "wilayah": "Wonosobo",
@@ -60,7 +78,10 @@
    "meninggal": 58,
    "luka_berat": 16,
    "luka_ringan": 239,
-   "kerugian": 197967000
+   "kerugian": 197967000,
+   "name": "Polres Kabupaten Wonosobo",
+   "latitude": -7.3685105,
+   "longitude": 109.8993687
  },
  {
    "wilayah": "Magelang",
@@ -69,7 +90,10 @@
    "meninggal": 170,
    "luka_berat": 1,
    "luka_ringan": 1024,
-   "kerugian": 358240000
+   "kerugian": 358240000,
+   "name": "Polres Kabupaten Magelang",
+   "latitude": -7.5865054,
+   "longitude": 110.219009
  },
  {
    "wilayah": "Boyolali",
@@ -78,7 +102,10 @@
    "meninggal": 112,
    "luka_berat": 2,
    "luka_ringan": 843,
-   "kerugian": 178100000
+   "kerugian": 178100000,
+   "name": "Polres Kabupaten Boyolali",
+   "latitude": -7.5381564,
+   "longitude": 110.6240389
  },
  {
    "wilayah": "Klaten",
@@ -87,7 +114,10 @@
    "meninggal": 164,
    "luka_berat": 10,
    "luka_ringan": 1448,
-   "kerugian": 1215060000
+   "kerugian": 1215060000,
+   "name": "Polres Kabupaten Klaten",
+   "latitude": -7.703691,
+   "longitude": 110.6143606
  },
  {
    "wilayah": "Sukoharjo",
@@ -96,7 +126,10 @@
    "meninggal": 103,
    "luka_berat": 0,
    "luka_ringan": 650,
-   "kerugian": 476450000
+   "kerugian": 476450000,
+   "name": "Polres Kabupaten Sukoharjo",
+   "latitude": -7.6752785,
+   "longitude": 110.8274124
  },
  {
    "wilayah": "Wonogiri",
@@ -105,7 +138,10 @@
    "meninggal": 97,
    "luka_berat": 1,
    "luka_ringan": 673,
-   "kerugian": 324800000
+   "kerugian": 324800000,
+   "name": "Polres Kabupaten Wonogiri",
+   "latitude": -7.831353,
+   "longitude": 110.9163931
  },
  {
    "wilayah": "Karanganyar",
@@ -114,7 +150,10 @@
    "meninggal": 119,
    "luka_berat": 3,
    "luka_ringan": 951,
-   "kerugian": 395000000
+   "kerugian": 395000000,
+   "name": "Polres Kabupaten Karanganyar",
+   "latitude": -7.5957043,
+   "longitude": 110.9457089
  },
  {
    "wilayah": "Sragen",
@@ -123,7 +162,10 @@
    "meninggal": 136,
    "luka_berat": 0,
    "luka_ringan": 1249,
-   "kerugian": 829300000
+   "kerugian": 829300000,
+   "name": "Polres Kabupaten Sragen",
+   "latitude": -7.430586,
+   "longitude": 111.0259961
  },
  {
    "wilayah": "Grobogan",
@@ -132,7 +174,10 @@
    "meninggal": 163,
    "luka_berat": 0,
    "luka_ringan": 533,
-   "kerugian": 268450000
+   "kerugian": 268450000,
+   "name": "Polres Kabupaten Grobogan",
+   "latitude": -7.094901,
+   "longitude": 110.9091882
  },
  {
    "wilayah": "Blora",
@@ -141,7 +186,10 @@
    "meninggal": 65,
    "luka_berat": 11,
    "luka_ringan": 547,
-   "kerugian": 224250000
+   "kerugian": 224250000,
+   "name": "Polres Kabupaten Blora",
+   "latitude": -6.9718862,
+   "longitude": 111.458534
  },
  {
    "wilayah": "Rembang",
@@ -150,7 +198,10 @@
    "meninggal": 132,
    "luka_berat": 0,
    "luka_ringan": 475,
-   "kerugian": 657050000
+   "kerugian": 657050000,
+   "name": "Polres Kabupaten Rembang",
+   "latitude": -6.7343985,
+   "longitude": 111.3546571
  },
  {
    "wilayah": "Pati",
@@ -159,7 +210,10 @@
    "meninggal": 186,
    "luka_berat": 0,
    "luka_ringan": 1342,
-   "kerugian": 657100000
+   "kerugian": 657100000,
+   "name": "Polres Kabupaten Pati",
+   "latitude": -6.7405347,
+   "longitude": 111.0331274
  },
  {
    "wilayah": "Kudus",
@@ -168,7 +222,10 @@
    "meninggal": 114,
    "luka_berat": 0,
    "luka_ringan": 780,
-   "kerugian": 317395000
+   "kerugian": 317395000,
+   "name": "Polres Kabupaten Kudus",
+   "latitude": -6.8029235,
+   "longitude": 110.9283928
  },
  {
    "wilayah": "Jepara",
@@ -177,7 +234,10 @@
    "meninggal": 103,
    "luka_berat": 4,
    "luka_ringan": 317,
-   "kerugian": 138900000
+   "kerugian": 138900000,
+   "name": "Polres Kabupaten Jepara",
+   "latitude": -6.5969402,
+   "longitude": 110.6660148
  },
  {
    "wilayah": "Demak",
@@ -186,7 +246,10 @@
    "meninggal": 141,
    "luka_berat": 4,
    "luka_ringan": 604,
-   "kerugian": 225550000
+   "kerugian": 225550000,
+   "name": "Polres Kabupaten Demak",
+   "latitude": -6.9092815,
+   "longitude": 110.6192784
  },
  {
    "wilayah": "Semarang",
@@ -195,7 +258,10 @@
    "meninggal": 158,
    "luka_berat": 3,
    "luka_ringan": 493,
-   "kerugian": 206300000
+   "kerugian": 206300000,
+   "name": "Polres Kabupaten Semarang",
+   "latitude": -7.1169008,
+   "longitude": 110.4131544
  },
  {
    "wilayah": "Temanggung",
@@ -204,7 +270,10 @@
    "meninggal": 60,
    "luka_berat": 1,
    "luka_ringan": 370,
-   "kerugian": 429400000
+   "kerugian": 429400000,
+   "name": "Polres Kabupaten Temanggung",
+   "latitude": -7.3362835,
+   "longitude": 110.2048636
  },
  {
    "wilayah": "Kendal",
@@ -213,7 +282,10 @@
    "meninggal": 105,
    "luka_berat": 1,
    "luka_ringan": 270,
-   "kerugian": 138175000
+   "kerugian": 138175000,
+   "name": "Polres Kabupaten Kendal",
+   "latitude": -6.9252631,
+   "longitude": 110.2074784
  },
  {
    "wilayah": "Batang",
@@ -222,7 +294,10 @@
    "meninggal": 109,
    "luka_berat": 5,
    "luka_ringan": 418,
-   "kerugian": 570500000
+   "kerugian": 570500000,
+   "name": "Polres Kabupaten Batang",
+   "latitude": -6.9182845,
+   "longitude": 109.7299467
  },
  {
    "wilayah": "Pekalongan",
@@ -231,7 +306,10 @@
    "meninggal": 64,
    "luka_berat": 8,
    "luka_ringan": 257,
-   "kerugian": 252200000
+   "kerugian": 252200000,
+   "name": "Polres Kabupaten Pekalongan",
+   "latitude": -7.0266575,
+   "longitude": 109.5929743
  },
  {
    "wilayah": "Pemalang",
@@ -240,7 +318,10 @@
    "meninggal": 136,
    "luka_berat": 2,
    "luka_ringan": 348,
-   "kerugian": 274050000
+   "kerugian": 274050000,
+   "name": "Polres Kabupaten Pemalang",
+   "latitude": -6.8938304,
+   "longitude": 109.4057015
  },
  {
    "wilayah": "Tegal",
@@ -249,7 +330,10 @@
    "meninggal": 157,
    "luka_berat": 0,
    "luka_ringan": 516,
-   "kerugian": 202650000
+   "kerugian": 202650000,
+   "name": "Polres Kabupaten Tegal",
+   "latitude": -6.9822288,
+   "longitude": 109.1313864
  },
  {
    "wilayah": "Brebes",
@@ -258,7 +342,10 @@
    "meninggal": 211,
    "luka_berat": 6,
    "luka_ringan": 753,
-   "kerugian": 1025600000
+   "kerugian": 1025600000,
+   "name": "Polres Kabupaten Brebes",
+   "latitude": -6.8748682,
+   "longitude": 109.0512026
  },
  {
    "wilayah": "Kota Magelang",
@@ -267,7 +354,10 @@
    "meninggal": 33,
    "luka_berat": 0,
    "luka_ringan": 185,
-   "kerugian": 63800000
+   "kerugian": 63800000,
+   "name": "Polres Kota Magelang",
+   "latitude": -7.47787,
+   "longitude": 110.218485
  },
  {
    "wilayah": "Surakarta",
@@ -276,7 +366,10 @@
    "meninggal": 61,
    "luka_berat": 1,
    "luka_ringan": 883,
-   "kerugian": 404550000
+   "kerugian": 404550000,
+   "name": "Polres Kabupaten Surakarta",
+   "latitude": -7.5646136,
+   "longitude": 110.8053048
  },
  {
    "wilayah": "Salatiga",
@@ -285,7 +378,10 @@
    "meninggal": 31,
    "luka_berat": 4,
    "luka_ringan": 103,
-   "kerugian": 75650000
+   "kerugian": 75650000,
+   "name": "Polres Kabupaten Salatiga",
+   "latitude": -7.3296348,
+   "longitude": 110.4997889
  },
  {
    "wilayah": "Kota Semarang",
@@ -294,7 +390,10 @@
    "meninggal": 189,
    "luka_berat": 5,
    "luka_ringan": 1086,
-   "kerugian": 1026900000
+   "kerugian": 1026900000,
+   "name": "Polres Kota Semarang",
+   "latitude": -7.1168672,
+   "longitude": 110.4130675
  },
  {
    "wilayah": "Kota Pekalongan",
@@ -303,7 +402,10 @@
    "meninggal": 32,
    "luka_berat": 1,
    "luka_ringan": 84,
-   "kerugian": 12175000
+   "kerugian": 12175000,
+   "name": "Polres Kota Pekalongan",
+   "latitude": -6.8813721,
+   "longitude": 109.6718825
  },
  {
    "wilayah": "Kota Tegal",
@@ -312,7 +414,10 @@
    "meninggal": 42,
    "luka_berat": 0,
    "luka_ringan": 251,
-   "kerugian": 167850000
+   "kerugian": 167850000,
+   "name": "Polres Kota Tegal",
+   "latitude": -6.8553832,
+   "longitude": 109.1374183
  },
  {
    "wilayah": "Cilacap",
@@ -321,7 +426,10 @@
    "meninggal": 189,
    "luka_berat": 0,
    "luka_ringan": 1263,
-   "kerugian": 874150000
+   "kerugian": 874150000,
+   "name": "Polres Kabupaten Cilacap",
+   "latitude": -7.692972,
+   "longitude": 109.025262
  },
  {
    "wilayah": "Banyumas",
@@ -330,7 +438,10 @@
    "meninggal": 224,
    "luka_berat": 7,
    "luka_ringan": 1149,
-   "kerugian": 685580000
+   "kerugian": 685580000,
+   "name": "Polres Kabupaten Banyumas",
+   "latitude": -7.403973,
+   "longitude": 109.2317552
  },
  {
    "wilayah": "Purbalingga",
@@ -339,7 +450,10 @@
    "meninggal": 77,
    "luka_berat": 0,
    "luka_ringan": 715,
-   "kerugian": 344600000
+   "kerugian": 344600000,
+   "name": "Polres Kabupaten Purbalingga",
+   "latitude": -7.3991943,
+   "longitude": 109.3496587
  },
  {
    "wilayah": "Banjarnegara",
@@ -348,7 +462,10 @@
    "meninggal": 93,
    "luka_berat": 5,
    "luka_ringan": 569,
-   "kerugian": 413250000
+   "kerugian": 413250000,
+   "name": "Polres Kabupaten Banjarnegara",
+   "latitude": -7.3967058,
+   "longitude": 109.7002658
  },
  {
    "wilayah": "Kebumen",
@@ -357,7 +474,10 @@
    "meninggal": 161,
    "luka_berat": 0,
    "luka_ringan": 838,
-   "kerugian": 915700000
+   "kerugian": 915700000,
+   "name": "Polres Kabupaten Kebumen",
+   "latitude": -7.6767372,
+   "longitude": 109.6701049
  },
  {
    "wilayah": "Purworejo",
@@ -366,7 +486,10 @@
    "meninggal": 119,
    "luka_berat": 3,
    "luka_ringan": 644,
-   "kerugian": 262750000
+   "kerugian": 262750000,
+   "name": "Polres Kabupaten Purworejo",
+   "latitude": -7.7268155,
+   "longitude": 109.9707674
  },
  {
    "wilayah": "Wonosobo",
@@ -375,7 +498,10 @@
    "meninggal": 45,
    "luka_berat": 25,
    "luka_ringan": 311,
-   "kerugian": 152155000
+   "kerugian": 152155000,
+   "name": "Polres Kabupaten Wonosobo",
+   "latitude": -7.3685105,
+   "longitude": 109.8993687
  },
  {
    "wilayah": "Magelang",
@@ -384,7 +510,10 @@
    "meninggal": 169,
    "luka_berat": 5,
    "luka_ringan": 1440,
-   "kerugian": 352150000
+   "kerugian": 352150000,
+   "name": "Polres Kabupaten Magelang",
+   "latitude": -7.5865054,
+   "longitude": 110.219009
  },
  {
    "wilayah": "Boyolali",
@@ -393,7 +522,10 @@
    "meninggal": 98,
    "luka_berat": 1,
    "luka_ringan": 1245,
-   "kerugian": 272750000
+   "kerugian": 272750000,
+   "name": "Polres Kabupaten Boyolali",
+   "latitude": -7.5381564,
+   "longitude": 110.6240389
  },
  {
    "wilayah": "Klaten",
@@ -402,7 +534,10 @@
    "meninggal": 161,
    "luka_berat": 5,
    "luka_ringan": 2308,
-   "kerugian": 1318350000
+   "kerugian": 1318350000,
+   "name": "Polres Kabupaten Klaten",
+   "latitude": -7.703691,
+   "longitude": 110.6143606
  },
  {
    "wilayah": "Sukoharjo",
@@ -411,7 +546,10 @@
    "meninggal": 107,
    "luka_berat": 3,
    "luka_ringan": 1486,
-   "kerugian": 972400000
+   "kerugian": 972400000,
+   "name": "Polres Kabupaten Sukoharjo",
+   "latitude": -7.6752785,
+   "longitude": 110.8274124
  },
  {
    "wilayah": "Wonogiri",
@@ -420,7 +558,10 @@
    "meninggal": 86,
    "luka_berat": 0,
    "luka_ringan": 955,
-   "kerugian": 401400000
+   "kerugian": 401400000,
+   "name": "Polres Kabupaten Wonogiri",
+   "latitude": -7.831353,
+   "longitude": 110.9163931
  },
  {
    "wilayah": "Karanganyar",
@@ -429,7 +570,10 @@
    "meninggal": 124,
    "luka_berat": 2,
    "luka_ringan": 1687,
-   "kerugian": 565552000
+   "kerugian": 565552000,
+   "name": "Polres Kabupaten Karanganyar",
+   "latitude": -7.5957043,
+   "longitude": 110.9457089
  },
  {
    "wilayah": "Sragen",
@@ -438,7 +582,10 @@
    "meninggal": 141,
    "luka_berat": 0,
    "luka_ringan": 1564,
-   "kerugian": 809220000
+   "kerugian": 809220000,
+   "name": "Polres Kabupaten Sragen",
+   "latitude": -7.430586,
+   "longitude": 111.0259961
  },
  {
    "wilayah": "Grobogan",
@@ -447,7 +594,10 @@
    "meninggal": 145,
    "luka_berat": 0,
    "luka_ringan": 773,
-   "kerugian": 183800000
+   "kerugian": 183800000,
+   "name": "Polres Kabupaten Grobogan",
+   "latitude": -7.094901,
+   "longitude": 110.9091882
  },
  {
    "wilayah": "Blora",
@@ -456,7 +606,10 @@
    "meninggal": 83,
    "luka_berat": 2,
    "luka_ringan": 560,
-   "kerugian": 193850000
+   "kerugian": 193850000,
+   "name": "Polres Kabupaten Blora",
+   "latitude": -6.9718862,
+   "longitude": 111.458534
  },
  {
    "wilayah": "Rembang",
@@ -465,7 +618,10 @@
    "meninggal": 113,
    "luka_berat": 0,
    "luka_ringan": 585,
-   "kerugian": 562150000
+   "kerugian": 562150000,
+   "name": "Polres Kabupaten Rembang",
+   "latitude": -6.7343985,
+   "longitude": 111.3546571
  },
  {
    "wilayah": "Pati",
@@ -474,7 +630,10 @@
    "meninggal": 208,
    "luka_berat": 0,
    "luka_ringan": 1754,
-   "kerugian": 1102300000
+   "kerugian": 1102300000,
+   "name": "Polres Kabupaten Pati",
+   "latitude": -6.7405347,
+   "longitude": 111.0331274
  },
  {
    "wilayah": "Kudus",
@@ -483,7 +642,10 @@
    "meninggal": 98,
    "luka_berat": 1,
    "luka_ringan": 1072,
-   "kerugian": 368710000
+   "kerugian": 368710000,
+   "name": "Polres Kabupaten Kudus",
+   "latitude": -6.8029235,
+   "longitude": 110.9283928
  },
  {
    "wilayah": "Jepara",
@@ -492,7 +654,10 @@
    "meninggal": 116,
    "luka_berat": 0,
    "luka_ringan": 626,
-   "kerugian": 231600000
+   "kerugian": 231600000,
+   "name": "Polres Kabupaten Jepara",
+   "latitude": -6.5969402,
+   "longitude": 110.6660148
  },
  {
    "wilayah": "Demak",
@@ -501,7 +666,10 @@
    "meninggal": 161,
    "luka_berat": 0,
    "luka_ringan": 721,
-   "kerugian": 229500000
+   "kerugian": 229500000,
+   "name": "Polres Kabupaten Demak",
+   "latitude": -6.9092815,
+   "longitude": 110.6192784
  },
  {
    "wilayah": "Semarang",
@@ -510,7 +678,10 @@
    "meninggal": 130,
    "luka_berat": 1,
    "luka_ringan": 665,
-   "kerugian": 332800000
+   "kerugian": 332800000,
+   "name": "Polres Kabupaten Semarang",
+   "latitude": -7.1169008,
+   "longitude": 110.4131544
  },
  {
    "wilayah": "Temanggung",
@@ -519,7 +690,10 @@
    "meninggal": 86,
    "luka_berat": 1,
    "luka_ringan": 600,
-   "kerugian": 647400000
+   "kerugian": 647400000,
+   "name": "Polres Kabupaten Temanggung",
+   "latitude": -7.3362835,
+   "longitude": 110.2048636
  },
  {
    "wilayah": "Kendal",
@@ -528,7 +702,10 @@
    "meninggal": 125,
    "luka_berat": 2,
    "luka_ringan": 330,
-   "kerugian": 194500000
+   "kerugian": 194500000,
+   "name": "Polres Kabupaten Kendal",
+   "latitude": -6.9252631,
+   "longitude": 110.2074784
  },
  {
    "wilayah": "Batang",
@@ -537,7 +714,10 @@
    "meninggal": 155,
    "luka_berat": 13,
    "luka_ringan": 655,
-   "kerugian": 985000000
+   "kerugian": 985000000,
+   "name": "Polres Kabupaten Batang",
+   "latitude": -6.9182845,
+   "longitude": 109.7299467
  },
  {
    "wilayah": "Pekalongan",
@@ -546,7 +726,10 @@
    "meninggal": 64,
    "luka_berat": 7,
    "luka_ringan": 276,
-   "kerugian": 471550000
+   "kerugian": 471550000,
+   "name": "Polres Kabupaten Pekalongan",
+   "latitude": -7.0266575,
+   "longitude": 109.5929743
  },
  {
    "wilayah": "Pemalang",
@@ -555,7 +738,10 @@
    "meninggal": 138,
    "luka_berat": 0,
    "luka_ringan": 467,
-   "kerugian": 439900000
+   "kerugian": 439900000,
+   "name": "Polres Kabupaten Pemalang",
+   "latitude": -6.8938304,
+   "longitude": 109.4057015
  },
  {
    "wilayah": "Tegal",
@@ -564,7 +750,10 @@
    "meninggal": 161,
    "luka_berat": 0,
    "luka_ringan": 636,
-   "kerugian": 266330000
+   "kerugian": 266330000,
+   "name": "Polres Kabupaten Tegal",
+   "latitude": -6.9822288,
+   "longitude": 109.1313864
  },
  {
    "wilayah": "Brebes",
@@ -573,7 +762,10 @@
    "meninggal": 182,
    "luka_berat": 3,
    "luka_ringan": 1006,
-   "kerugian": 1143480000
+   "kerugian": 1143480000,
+   "name": "Polres Kabupaten Brebes",
+   "latitude": -6.8748682,
+   "longitude": 109.0512026
  },
  {
    "wilayah": "Kota Magelang",
@@ -582,7 +774,10 @@
    "meninggal": 27,
    "luka_berat": 0,
    "luka_ringan": 309,
-   "kerugian": 67200000
+   "kerugian": 67200000,
+   "name": "Polres Kota Magelang",
+   "latitude": -7.47787,
+   "longitude": 110.218485
  },
  {
    "wilayah": "Surakarta",
@@ -591,7 +786,10 @@
    "meninggal": 65,
    "luka_berat": 0,
    "luka_ringan": 1150,
-   "kerugian": 523950000
+   "kerugian": 523950000,
+   "name": "Polres Kabupaten Surakarta",
+   "latitude": -7.5646136,
+   "longitude": 110.8053048
  },
  {
    "wilayah": "Salatiga",
@@ -600,7 +798,10 @@
    "meninggal": 39,
    "luka_berat": 8,
    "luka_ringan": 294,
-   "kerugian": 134500000
+   "kerugian": 134500000,
+   "name": "Polres Kabupaten Salatiga",
+   "latitude": -7.3296348,
+   "longitude": 110.4997889
  },
  {
    "wilayah": "Kota Semarang",
@@ -609,7 +810,10 @@
    "meninggal": 193,
    "luka_berat": 2,
    "luka_ringan": 1434,
-   "kerugian": 1306480000
+   "kerugian": 1306480000,
+   "name": "Polres Kota Semarang",
+   "latitude": -7.1168672,
+   "longitude": 110.4130675
  },
  {
    "wilayah": "Kota Pekalongan",
@@ -618,7 +822,10 @@
    "meninggal": 35,
    "luka_berat": 0,
    "luka_ringan": 115,
-   "kerugian": 16400000
+   "kerugian": 16400000,
+   "name": "Polres Kota Pekalongan",
+   "latitude": -6.8813721,
+   "longitude": 109.6718825
  },
  {
    "wilayah": "Kota Tegal",
@@ -627,7 +834,10 @@
    "meninggal": 23,
    "luka_berat": 0,
    "luka_ringan": 353,
-   "kerugian": 116360000
+   "kerugian": 116360000,
+   "name": "Polres Kota Tegal",
+   "latitude": -6.8553832,
+   "longitude": 109.1374183
  },
  {
    "wilayah": "Cilacap",
@@ -636,7 +846,10 @@
    "meninggal": 172,
    "luka_berat": 1,
    "luka_ringan": 1035,
-   "kerugian": 620700000
+   "kerugian": 620700000,
+   "name": "Polres Kabupaten Cilacap",
+   "latitude": -7.692972,
+   "longitude": 109.025262
  },
  {
    "wilayah": "Banyumas",
@@ -645,7 +858,10 @@
    "meninggal": 217,
    "luka_berat": 1,
    "luka_ringan": 1765,
-   "kerugian": 952820000
+   "kerugian": 952820000,
+   "name": "Polres Kabupaten Banyumas",
+   "latitude": -7.403973,
+   "longitude": 109.2317552
  },
  {
    "wilayah": "Purbalingga",
@@ -654,7 +870,10 @@
    "meninggal": 75,
    "luka_berat": 0,
    "luka_ringan": 497,
-   "kerugian": 239100000
+   "kerugian": 239100000,
+   "name": "Polres Kabupaten Purbalingga",
+   "latitude": -7.3991943,
+   "longitude": 109.3496587
  },
  {
    "wilayah": "Banjarnegara",
@@ -663,7 +882,10 @@
    "meninggal": 75,
    "luka_berat": 4,
    "luka_ringan": 528,
-   "kerugian": 518650000
+   "kerugian": 518650000,
+   "name": "Polres Kabupaten Banjarnegara",
+   "latitude": -7.3967058,
+   "longitude": 109.7002658
  },
  {
    "wilayah": "Kebumen",
@@ -672,7 +894,10 @@
    "meninggal": 121,
    "luka_berat": 0,
    "luka_ringan": 732,
-   "kerugian": 891200000
+   "kerugian": 891200000,
+   "name": "Polres Kabupaten Kebumen",
+   "latitude": -7.6767372,
+   "longitude": 109.6701049
  },
  {
    "wilayah": "Purworejo",
@@ -681,7 +906,10 @@
    "meninggal": 87,
    "luka_berat": 0,
    "luka_ringan": 561,
-   "kerugian": 373200000
+   "kerugian": 373200000,
+   "name": "Polres Kabupaten Purworejo",
+   "latitude": -7.7268155,
+   "longitude": 109.9707674
  },
  {
    "wilayah": "Wonosobo",
@@ -690,7 +918,10 @@
    "meninggal": 53,
    "luka_berat": 2,
    "luka_ringan": 319,
-   "kerugian": 186765000
+   "kerugian": 186765000,
+   "name": "Polres Kabupaten Wonosobo",
+   "latitude": -7.3685105,
+   "longitude": 109.8993687
  },
  {
    "wilayah": "Magelang",
@@ -699,7 +930,10 @@
    "meninggal": 135,
    "luka_berat": 2,
    "luka_ringan": 941,
-   "kerugian": 254050000
+   "kerugian": 254050000,
+   "name": "Polres Kabupaten Magelang",
+   "latitude": -7.5865054,
+   "longitude": 110.219009
  },
  {
    "wilayah": "Boyolali",
@@ -708,7 +942,10 @@
    "meninggal": 91,
    "luka_berat": 1,
    "luka_ringan": 1087,
-   "kerugian": 278400000
+   "kerugian": 278400000,
+   "name": "Polres Kabupaten Boyolali",
+   "latitude": -7.5381564,
+   "longitude": 110.6240389
  },
  {
    "wilayah": "Klaten",
@@ -717,7 +954,10 @@
    "meninggal": 142,
    "luka_berat": 7,
    "luka_ringan": 1712,
-   "kerugian": 1153540000
+   "kerugian": 1153540000,
+   "name": "Polres Kabupaten Klaten",
+   "latitude": -7.703691,
+   "longitude": 110.6143606
  },
  {
    "wilayah": "Sukoharjo",
@@ -726,7 +966,10 @@
    "meninggal": 80,
    "luka_berat": 1,
    "luka_ringan": 1186,
-   "kerugian": 647700000
+   "kerugian": 647700000,
+   "name": "Polres Kabupaten Sukoharjo",
+   "latitude": -7.6752785,
+   "longitude": 110.8274124
  },
  {
    "wilayah": "Wonogiri",
@@ -735,7 +978,10 @@
    "meninggal": 65,
    "luka_berat": 0,
    "luka_ringan": 754,
-   "kerugian": 269900000
+   "kerugian": 269900000,
+   "name": "Polres Kabupaten Wonogiri",
+   "latitude": -7.831353,
+   "longitude": 110.9163931
  },
  {
    "wilayah": "Karanganyar",
@@ -744,7 +990,10 @@
    "meninggal": 99,
    "luka_berat": 4,
    "luka_ringan": 1208,
-   "kerugian": 388300000
+   "kerugian": 388300000,
+   "name": "Polres Kabupaten Karanganyar",
+   "latitude": -7.5957043,
+   "longitude": 110.9457089
  },
  {
    "wilayah": "Sragen",
@@ -753,7 +1002,10 @@
    "meninggal": 126,
    "luka_berat": 0,
    "luka_ringan": 909,
-   "kerugian": 790550000
+   "kerugian": 790550000,
+   "name": "Polres Kabupaten Sragen",
+   "latitude": -7.430586,
+   "longitude": 111.0259961
  },
  {
    "wilayah": "Grobogan",
@@ -762,7 +1014,10 @@
    "meninggal": 123,
    "luka_berat": 2,
    "luka_ringan": 577,
-   "kerugian": 159150000
+   "kerugian": 159150000,
+   "name": "Polres Kabupaten Grobogan",
+   "latitude": -7.094901,
+   "longitude": 110.9091882
  },
  {
    "wilayah": "Blora",
@@ -771,7 +1026,10 @@
    "meninggal": 70,
    "luka_berat": 6,
    "luka_ringan": 357,
-   "kerugian": 131120000
+   "kerugian": 131120000,
+   "name": "Polres Kabupaten Blora",
+   "latitude": -6.9718862,
+   "longitude": 111.458534
  },
  {
    "wilayah": "Rembang",
@@ -780,7 +1038,10 @@
    "meninggal": 93,
    "luka_berat": 0,
    "luka_ringan": 397,
-   "kerugian": 453850000
+   "kerugian": 453850000,
+   "name": "Polres Kabupaten Rembang",
+   "latitude": -6.7343985,
+   "longitude": 111.3546571
  },
  {
    "wilayah": "Pati",
@@ -789,7 +1050,10 @@
    "meninggal": 153,
    "luka_berat": 1,
    "luka_ringan": 1446,
-   "kerugian": 679880000
+   "kerugian": 679880000,
+   "name": "Polres Kabupaten Pati",
+   "latitude": -6.7405347,
+   "longitude": 111.0331274
  },
  {
    "wilayah": "Kudus",
@@ -798,7 +1062,10 @@
    "meninggal": 109,
    "luka_berat": 0,
    "luka_ringan": 890,
-   "kerugian": 317200000
+   "kerugian": 317200000,
+   "name": "Polres Kabupaten Kudus",
+   "latitude": -6.8029235,
+   "longitude": 110.9283928
  },
  {
    "wilayah": "Jepara",
@@ -807,7 +1074,10 @@
    "meninggal": 97,
    "luka_berat": 0,
    "luka_ringan": 363,
-   "kerugian": 149000000
+   "kerugian": 149000000,
+   "name": "Polres Kabupaten Jepara",
+   "latitude": -6.5969402,
+   "longitude": 110.6660148
  },
  {
    "wilayah": "Demak",
@@ -816,7 +1086,10 @@
    "meninggal": 154,
    "luka_berat": 5,
    "luka_ringan": 582,
-   "kerugian": 209900000
+   "kerugian": 209900000,
+   "name": "Polres Kabupaten Demak",
+   "latitude": -6.9092815,
+   "longitude": 110.6192784
  },
  {
    "wilayah": "Semarang",
@@ -825,7 +1098,10 @@
    "meninggal": 121,
    "luka_berat": 1,
    "luka_ringan": 539,
-   "kerugian": 283100000
+   "kerugian": 283100000,
+   "name": "Polres Kabupaten Semarang",
+   "latitude": -7.1169008,
+   "longitude": 110.4131544
  },
  {
    "wilayah": "Temanggung",
@@ -834,7 +1110,10 @@
    "meninggal": 59,
    "luka_berat": 0,
    "luka_ringan": 350,
-   "kerugian": 369400000
+   "kerugian": 369400000,
+   "name": "Polres Kabupaten Temanggung",
+   "latitude": -7.3362835,
+   "longitude": 110.2048636
  },
  {
    "wilayah": "Kendal",
@@ -843,7 +1122,10 @@
    "meninggal": 114,
    "luka_berat": 2,
    "luka_ringan": 426,
-   "kerugian": 240450000
+   "kerugian": 240450000,
+   "name": "Polres Kabupaten Kendal",
+   "latitude": -6.9252631,
+   "longitude": 110.2074784
  },
  {
    "wilayah": "Batang",
@@ -852,7 +1134,10 @@
    "meninggal": 118,
    "luka_berat": 3,
    "luka_ringan": 453,
-   "kerugian": 1060450000
+   "kerugian": 1060450000,
+   "name": "Polres Kabupaten Batang",
+   "latitude": -6.9182845,
+   "longitude": 109.7299467
  },
  {
    "wilayah": "Pekalongan",
@@ -861,7 +1146,10 @@
    "meninggal": 53,
    "luka_berat": 1,
    "luka_ringan": 254,
-   "kerugian": 652000000
+   "kerugian": 652000000,
+   "name": "Polres Kabupaten Pekalongan",
+   "latitude": -7.0266575,
+   "longitude": 109.5929743
  },
  {
    "wilayah": "Pemalang",
@@ -870,7 +1158,10 @@
    "meninggal": 100,
    "luka_berat": 1,
    "luka_ringan": 507,
-   "kerugian": 248550000
+   "kerugian": 248550000,
+   "name": "Polres Kabupaten Pemalang",
+   "latitude": -6.8938304,
+   "longitude": 109.4057015
  },
  {
    "wilayah": "Tegal",
@@ -879,7 +1170,10 @@
    "meninggal": 134,
    "luka_berat": 0,
    "luka_ringan": 506,
-   "kerugian": 316800000
+   "kerugian": 316800000,
+   "name": "Polres Kabupaten Tegal",
+   "latitude": -6.9822288,
+   "longitude": 109.1313864
  },
  {
    "wilayah": "Brebes",
@@ -888,7 +1182,10 @@
    "meninggal": 171,
    "luka_berat": 1,
    "luka_ringan": 972,
-   "kerugian": 867300000
+   "kerugian": 867300000,
+   "name": "Polres Kabupaten Brebes",
+   "latitude": -6.8748682,
+   "longitude": 109.0512026
  },
  {
    "wilayah": "Kota Magelang",
@@ -897,7 +1194,10 @@
    "meninggal": 25,
    "luka_berat": 0,
    "luka_ringan": 227,
-   "kerugian": 103250000
+   "kerugian": 103250000,
+   "name": "Polres Kota Magelang",
+   "latitude": -7.47787,
+   "longitude": 110.218485
  },
  {
    "wilayah": "Surakarta",
@@ -906,7 +1206,10 @@
    "meninggal": 50,
    "luka_berat": 0,
    "luka_ringan": 852,
-   "kerugian": 293200000
+   "kerugian": 293200000,
+   "name": "Polres Kabupaten Surakarta",
+   "latitude": -7.5646136,
+   "longitude": 110.8053048
  },
  {
    "wilayah": "Salatiga",
@@ -915,7 +1218,10 @@
    "meninggal": 33,
    "luka_berat": 0,
    "luka_ringan": 264,
-   "kerugian": 149500000
+   "kerugian": 149500000,
+   "name": "Polres Kabupaten Salatiga",
+   "latitude": -7.3296348,
+   "longitude": 110.4997889
  },
  {
    "wilayah": "Kota Semarang",
@@ -924,7 +1230,10 @@
    "meninggal": 121,
    "luka_berat": 1,
    "luka_ringan": 539,
-   "kerugian": 427950000
+   "kerugian": 427950000,
+   "name": "Polres Kota Semarang",
+   "latitude": -7.1168672,
+   "longitude": 110.4130675
  },
  {
    "wilayah": "Kota Pekalongan",
@@ -933,7 +1242,10 @@
    "meninggal": 25,
    "luka_berat": 2,
    "luka_ringan": 117,
-   "kerugian": 13400000
+   "kerugian": 13400000,
+   "name": "Polres Kota Pekalongan",
+   "latitude": -6.8813721,
+   "longitude": 109.6718825
  },
  {
    "wilayah": "Kota Tegal",
@@ -942,7 +1254,10 @@
    "meninggal": 17,
    "luka_berat": 0,
    "luka_ringan": 254,
-   "kerugian": 56200000
+   "kerugian": 56200000,
+   "name": "Polres Kota Tegal",
+   "latitude": -6.8553832,
+   "longitude": 109.1374183
  },
  {
    "wilayah": "Cilacap",
@@ -951,7 +1266,10 @@
    "meninggal": 183,
    "luka_berat": 2,
    "luka_ringan": 1057,
-   "kerugian": 714600000
+   "kerugian": 714600000,
+   "name": "Polres Kabupaten Cilacap",
+   "latitude": -7.692972,
+   "longitude": 109.025262
  },
  {
    "wilayah": "Banyumas",
@@ -960,7 +1278,10 @@
    "meninggal": 216,
    "luka_berat": 13,
    "luka_ringan": 1816,
-   "kerugian": 1121220000
+   "kerugian": 1121220000,
+   "name": "Polres Kabupaten Banyumas",
+   "latitude": -7.403973,
+   "longitude": 109.2317552
  },
  {
    "wilayah": "Purbalingga",
@@ -969,7 +1290,10 @@
    "meninggal": 56,
    "luka_berat": 0,
    "luka_ringan": 508,
-   "kerugian": 187500000
+   "kerugian": 187500000,
+   "name": "Polres Kabupaten Purbalingga",
+   "latitude": -7.3991943,
+   "longitude": 109.3496587
  },
  {
    "wilayah": "Banjarnegara",
@@ -978,7 +1302,10 @@
    "meninggal": 60,
    "luka_berat": 5,
    "luka_ringan": 598,
-   "kerugian": 388500000
+   "kerugian": 388500000,
+   "name": "Polres Kabupaten Banjarnegara",
+   "latitude": -7.3967058,
+   "longitude": 109.7002658
  },
  {
    "wilayah": "Kebumen",
@@ -987,7 +1314,10 @@
    "meninggal": 129,
    "luka_berat": 0,
    "luka_ringan": 760,
-   "kerugian": 157685000
+   "kerugian": 157685000,
+   "name": "Polres Kabupaten Kebumen",
+   "latitude": -7.6767372,
+   "longitude": 109.6701049
  },
  {
    "wilayah": "Purworejo",
@@ -996,7 +1326,10 @@
    "meninggal": 98,
    "luka_berat": 0,
    "luka_ringan": 540,
-   "kerugian": 357300000
+   "kerugian": 357300000,
+   "name": "Polres Kabupaten Purworejo",
+   "latitude": -7.7268155,
+   "longitude": 109.9707674
  },
  {
    "wilayah": "Wonosobo",
@@ -1005,7 +1338,10 @@
    "meninggal": 62,
    "luka_berat": 2,
    "luka_ringan": 316,
-   "kerugian": 187500000
+   "kerugian": 187500000,
+   "name": "Polres Kabupaten Wonosobo",
+   "latitude": -7.3685105,
+   "longitude": 109.8993687
  },
  {
    "wilayah": "Magelang",
@@ -1014,7 +1350,10 @@
    "meninggal": 164,
    "luka_berat": 2,
    "luka_ringan": 912,
-   "kerugian": 319920000
+   "kerugian": 319920000,
+   "name": "Polres Kabupaten Magelang",
+   "latitude": -7.5865054,
+   "longitude": 110.219009
  },
  {
    "wilayah": "Boyolali",
@@ -1023,7 +1362,10 @@
    "meninggal": 109,
    "luka_berat": 1,
    "luka_ringan": 1335,
-   "kerugian": 250770000
+   "kerugian": 250770000,
+   "name": "Polres Kabupaten Boyolali",
+   "latitude": -7.5381564,
+   "longitude": 110.6240389
  },
  {
    "wilayah": "Klaten",
@@ -1032,7 +1374,10 @@
    "meninggal": 148,
    "luka_berat": 5,
    "luka_ringan": 2029,
-   "kerugian": 1314070000
+   "kerugian": 1314070000,
+   "name": "Polres Kabupaten Klaten",
+   "latitude": -7.703691,
+   "longitude": 110.6143606
  },
  {
    "wilayah": "Sukoharjo",
@@ -1041,7 +1386,10 @@
    "meninggal": 103,
    "luka_berat": 3,
    "luka_ringan": 1332,
-   "kerugian": 784250000
+   "kerugian": 784250000,
+   "name": "Polres Kabupaten Sukoharjo",
+   "latitude": -7.6752785,
+   "longitude": 110.8274124
  },
  {
    "wilayah": "Wonogiri",
@@ -1050,7 +1398,10 @@
    "meninggal": 77,
    "luka_berat": 0,
    "luka_ringan": 830,
-   "kerugian": 300400000
+   "kerugian": 300400000,
+   "name": "Polres Kabupaten Wonogiri",
+   "latitude": -7.831353,
+   "longitude": 110.9163931
  },
  {
    "wilayah": "Karanganyar",
@@ -1059,7 +1410,10 @@
    "meninggal": 112,
    "luka_berat": 2,
    "luka_ringan": 1251,
-   "kerugian": 534000000
+   "kerugian": 534000000,
+   "name": "Polres Kabupaten Karanganyar",
+   "latitude": -7.5957043,
+   "longitude": 110.9457089
  },
  {
    "wilayah": "Sragen",
@@ -1068,7 +1422,10 @@
    "meninggal": 117,
    "luka_berat": 0,
    "luka_ringan": 1066,
-   "kerugian": 1026550000
+   "kerugian": 1026550000,
+   "name": "Polres Kabupaten Sragen",
+   "latitude": -7.430586,
+   "longitude": 111.0259961
  },
  {
    "wilayah": "Grobogan",
@@ -1077,7 +1434,10 @@
    "meninggal": 122,
    "luka_berat": 0,
    "luka_ringan": 565,
-   "kerugian": 124850000
+   "kerugian": 124850000,
+   "name": "Polres Kabupaten Grobogan",
+   "latitude": -7.094901,
+   "longitude": 110.9091882
  },
  {
    "wilayah": "Blora",
@@ -1086,7 +1446,10 @@
    "meninggal": 79,
    "luka_berat": 2,
    "luka_ringan": 396,
-   "kerugian": 428500000
+   "kerugian": 428500000,
+   "name": "Polres Kabupaten Blora",
+   "latitude": -6.9718862,
+   "longitude": 111.458534
  },
  {
    "wilayah": "Rembang",
@@ -1095,7 +1458,10 @@
    "meninggal": 87,
    "luka_berat": 0,
    "luka_ringan": 392,
-   "kerugian": 406750000
+   "kerugian": 406750000,
+   "name": "Polres Kabupaten Rembang",
+   "latitude": -6.7343985,
+   "longitude": 111.3546571
  },
  {
    "wilayah": "Pati",
@@ -1104,7 +1470,10 @@
    "meninggal": 195,
    "luka_berat": 0,
    "luka_ringan": 1248,
-   "kerugian": 877500000
+   "kerugian": 877500000,
+   "name": "Polres Kabupaten Pati",
+   "latitude": -6.7405347,
+   "longitude": 111.0331274
  },
  {
    "wilayah": "Kudus",
@@ -1113,7 +1482,10 @@
    "meninggal": 85,
    "luka_berat": 2,
    "luka_ringan": 914,
-   "kerugian": 372300000
+   "kerugian": 372300000,
+   "name": "Polres Kabupaten Kudus",
+   "latitude": -6.8029235,
+   "longitude": 110.9283928
  },
  {
    "wilayah": "Jepara",
@@ -1122,7 +1494,10 @@
    "meninggal": 116,
    "luka_berat": 0,
    "luka_ringan": 453,
-   "kerugian": 268500000
+   "kerugian": 268500000,
+   "name": "Polres Kabupaten Jepara",
+   "latitude": -6.5969402,
+   "longitude": 110.6660148
  },
  {
    "wilayah": "Demak",
@@ -1131,7 +1506,10 @@
    "meninggal": 126,
    "luka_berat": 5,
    "luka_ringan": 582,
-   "kerugian": 243500000
+   "kerugian": 243500000,
+   "name": "Polres Kabupaten Demak",
+   "latitude": -6.9092815,
+   "longitude": 110.6192784
  },
  {
    "wilayah": "Semarang",
@@ -1140,7 +1518,10 @@
    "meninggal": 146,
    "luka_berat": 1,
    "luka_ringan": 563,
-   "kerugian": 341900000
+   "kerugian": 341900000,
+   "name": "Polres Kabupaten Semarang",
+   "latitude": -7.1169008,
+   "longitude": 110.4131544
  },
  {
    "wilayah": "Temanggung",
@@ -1149,7 +1530,10 @@
    "meninggal": 68,
    "luka_berat": 6,
    "luka_ringan": 360,
-   "kerugian": 586200000
+   "kerugian": 586200000,
+   "name": "Polres Kabupaten Temanggung",
+   "latitude": -7.3362835,
+   "longitude": 110.2048636
  },
  {
    "wilayah": "Kendal",
@@ -1158,7 +1542,10 @@
    "meninggal": 127,
    "luka_berat": 1,
    "luka_ringan": 411,
-   "kerugian": 220650000
+   "kerugian": 220650000,
+   "name": "Polres Kabupaten Kendal",
+   "latitude": -6.9252631,
+   "longitude": 110.2074784
  },
  {
    "wilayah": "Batang",
@@ -1167,7 +1554,10 @@
    "meninggal": 138,
    "luka_berat": 0,
    "luka_ringan": 470,
-   "kerugian": 1293000000
+   "kerugian": 1293000000,
+   "name": "Polres Kabupaten Batang",
+   "latitude": -6.9182845,
+   "longitude": 109.7299467
  },
  {
    "wilayah": "Pekalongan",
@@ -1176,7 +1566,10 @@
    "meninggal": 52,
    "luka_berat": 3,
    "luka_ringan": 164,
-   "kerugian": 289300000
+   "kerugian": 289300000,
+   "name": "Polres Kabupaten Pekalongan",
+   "latitude": -7.0266575,
+   "longitude": 109.5929743
  },
  {
    "wilayah": "Pemalang",
@@ -1185,7 +1578,10 @@
    "meninggal": 119,
    "luka_berat": 16,
    "luka_ringan": 572,
-   "kerugian": 642050000
+   "kerugian": 642050000,
+   "name": "Polres Kabupaten Pemalang",
+   "latitude": -6.8938304,
+   "longitude": 109.4057015
  },
  {
    "wilayah": "Tegal",
@@ -1194,7 +1590,10 @@
    "meninggal": 137,
    "luka_berat": 4,
    "luka_ringan": 643,
-   "kerugian": 656600000
+   "kerugian": 656600000,
+   "name": "Polres Kabupaten Tegal",
+   "latitude": -6.9822288,
+   "longitude": 109.1313864
  },
  {
    "wilayah": "Brebes",
@@ -1203,7 +1602,10 @@
    "meninggal": 197,
    "luka_berat": 1,
    "luka_ringan": 913,
-   "kerugian": 1098470000
+   "kerugian": 1098470000,
+   "name": "Polres Kabupaten Brebes",
+   "latitude": -6.8748682,
+   "longitude": 109.0512026
  },
  {
    "wilayah": "Kota Magelang",
@@ -1212,7 +1614,10 @@
    "meninggal": 22,
    "luka_berat": 1,
    "luka_ringan": 281,
-   "kerugian": 36950000
+   "kerugian": 36950000,
+   "name": "Polres Kota Magelang",
+   "latitude": -7.47787,
+   "longitude": 110.218485
  },
  {
    "wilayah": "Surakarta",
@@ -1221,7 +1626,10 @@
    "meninggal": 53,
    "luka_berat": 0,
    "luka_ringan": 947,
-   "kerugian": 331700000
+   "kerugian": 331700000,
+   "name": "Polres Kabupaten Surakarta",
+   "latitude": -7.5646136,
+   "longitude": 110.8053048
  },
  {
    "wilayah": "Salatiga",
@@ -1230,7 +1638,10 @@
    "meninggal": 48,
    "luka_berat": 0,
    "luka_ringan": 293,
-   "kerugian": 171250000
+   "kerugian": 171250000,
+   "name": "Polres Kabupaten Salatiga",
+   "latitude": -7.3296348,
+   "longitude": 110.4997889
  },
  {
    "wilayah": "Kota Semarang",
@@ -1239,7 +1650,10 @@
    "meninggal": 147,
    "luka_berat": 0,
    "luka_ringan": 931,
-   "kerugian": 716800000
+   "kerugian": 716800000,
+   "name": "Polres Kota Semarang",
+   "latitude": -7.1168672,
+   "longitude": 110.4130675
  },
  {
    "wilayah": "Kota Pekalongan",
@@ -1248,7 +1662,10 @@
    "meninggal": 21,
    "luka_berat": 0,
    "luka_ringan": 104,
-   "kerugian": 11650000
+   "kerugian": 11650000,
+   "name": "Polres Kota Pekalongan",
+   "latitude": -6.8813721,
+   "longitude": 109.6718825
  },
  {
    "wilayah": "Kota Tegal",
@@ -1257,6 +1674,9 @@
    "meninggal": 31,
    "luka_berat": 0,
    "luka_ringan": 295,
-   "kerugian": 73750000
+   "kerugian": 73750000,
+   "name": "Polres Kota Tegal",
+   "latitude": -6.8553832,
+   "longitude": 109.1374183
  }
 ]

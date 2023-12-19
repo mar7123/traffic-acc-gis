@@ -2,19 +2,20 @@
 
 import Loader from "@/components/common/Loader";
 import ViewPanelComponent from "./ViewPanelComponent";
-import { MapContainer, TileLayer, GeoJSON, Popup } from "react-leaflet";
+import ReportPanelComponent from "./ReportPanelComponent";
+import { useSearchParams } from 'next/navigation'
+import { MapContainer, TileLayer, GeoJSON, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import MarkerIcon from "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/leaflet.css";
 import { ChangeEvent, useEffect, useState } from "react";
-import ReportPanelComponent from "./ReportPanelComponent";
+import { GeoLocation, GeoData } from "@prisma/client";
 
-interface Geolocs {
-    id: String,
-    geoId: number,
-    geoId2?: number,
-    name: string,
-    name2?: string,
+type GeoLocationMod = Omit<GeoLocation, 'geojs'> & {
+    geojs: GeoJSON.GeoJsonObject
+}
+
+interface Geolocs extends GeoLocationMod {
     geojs: GeoJSON.GeoJsonObject,
     color?: string,
     agregate: {
@@ -23,25 +24,19 @@ interface Geolocs {
             jumlah_kecelakaan: number,
         }
     }[],
-    geodatas: GeoDatas[]
+    geodatas: GeoData[]
 }
-interface GeoDatas {
-    id: String,
-    wilayah: string,
-    tahun: number,
-    jumlah_kecelakaan: number,
-    meninggal: number,
-    luka_berat: number,
-    luka_ringan: number,
-    kerugian: number,
-}
+
 const MapComponent = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [geolocs, setGeolocs] = useState<Geolocs[]>([]);
-    const [year, setYear] = useState<{ selected: number, yearDD: { tahun: number }[] }>({
+    const [markerRef, setMarkerRef] = useState<L.Marker<any>>(new L.Marker([0, 0]));
+    const [year, setYear] = useState<{ selected: number, yearDD: { _id: number }[] }>({
         selected: 0,
         yearDD: []
     });
+    const searchParams = useSearchParams()
+    const mode = searchParams.get('mode');
     const [filters, setFilters] = useState<{
         count: {
             data: number,
@@ -80,7 +75,7 @@ const MapComponent = () => {
             val: 0,
             exist: false,
         },
-        mode: "view",
+        mode: mode == "report" ? mode : "view",
         toggle: true
     });
 
@@ -105,6 +100,28 @@ const MapComponent = () => {
             n: Number(target.value),
             toggle: !filters.toggle
         });
+    }
+
+    const MarkerOnClick = () => {
+        const map = useMapEvents({
+            click: (e) => {
+                markerRef.remove();
+                const { lat, lng } = e.latlng;
+                const marker = L.marker([lat, lng],
+                    {
+                        icon: L.icon({
+                            iconUrl: MarkerIcon.src,
+                            iconRetinaUrl: MarkerIcon.src,
+                            iconSize: [25, 41],
+                            iconAnchor: [12.5, 41],
+                            popupAnchor: [0, -41],
+                        }),
+                    });
+                setMarkerRef(marker);
+                marker.addTo(map);
+            }
+        });
+        return null;
     }
 
     const mean = (
@@ -255,8 +272,8 @@ const MapComponent = () => {
             const yearDB = await fetch('/api/geodata/year', {
                 method: "GET",
             }).then(async (year_res) => {
-                const { data: yearjson }: { data: { tahun: number }[] } = await year_res.json()
-                const year_q = year.selected == 0 ? yearjson[0].tahun : year.selected;
+                const { data: yearjson }: { data: { _id: number }[] } = await year_res.json()
+                const year_q = year.selected == 0 ? yearjson[0]._id : year.selected;
                 setYear({ selected: year_q, yearDD: yearjson });
                 const res = await fetch('/api/geoloc?' + new URLSearchParams({
                     year: year_q.toString(),
@@ -351,7 +368,7 @@ const MapComponent = () => {
                         }
                         onEachFeature={function (feature, layer) {
                             let sumstr = "";
-                            item.geodatas?.forEach(elem => sumstr += elem.wilayah + " " + item.agregate[0]?._sum.jumlah_kecelakaan + " accident(s)<br />")
+                            sumstr += item.name + " " + item.agregate[0]?._sum.jumlah_kecelakaan + " accident(s)<br />";
                             const popUpContent = (`<Popup>
                                 ${sumstr}
                             </Popup>`);
@@ -365,21 +382,27 @@ const MapComponent = () => {
                             opacity: 1,
                             color: "black"
                         }} />)
-                }) : (null)}
+                }) : (
+                    <MarkerOnClick />
+                )}
             </MapContainer>
             <div className="fixed right-10 top-50 z-1200 flex flex-col items-center max-w-1/2 w-[22vw] h-1/2 bg-gray-100 shadow-lg rounded text-black ">
-                <div className="w-full grid grid-cols-1 content-center">
+                <div className="h-full w-full grid grid-cols-1 content-start">
                     {filters.mode == "view" ? (
                         <ViewPanelComponent filters={filters} year={year} selectYear={selectYear} selectN={selectN} />
                     ) : (
-                        <ReportPanelComponent year={year} selectYear={selectYear} />
+                        <ReportPanelComponent markerRef={markerRef} />
                     )}
                 </div>
             </div>
             <div className="fixed bottom-2 z-1200 flex flex-col items-center max-w-1/2 w-fit h-[30px] bg-gray-700 shadow-lg rounded text-black">
                 <div className="w-full h-full grid grid-cols-2 text-white">
                     <div className="w-[70px] h-full flex flex-col items-center relative justify-self-center">
-                        <button className={"absolute w-[50px] h-[50px] flex flex-col items-center bg-sky-400 rounded-full shadow-md " + (filters.mode == "view" ? "bottom-4" : "bottom-3")} onClick={() => { setFilters({ ...filters, n: 0, mode: "view", toggle: !filters.toggle }) }}>
+                        <button className={"absolute w-[50px] h-[50px] flex flex-col items-center bg-sky-400 rounded-full shadow-md " + (filters.mode == "view" ? "bottom-4" : "bottom-3")} onClick={() => {
+                            markerRef.remove();
+                            setFilters({ ...filters, n: 0, mode: "view", toggle: !filters.toggle });
+                            window.history.replaceState("", "", "/map?mode=view");
+                        }}>
                             <svg width="25px" height="25px" className="h-full" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
                                 <g id="SVGRepo_bgCarrier" strokeWidth="0">
                                 </g>
@@ -394,7 +417,10 @@ const MapComponent = () => {
                         <span className={"absolute bottom-0 font-black " + (filters.mode == "view" ? "" : "hidden")}>.</span>
                     </div>
                     <div className="w-full h-full flex flex-col items-center relative justify-self-center">
-                        <button className={"absolute w-[50px] h-[50px] flex flex-col items-center bg-green-400 rounded-full shadow-md " + (filters.mode == "report" ? "bottom-4" : "bottom-3")} onClick={() => { setFilters({ ...filters, mode: "report" }) }}>
+                        <button className={"absolute w-[50px] h-[50px] flex flex-col items-center bg-green-400 rounded-full shadow-md " + (filters.mode == "report" ? "bottom-4" : "bottom-3")} onClick={() => {
+                            setFilters({ ...filters, mode: "report" });
+                            window.history.replaceState("", "", "/map?mode=report");
+                        }}>
                             <svg width="18px" height="18px" className="h-full" viewBox="0 -0.5 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" fill="#ffffff" stroke="#ffffff">
                                 <g id="SVGRepo_bgCarrier" strokeWidth="0">
                                 </g>

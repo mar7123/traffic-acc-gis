@@ -5,22 +5,17 @@ import { Button, Dropdown, Label, Table, TextInput } from 'flowbite-react';
 import Link from "next/link";
 import { Pagination } from 'flowbite-react';
 import { useEffect, useState } from "react";
+import { GeoData } from "@prisma/client";
 
-interface GeoDatas {
-    id: String,
-    wilayah: string,
-    tahun: number,
-    jumlah_kecelakaan: number,
-    meninggal: number,
-    luka_berat: number,
-    luka_ringan: number,
-    kerugian: number,
+type GeoDataMod = Omit<GeoData, 'datetime_crash'> & {
+    datetime_crash: string,
 }
+
 function DataComponent() {
     const [loading, setLoading] = useState<boolean>(true);
 
     // Fetch Data
-    const [geodatas, setGeodatas] = useState<{ data: GeoDatas[], count: number }>({ data: [], count: 0 });
+    const [geodatas, setGeodatas] = useState<{ data: GeoDataMod[], count: number }>({ data: [], count: 0 });
 
     // Search, Pagination, Take
     const [currentFilter, setCurrentFilter] = useState({
@@ -53,7 +48,7 @@ function DataComponent() {
         }), {
             method: "GET",
         })
-        const { data, count } = await res.json()
+        const { data, count }: { data: GeoDataMod[], count: number } = await res.json()
         setGeodatas({ data: data, count: count });
         setLoading(false);
     }
@@ -123,26 +118,26 @@ function DataComponent() {
                             <Table striped>
                                 <Table.Head>
                                     <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Wilayah</Table.HeadCell>
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Tahun</Table.HeadCell>
+                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Nama</Table.HeadCell>
+                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Waktu</Table.HeadCell>
+                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Latitude</Table.HeadCell>
+                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Longitude</Table.HeadCell>
                                     <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Jumlah Kecelakaan</Table.HeadCell>
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Meninggal</Table.HeadCell>
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Luka Berat</Table.HeadCell>
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Luka Ringan</Table.HeadCell>
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Kerugian</Table.HeadCell>
                                     <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Action</Table.HeadCell>
                                 </Table.Head>
                                 <Table.Body className="divide-y">
-                                    {geodatas.data?.map((item: GeoDatas, key: number) => (
+                                    {geodatas.data?.map((item: GeoDataMod, key: number) => (
                                         <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" key={key}>
                                             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                                                 {item.wilayah}
                                             </Table.Cell>
-                                            <Table.Cell>{item.tahun}</Table.Cell>
+                                            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                                {item.name}
+                                            </Table.Cell>
+                                            <Table.Cell>{item.datetime_crash}</Table.Cell>
+                                            <Table.Cell>{item.latitude}</Table.Cell>
+                                            <Table.Cell>{item.longitude}</Table.Cell>
                                             <Table.Cell>{item.jumlah_kecelakaan}</Table.Cell>
-                                            <Table.Cell>{item.meninggal}</Table.Cell>
-                                            <Table.Cell>{item.luka_berat}</Table.Cell>
-                                            <Table.Cell>{item.luka_ringan}</Table.Cell>
-                                            <Table.Cell>{item.kerugian.toLocaleString()}</Table.Cell>
                                             <Table.Cell>
                                                 <Link href={"/detaildata?id=" + item.id} className="hover:text-primary">
                                                     <svg
