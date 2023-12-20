@@ -43,7 +43,7 @@ function NavbarComponent({ scrollHeaderClick }: { scrollHeaderClick: () => void 
                         <div className='p-12'>
                             <h1 className="text-4xl xl:text-6xl font-bold text-white mb-4">Traffic Accident Risk Analysis</h1>
                             <p className="text-lg md:text-xl text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut </p>
-                            <Button type='submit' as='a' onClick={scrollHeaderClick} className="mt-4 py-1 bg-transparent hover:bg-white border-white hover:text-black w-full md:w-auto md:inline-block py-1 font-semibold text-white">
+                            <Button type='submit' color='mt-4 py-1 bg-transparent hover:bg-white border-white hover:text-black w-full md:w-auto md:inline-block py-1 font-semibold text-white' onClick={scrollHeaderClick} className="mt-4 py-1 bg-transparent hover:bg-white border-white border-2 hover:text-black w-full md:w-auto md:inline-block py-1 font-semibold text-white">
                                 Get Started
                             </Button>
                         </div>

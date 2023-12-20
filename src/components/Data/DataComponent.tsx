@@ -1,7 +1,7 @@
 'use client';
 
 import Loader from "@/components/common/Loader";
-import { Button, Dropdown, Label, Table, TextInput } from 'flowbite-react';
+import { Button, Dropdown, Label, Select, Table, TextInput } from 'flowbite-react';
 import Link from "next/link";
 import { Pagination } from 'flowbite-react';
 import { useEffect, useState } from "react";
@@ -81,7 +81,7 @@ function DataComponent() {
                         }
                     }} />
                 </div>
-                <Button type="submit" className="w-2/12 bg-black text-white" onClick={(e: any) => {
+                <Button type="submit" color="bg-black text-white hover:bg-opacity-80" className="w-2/12 bg-black text-white hover:bg-opacity-80" onClick={(e: any) => {
                     if (currentFilter.search == "") {
                         setCurrentFilter({ ...currentFilter, mode: "default", toggle: !currentFilter.toggle, page: 1 });
                         return;
@@ -93,23 +93,13 @@ function DataComponent() {
                 }}>Search</Button>
             </div>
             <div className="flex flex-col items-end h-fit w-full my-2 px-2">
-                <Dropdown label="Take" style={{ backgroundColor: "black", color: "white" }} dismissOnClick={false}>
-                    <li className="" onClick={() => setCurrentFilter({ ...currentFilter, take: 10, toggle: !currentFilter.toggle, page: 1 })}>
-                        <Button type="button" className={"flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-full dark:text-gray-200 dark:hover:bg-gray-600 focus:outline-none dark:hover:text-white dark:focus:bg-gray-600 dark:focus:text-white" + (currentFilter.take == 10 ? " text-white bg-black" : " text-gray-700 bg-white hover:bg-gray-100")} tabIndex={-1}>
-                            10
-                        </Button>
-                    </li>
-                    <li className="" onClick={() => setCurrentFilter({ ...currentFilter, take: 25, toggle: !currentFilter.toggle, page: 1 })}>
-                        <Button type="button" className={"flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-full dark:text-gray-200 dark:hover:bg-gray-600 focus:outline-none dark:hover:text-white dark:focus:bg-gray-600 dark:focus:text-white" + (currentFilter.take == 25 ? " text-white bg-black" : " text-gray-700 bg-white hover:bg-gray-100")} tabIndex={-1}>
-                            25
-                        </Button>
-                    </li>
-                    <li className="" onClick={() => setCurrentFilter({ ...currentFilter, take: 50, toggle: !currentFilter.toggle, page: 1 })}>
-                        <Button type="button" className={"flex items-center justify-start py-2 px-4 text-sm cursor-pointer w-full dark:text-gray-200 dark:hover:bg-gray-600 focus:outline-none dark:hover:text-white dark:focus:bg-gray-600 dark:focus:text-white" + (currentFilter.take == 50 ? " text-white bg-black" : " text-gray-700 bg-white hover:bg-gray-100")} tabIndex={-1}>
-                            50
-                        </Button>
-                    </li>
-                </Dropdown>
+                <Select id="year" value={currentFilter.take} onChange={(e) => {
+                    setCurrentFilter({ ...currentFilter, take: Number(e.target.value), toggle: !currentFilter.toggle, page: 1 });
+                }} required>
+                    <option key={10} value={10}>{10}</option>
+                    <option key={25} value={25}>{25}</option>
+                    <option key={50} value={50}>{50}</option>
+                </Select>
             </div>
             <div className="relative min-h-[96px] w-full">
                 {loading ? (<Loader />) : (
