@@ -22,7 +22,9 @@ export default async function RootLayout({
         <html lang="en">
             <body className={inter.className} suppressHydrationWarning={true}>
                 <SessionProvider session={session}>
-                    <RootLayoutComponent children={children} />
+                    <RootLayoutComponent >
+                        {children}
+                    </RootLayoutComponent>
                 </SessionProvider>
             </body>
         </html>
