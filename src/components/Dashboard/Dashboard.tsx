@@ -6,9 +6,9 @@ import CardDataStats from "../CardDataStats";
 
 // without this the component renders on server and throws an error
 import dynamic from "next/dynamic";
-const MapOne = dynamic(() => import("../Maps/MapOne"), {
-  ssr: false,
-});
+// const MapOne = dynamic(() => import("../Maps/MapOne"), {
+//   ssr: false,
+// });
 
 const Dashboard: React.FC = () => {
   return (

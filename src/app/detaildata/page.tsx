@@ -10,7 +10,6 @@ async function DetailData({
         if (res) {
             return (
                 <div className='min-h-fit h-full w-full lg:px-[15vw] sm:px-[7vw] lg:py-20 sm:py-10 bg-gray-100'>
-                    {/* <TextDetailData/> */}
                     <div className="text-left">
                         <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Detail Data</h1>
                         <p className="text-base md:text-lg text-gray-600 mb-6">
@@ -43,7 +42,6 @@ async function DetailData({
     }
     return (
         <div className='h-[3029px] w-full px-[7vw] bg-cover bg-top' style={{ backgroundImage: "url('/assets/bg/bg-landing.png')" }}>
-            {/* <TextDetailData/> */}
             <div className="text-left pl-15 mt-20 max-w-xl">
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">No Data</h1>
             </div>
