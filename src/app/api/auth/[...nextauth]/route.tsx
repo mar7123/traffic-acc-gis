@@ -1,12 +1,12 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 import { getUserByEmail } from "@/lib/prisma/users";
 import bcrypt from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { NextRequest } from "next/server";
 
-async function auth(req: NextApiRequest, res: NextApiResponse) {
+async function auth(req: NextRequest, res: any) {
     // Do whatever you want here, before the request is passed down to `NextAuth`
     const providers = [
         CredentialsProvider({
