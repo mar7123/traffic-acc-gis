@@ -369,7 +369,7 @@ const MapComponent = () => {
                         }
                         onEachFeature={function (feature, layer) {
                             let sumstr = "";
-                            sumstr += item.name + " " + item.agregate[0]?._sum.jumlah_kecelakaan + " accident(s)<br />";
+                            sumstr += item.name2 + " " + item.agregate[0]?._sum.jumlah_kecelakaan + " accident(s)<br />";
                             const popUpContent = (`<Popup>
                                 ${sumstr}
                             </Popup>`);
