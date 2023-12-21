@@ -1,22 +1,21 @@
-import Landing from './landing/page';
-import Dashboard from './dashboard/page';
+import DashboardComponent from "@/components/Dashboard/DashboardComponent";
+import LandingComponent from "@/components/LandingPage/LandingComponent";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth/next"
 
 export const metadata: Metadata = {
-    title: "TailAdmin | Next.js  Dashboard Template",
-    description: "This is Home Blog page for TailAdmin Next.js",
-    // other metadata
-};
+    title: 'TARGIS | Traffic Accident Risk GIS',
+    description: 'TARGIS is a geographic information system for capturing, storing, checking, and displaying data related to traffic accidents',
+}
 
 export default async function Home() {
     const session = await getServerSession();
     return (
         <>
             {session ? (
-                <Dashboard />
+                <DashboardComponent />
             ) : (
-                <Landing />
+                <LandingComponent />
             )}
         </>
     )

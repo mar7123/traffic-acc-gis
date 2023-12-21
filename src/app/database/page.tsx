@@ -1,10 +1,6 @@
 import { getServerSession } from "next-auth/next"
 import { redirect } from "next/navigation";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import WhiteButton from "@/components/Button/WhiteButton";
-import TableThree from "@/components/Tables/TableThree";
-
-
+import Breadcrumb from "@/components/Breadcrumbs/BreadcrumbComponent";
 import { Metadata } from "next";
 import DataComponent from "@/components/Data/DataComponent";
 export const metadata: Metadata = {
@@ -19,16 +15,9 @@ const TablesPage = async () => {
         redirect("/")
     }
     return (
-        <div className='flex flex-col items-center min-h-screen h-fit w-full lg:px-[15vw] sm:px-[7vw] lg:py-20 sm:py-10 bg-gray-100'>
-            <Breadcrumb pageName="Tables" />
-            <div className="flex justify-end mb-6">
-                <WhiteButton text="Tambah Data" href="/tables/add" />
-            </div>
-
+        <div className='flex flex-col items-center min-h-screen h-fit w-full lg:px-[10vw] sm:px-[5vw] lg:py-15 sm:py-10 bg-gray-100'>
+            <Breadcrumb pageName="Database" />
             <DataComponent />
-            <div className="flex flex-col gap-10">
-                <TableThree />
-            </div>
         </div>
     );
 };

@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 //   ssr: false,
 // });
 
-const Dashboard: React.FC = () => {
+const DashboardComponent: React.FC = () => {
   return (
     <>
   
@@ -101,11 +101,11 @@ const Dashboard: React.FC = () => {
         </CardDataStats>
       </div>
 
-      <div className="mt-4 grid grid-cols-6 w-full gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      {/* <div className="mt-4 grid grid-cols-6 w-full gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartOne /> 
-      </div>
+      </div> */}
     </>
   );
 };
 
-export default Dashboard;
+export default DashboardComponent;

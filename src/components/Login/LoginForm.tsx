@@ -1,8 +1,7 @@
 "use client"
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
+import { Button, Label, TextInput } from 'flowbite-react';
 import { useFormState } from "react-dom";
 import { LoginAction } from "./LoginAction";
 
@@ -14,7 +13,7 @@ function LoginForm() {
     const [state, loginFormAction] = useFormState(LoginAction, initialState);
     return (
         <>
-            <div className="h-full w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div className="h-full w-full max-h-fit rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div className="grid grid-cols-1 xl:grid-cols-2 h-full content-center">
                     <div className="hidden w-full xl:flex xl:flex-col xl:items-center justify-self-center xl:py-15 sm:py-5 lg:px-[10%] sm:px-[5%]">
                         <Link className="mb-5.5 inline-block" href="/">
