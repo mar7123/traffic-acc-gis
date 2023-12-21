@@ -105,8 +105,12 @@ function DataComponent() {
                     setCurrentFilter({ ...currentFilter, mode: "search", toggle: !currentFilter.toggle, page: 1 });
                 }}>Search</Button>
             </div>
-            <div className="flex  justify-between h-fit w-full my-2 px-2">
-                <Button color="bg-black text-white hover:bg-opacity-80" className="bg-black text-white hover:bg-opacity-80" onClick={() => router.push('/database/add')}>Add Data</Button>
+            <div className="flex justify-between h-fit w-full my-2 px-2">
+                {status == "authenticated" ? (
+                    <Button color="bg-black text-white hover:bg-opacity-80" className="bg-black text-white hover:bg-opacity-80" onClick={() => router.push('/database/add')}>Add Data</Button>
+                ) : (
+                    <div></div>
+                )}
                 <Select id="year" value={currentFilter.take} onChange={(e) => {
                     setCurrentFilter({ ...currentFilter, take: Number(e.target.value), toggle: !currentFilter.toggle, page: 1 });
                 }} required>

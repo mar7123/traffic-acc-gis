@@ -43,7 +43,7 @@ export default async function RootLayout({
                                 </>
                             ) : (
                                 <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-                                    <div className='bg-cover bg-black bg-top min-h-fit max-h-screen' style={{ backgroundImage: "url('/assets/bgpfp.jpg')" }}>
+                                    <div className='bg-cover bg-black bg-top min-h-fit max-h-screen' style={{ backgroundImage: "url('/assets/bg/bgpfp.jpg')" }}>
                                         <div className='flex flex-col h-full w-full backdrop-brightness-50 bg-black/30'>
                                             <Suspense fallback={<Loading />}>
                                                 <NavbarComponent />

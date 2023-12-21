@@ -47,11 +47,11 @@ async function DetailData({
         }
     }
     return (
-        <div className='h-[3029px] w-full px-[7vw] bg-cover bg-top' style={{ backgroundImage: "url('/assets/bg/bg-landing.png')" }}>
+        <div className='min-h-fit h-full w-full lg:px-[15vw] sm:px-[7vw] lg:py-15 sm:py-10 bg-gray-100'>
+            <Breadcrumb pageName={(data ? ("Database") : ("Data")) + "/Detail Data"} />
             <div className="text-left pl-15 mt-20 max-w-xl">
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">No Data</h1>
             </div>
-            {/* Konten halaman Anda akan ada di sini */}
         </div>
     );
 };
