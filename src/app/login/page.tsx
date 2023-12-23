@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth/next"
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 import LoginForm from "@/components/Login/LoginForm";
 
 export const metadata: Metadata = {
@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 const SignIn: React.FC = async () => {
     const data = await getServerSession();
     if (data) {
-        redirect("/")
+        permanentRedirect("/")
     }
     return (
-        <div className="min-h-screen w-full flex items-center lg:px-[15vw] sm:px-[7vw] py-40 bg-gray-100">
+        <div className="min-h-screen w-full flex flex-col items-center px-[4vw] sm:px-[7vw] lg:px-[15vw] bg-gray-100">
             <LoginForm />
         </div>
     );

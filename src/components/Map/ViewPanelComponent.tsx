@@ -60,7 +60,7 @@ const ViewPanelComponent = ({
                         </Select>
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="lg:w-20 sm:w-15 ">
+                        <div className="sm:w-10 lg:w-20 ">
                             <Label htmlFor="nval" value="n" />
                         </div>
                         <TextInput id="nval" type="number" value={filters.n} min={0.1} onChange={({ target }) => {
@@ -68,41 +68,50 @@ const ViewPanelComponent = ({
                         }} step={0.1} shadow />
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="h-full lg:w-20 sm:w-15">
+                        <div className="h-full sm:w-10 lg:w-20">
                             <div className="h-full w-1/2 bg-red-200 border-2 border-black">
                             </div>
                         </div>
                         <div className="mx-2">
-                            <Label htmlFor="mean" value={`High Risk (count : ${filters.count.high})`} />
+                            <Label value={`High Risk (count : ${filters.count.high})`} />
                             <span></span>
                         </div>
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="h-full lg:w-20 sm:w-15">
+                        <div className="h-full sm:w-10 lg:w-20">
                             <div className="h-full w-1/2 bg-yellow-200 border-2 border-black">
                             </div>
                         </div>
                         <div className="mx-2">
-                            <Label htmlFor="mean" value={`Moderate Risk (count : ${filters.count.med})`} />
+                            <Label className="truncate " value={`Moderate Risk (count : ${filters.count.med})`} />
                         </div>
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="h-full lg:w-20 sm:w-15">
+                        <div className="h-full sm:w-10 lg:w-20">
                             <div className="h-full w-1/2 bg-green-200 border-2 border-black">
                             </div>
                         </div>
                         <div className="mx-2">
-                            <Label htmlFor="mean" value={`Low Risk (count : ${filters.count.low})`} />
+                            <Label value={`Low Risk (count : ${filters.count.low})`} />
                         </div>
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="lg:w-20 sm:w-15 ">
+                        <div className="h-full sm:w-10 lg:w-20">
+                            <div className="h-full w-1/2 bg-blue-200 border-2 border-black">
+                            </div>
+                        </div>
+                        <div className="mx-2">
+                            <Label value={`No Data`} />
+                        </div>
+                    </div>
+                    <div className="flex items-center w-full">
+                        <div className="sm:w-10 lg:w-20 ">
                             <Label htmlFor="mean" value="Mean" />
                         </div>
                         <TextInput id="mean" type="number" value={filters.mean} shadow disabled />
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="lg:w-20 sm:w-15 ">
+                        <div className="sm:w-10 lg:w-20 ">
                             <Label htmlFor="std" value="Std" />
                         </div>
                         <TextInput id="std" type="number" value={filters.std} shadow disabled />

@@ -1,5 +1,3 @@
-import { getServerSession } from "next-auth/next"
-import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import dynamic from 'next/dynamic'
 
@@ -12,10 +10,6 @@ export const metadata: Metadata = {
 };
 
 const TambahForm = async () => {
-    const data = await getServerSession();
-    if (!data) {
-        redirect("/")
-    }
     return (
         <div className="w-full px-[7vw] pt-[4vw]">
             <AddForm />

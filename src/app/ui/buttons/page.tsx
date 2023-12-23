@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import Breadcrumb from "@/components/Breadcrumbs/BreadcrumbComponent";
 import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Buttons Page | Next.js E-commerce Dashboard Template",

@@ -1,12 +1,7 @@
-import { getServerSession } from "next-auth/next"
-import { redirect } from "next/navigation";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import WhiteButton from "@/components/Button/WhiteButton";
-import TableThree from "@/components/Tables/TableThree";
-
-
+import Breadcrumb from "@/components/Breadcrumbs/BreadcrumbComponent";
 import { Metadata } from "next";
 import DataComponent from "@/components/Data/DataComponent";
+
 export const metadata: Metadata = {
     title: "Tables Page | Next.js E-commerce Dashboard Template",
     description: "This is Tables page for TailAdmin Next.js",
@@ -14,20 +9,11 @@ export const metadata: Metadata = {
 };
 
 const TablesPage = async () => {
-    const data = await getServerSession();
-    if (!data) {
-        redirect("/")
-    }
     return (
-        <div className='flex flex-col items-center min-h-screen h-fit w-full lg:px-[15vw] sm:px-[7vw] lg:py-20 sm:py-10 bg-gray-100'>
-            <Breadcrumb pageName="Tables" />
-            <div className="flex justify-end mb-6">
-                <WhiteButton text="Tambah Data" href="/tables/add" />
-            </div>
-
-            <DataComponent />
-            <div className="flex flex-col gap-10">
-                <TableThree />
+        <div className='flex flex-col items-center min-h-screen h-fit w-full bg-gray-100'>
+            <div className='flex flex-col items-center max-w-screen-2xl mx-auto h-full w-full px-[4vw] sm:px-[7vw] lg:px-[15vw] py-5 sm:py-10 lg:py-15'>
+                <Breadcrumb pageName="Database" />
+                <DataComponent />
             </div>
         </div>
     );

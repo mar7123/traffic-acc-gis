@@ -8,7 +8,7 @@ export async function getGeoLocsPerYear(tahun: number) {
                     where: {
                         datetime_crash: {
                             gte: new Date(String(tahun) + "-01-01"),
-                            lte: new Date(String(tahun) + "-12-31"),
+                            lte: new Date(String(tahun + 1) + "-01-01"),
                         },
                     }
                 }
@@ -26,7 +26,7 @@ export async function getGeoLocsPerYear(tahun: number) {
                 },
                 datetime_crash: {
                     gte: new Date(String(tahun) + "-01-01"),
-                    lte: new Date(String(tahun + 1) + "-12-31"),
+                    lte: new Date(String(tahun + 1) + "-01-01"),
                 },
             }
         })
