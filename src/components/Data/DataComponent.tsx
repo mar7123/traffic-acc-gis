@@ -14,7 +14,7 @@ type GeoDataMod = Omit<GeoData, 'datetime_crash'> & {
 }
 
 function DataComponent() {
-    const { data: session, status } = useSession();
+    const { status } = useSession();
     const router = useRouter()
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -79,8 +79,8 @@ function DataComponent() {
 
     return (
         <>
-            <div className="flex max-w-full w-5/6 gap-2 my-2">
-                <div className="w-10/12">
+            <div className="flex max-w-full w-full sm:w-5/6 gap-2 my-2">
+                <div className="w-9/12">
                     <TextInput id="search-bar" type="text" placeholder="Search" value={currentFilter.search} onChange={({ target }) => { setCurrentFilter({ ...currentFilter, search: target.value }) }} onKeyDown={(e: any) => {
                         if (e.key == "Enter") {
                             if (currentFilter.search == "") {
@@ -94,7 +94,7 @@ function DataComponent() {
                         }
                     }} />
                 </div>
-                <Button type="submit" color="bg-black text-white hover:bg-opacity-80" className="w-2/12 bg-black text-white hover:bg-opacity-80" onClick={(e: any) => {
+                <Button type="submit" color="bg-black text-white hover:bg-opacity-80" className="w-3/12 bg-black text-white hover:bg-opacity-80" onClick={(e: any) => {
                     if (currentFilter.search == "") {
                         setCurrentFilter({ ...currentFilter, mode: "default", toggle: !currentFilter.toggle, page: 1 });
                         return;
@@ -103,7 +103,9 @@ function DataComponent() {
                         return;
                     }
                     setCurrentFilter({ ...currentFilter, mode: "search", toggle: !currentFilter.toggle, page: 1 });
-                }}>Search</Button>
+                }}>
+                    Search
+                </Button>
             </div>
             <div className="flex justify-between h-fit w-full my-2 px-2">
                 {status == "authenticated" ? (
@@ -124,7 +126,7 @@ function DataComponent() {
                     <>
                         <div className="overflow-x-auto my-2">
                             <Table striped>
-                                <Table.Head>
+                                <Table.Head >
                                     <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Wilayah</Table.HeadCell>
                                     <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Nama</Table.HeadCell>
                                     <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Waktu</Table.HeadCell>

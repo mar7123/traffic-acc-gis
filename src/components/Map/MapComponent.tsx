@@ -48,6 +48,8 @@ const MapComponent = () => {
         mean: number,
         std: number,
         n: number,
+        max: number,
+        min: number,
         upper: {
             val: number,
             exist: boolean
@@ -68,6 +70,8 @@ const MapComponent = () => {
         mean: 0,
         std: 0,
         n: 0,
+        max: 0,
+        min: 0,
         upper: {
             val: 0,
             exist: false,
@@ -161,7 +165,7 @@ const MapComponent = () => {
                     2);
             }
         });
-        if (calc.count.data != 0) {
+        if (calc.count.data > 1) {
             calc.std = Math.sqrt(sum / (calc.count.data - 1));
         }
     }
@@ -217,6 +221,7 @@ const MapComponent = () => {
         data: Geolocs[],
         calc_var: {
             count: {
+                data: number,
                 high: number,
                 med: number,
                 low: number
@@ -224,6 +229,8 @@ const MapComponent = () => {
             mean: number,
             std: number,
             n: number,
+            max: number,
+            min: number,
             upper: {
                 val: number,
                 exist: boolean
@@ -233,9 +240,10 @@ const MapComponent = () => {
                 exist: boolean
             }
         },
-        max: Geolocs,
-        min: Geolocs
     ) => {
+        if (calc_var.count.data <= 1) {
+            return data;
+        }
         let tries = 0;
         let temp = data;
         while ((!calc_var.upper.exist || !calc_var.lower.exist) && tries != 3) {
@@ -243,10 +251,10 @@ const MapComponent = () => {
             calc_var.lower.val = calc_var.mean - (calc_var.n * calc_var.std);
             temp = assignColor(data, calc_var);
             if (!calc_var.upper.exist || !calc_var.lower.exist) {
-                if (Math.abs(max.agregate[0]?._sum.jumlah_kecelakaan - calc_var.mean) < Math.abs(calc_var.mean - min.agregate[0]?._sum.jumlah_kecelakaan)) {
-                    calc_var.n = Math.abs(max.agregate[0]?._sum.jumlah_kecelakaan - calc_var.mean) / calc_var.std;
+                if (Math.abs(calc_var.max - calc_var.mean) < Math.abs(calc_var.mean - calc_var.min)) {
+                    calc_var.n = Math.abs(calc_var.max - calc_var.mean) / calc_var.std;
                 } else {
-                    calc_var.n = Math.abs(calc_var.mean - min.agregate[0]?._sum.jumlah_kecelakaan) / calc_var.std;
+                    calc_var.n = Math.abs(calc_var.mean - calc_var.min) / calc_var.std;
                 }
                 calc_var.n = (Math.floor(Number(calc_var.n) * 10) / 10 == undefined ? calc_var.n : Math.floor(Number(calc_var.n) * 10) / 10)
             }
@@ -293,37 +301,25 @@ const MapComponent = () => {
                     calc_var.lower.exist = false;
                     mean(data, calc_var);
                     std(data, calc_var);
-                    const max = data.reduce(function (prev, current) {
+                    calc_var.max = data.reduce(function (prev, current) {
                         if (prev.agregate.length == 1 && current.agregate.length == 1) {
                             return (prev && prev.agregate[0]?._sum.jumlah_kecelakaan > current.agregate[0]?._sum.jumlah_kecelakaan) ? prev : current
                         }
                         return current;
-                    })
-                    const min = data.reduce(function (prev, current) {
+                    }).agregate[0]._sum.jumlah_kecelakaan
+                    calc_var.min = data.reduce(function (prev, current) {
                         if (prev.agregate.length == 1 && current.agregate.length == 1) {
                             return (prev && prev.agregate[0]?._sum.jumlah_kecelakaan < current.agregate[0]?._sum.jumlah_kecelakaan) ? prev : current
                         }
                         return current;
-                    })
-                    const result = calculate(data, calc_var, max, min);
+                    }).agregate[0]._sum.jumlah_kecelakaan
+                    const result = calculate(data, calc_var);
                     setGeolocs(result);
                 })
             })
 
         } else {
-            const max = geolocs.reduce(function (prev, current) {
-                if (prev.agregate.length == 1 && current.agregate.length == 1) {
-                    return (prev && prev.agregate[0]?._sum.jumlah_kecelakaan > current.agregate[0]?._sum.jumlah_kecelakaan) ? prev : current
-                }
-                return current;
-            })
-            const min = geolocs.reduce(function (prev, current) {
-                if (prev.agregate.length == 1 && current.agregate.length == 1) {
-                    return (prev && prev.agregate[0]?._sum.jumlah_kecelakaan < current.agregate[0]?._sum.jumlah_kecelakaan) ? prev : current
-                }
-                return current;
-            })
-            const result = calculate(geolocs, filters, max, min);
+            const result = calculate(geolocs, filters);
             setGeolocs(result);
         }
         setLoading(false);
@@ -377,7 +373,7 @@ const MapComponent = () => {
                             // layer.bindTooltip(item.name2 != undefined ? item.name2 : "", { permanent: true, direction: "center" })
                         }}
                         pathOptions={{
-                            fillColor: item.color != undefined ? item.color : "blue",
+                            fillColor: item.color != undefined ? item.color : "#2563eb",
                             fillOpacity: 0.5,
                             weight: 1,
                             opacity: 1,
@@ -387,7 +383,7 @@ const MapComponent = () => {
                     <MarkerOnClick />
                 )}
             </MapContainer>
-            <div className="fixed right-10 top-50 z-1200 flex flex-col items-center max-w-1/2 w-[22vw] h-1/2 bg-gray-100 shadow-lg rounded text-black ">
+            <div className="fixed right-5 top-50 z-1200 flex flex-col items-center max-w-1/2 md:w-[30vw] lg:w-[25vw] h-1/2 bg-gray-100 shadow-lg rounded text-black ">
                 <div className="h-full w-full grid grid-cols-1 content-start">
                     {filters.mode == "view" ? (
                         <ViewPanelComponent filters={filters} year={year} selectYear={selectYear} selectN={selectN} />

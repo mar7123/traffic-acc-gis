@@ -8,8 +8,6 @@ import SessionProvider from '@/components/SessionProvider/SessionProvider';
 import RootSessionComponent from "@/components/RootLayout/RootSessionComponent";
 import NavbarComponent from "@/components/Navbar/NavbarComponent";
 import AdminNavbarComponent from "@/components/Navbar/AdminNavbarComponent";
-import { Suspense } from "react"
-import Loading from "./loading"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,21 +31,17 @@ export default async function RootLayout({
                             <RootSessionComponent />
                             {server_session ? (
                                 <>
-                                    <Suspense fallback={<Loading />}>
-                                        <AdminNavbarComponent server_session={server_session}>
-                                            <main id="main-component" className="flex flex-grow bg-white">
-                                                {children}
-                                            </main>
-                                        </AdminNavbarComponent>
-                                    </Suspense>
+                                    <AdminNavbarComponent server_session={server_session}>
+                                        <main id="main-component" className="flex flex-grow bg-white">
+                                            {children}
+                                        </main>
+                                    </AdminNavbarComponent>
                                 </>
                             ) : (
                                 <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
                                     <div className='bg-cover bg-black bg-top min-h-fit max-h-screen' style={{ backgroundImage: "url('/assets/bg/bgpfp.jpg')" }}>
                                         <div className='flex flex-col h-full w-full backdrop-brightness-50 bg-black/30'>
-                                            <Suspense fallback={<Loading />}>
                                                 <NavbarComponent />
-                                            </Suspense>
                                         </div>
                                     </div>
                                     <main id="main-component" className="flex flex-grow bg-white">
