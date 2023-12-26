@@ -53,11 +53,6 @@ const ReportPanelComponent = ({
 
     return (
         <>
-            <div className="bg-gray-900 py-2 px-4">
-                <span className="text-white text-md">
-                    Accident Report Panel
-                </span>
-            </div>
             {loading ? (<Loader />) : (
                 <div className="overflow-y-auto">
                     <div className="grid grid-cols-1 gap-3 py-2 px-4">

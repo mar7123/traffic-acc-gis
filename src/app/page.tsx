@@ -4,8 +4,8 @@ import { Metadata } from "next";
 import { getServerSession } from "next-auth/next"
 
 export const metadata: Metadata = {
-    title: 'TARGIS | Traffic Accident Risk GIS',
-    description: 'TARGIS is a geographic information system for capturing, storing, checking, and displaying data related to traffic accidents',
+    title: 'RISKA | Sistem Informasi Geografis untuk Pemetaan Risiko Kecelakaan',
+    description: 'RISKA adalah sistem informasi geografis yang memetakan data berkaitan dengan risiko kecelakaan',
 }
 
 export default async function Home() {

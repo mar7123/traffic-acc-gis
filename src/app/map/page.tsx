@@ -2,8 +2,8 @@ import dynamic from 'next/dynamic'
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: 'Map | TARGIS',
-    description: 'TARGIS is a geographic information system for capturing, storing, checking, and displaying data related to traffic accidents',
+    title: 'Map | RISKA',
+    description: 'RISKA adalah sistem informasi geografis yang memetakan data berkaitan dengan risiko kecelakaan',
 }
 
 const MapComp = dynamic(() => import('@/components/Map/MapComponent'), { ssr: false });

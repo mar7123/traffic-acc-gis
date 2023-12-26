@@ -40,11 +40,6 @@ const ViewPanelComponent = ({
 }) => {
     return (
         <>
-            <div className="bg-gray-900 py-2 px-4">
-                <span className="text-white text-md">
-                    Data View Panel
-                </span>
-            </div>
             <div className="overflow-y-auto">
                 <div className="grid grid-cols-1 gap-3 py-2 px-4">
                     <div className="w-full">
@@ -60,7 +55,7 @@ const ViewPanelComponent = ({
                         </Select>
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="sm:w-10 lg:w-20 ">
+                        <div className="w-10 lg:w-20 ">
                             <Label htmlFor="nval" value="n" />
                         </div>
                         <TextInput id="nval" type="number" value={filters.n} min={0.1} onChange={({ target }) => {
@@ -68,7 +63,7 @@ const ViewPanelComponent = ({
                         }} step={0.1} shadow />
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="h-full sm:w-10 lg:w-20">
+                        <div className="h-full w-10 lg:w-20">
                             <div className="h-full w-1/2 bg-red-200 border-2 border-black">
                             </div>
                         </div>
@@ -78,7 +73,7 @@ const ViewPanelComponent = ({
                         </div>
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="h-full sm:w-10 lg:w-20">
+                        <div className="h-full w-10 lg:w-20">
                             <div className="h-full w-1/2 bg-yellow-200 border-2 border-black">
                             </div>
                         </div>
@@ -87,7 +82,7 @@ const ViewPanelComponent = ({
                         </div>
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="h-full sm:w-10 lg:w-20">
+                        <div className="h-full w-10 lg:w-20">
                             <div className="h-full w-1/2 bg-green-200 border-2 border-black">
                             </div>
                         </div>
@@ -96,7 +91,7 @@ const ViewPanelComponent = ({
                         </div>
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="h-full sm:w-10 lg:w-20">
+                        <div className="h-full w-10 lg:w-20">
                             <div className="h-full w-1/2 bg-blue-200 border-2 border-black">
                             </div>
                         </div>
@@ -105,13 +100,13 @@ const ViewPanelComponent = ({
                         </div>
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="sm:w-10 lg:w-20 ">
+                        <div className="w-10 lg:w-20 ">
                             <Label htmlFor="mean" value="Mean" />
                         </div>
                         <TextInput id="mean" type="number" value={filters.mean} shadow disabled />
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="sm:w-10 lg:w-20 ">
+                        <div className="w-10 lg:w-20 ">
                             <Label htmlFor="std" value="Std" />
                         </div>
                         <TextInput id="std" type="number" value={filters.std} shadow disabled />

@@ -6,8 +6,8 @@ import { permanentRedirect } from "next/navigation";
 
 
 export const metadata: Metadata = {
-    title: 'Data | TARGIS',
-    description: 'TARGIS is a geographic information system for capturing, storing, checking, and displaying data related to traffic accidents',
+    title: 'Data | RISKA',
+    description: 'RISKA adalah sistem informasi geografis yang memetakan data berkaitan dengan risiko kecelakaan',
 }
 
 async function DBPage() {

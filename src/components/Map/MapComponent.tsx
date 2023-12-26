@@ -10,7 +10,7 @@ import MarkerIcon from "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/leaflet.css";
 import { ChangeEvent, useEffect, useState } from "react";
 import { GeoLocation, GeoData } from "@prisma/client";
-import { Tooltip } from "flowbite-react";
+import { Tooltip, Button } from "flowbite-react";
 
 type GeoLocationMod = Omit<GeoLocation, 'geojs'> & {
     geojs: GeoJSON.GeoJsonObject
@@ -28,16 +28,21 @@ interface Geolocs extends GeoLocationMod {
     geodatas: GeoData[]
 }
 
+const ViewMode = ['view', 'report'];
+type MapViewMode = typeof ViewMode[number];
+
 const MapComponent = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [geolocs, setGeolocs] = useState<Geolocs[]>([]);
     const [markerRef, setMarkerRef] = useState<L.Marker<any>>(new L.Marker([0, 0]));
+    const [showPanel, setShowPanel] = useState(true);
     const [year, setYear] = useState<{ selected: number, yearDD: { _id: number }[] }>({
         selected: 0,
         yearDD: []
     });
     const searchParams = useSearchParams()
     const mode = searchParams.get('mode');
+    const mode_val = mode ? mode : '';
     const [filters, setFilters] = useState<{
         count: {
             data: number,
@@ -58,7 +63,7 @@ const MapComponent = () => {
             val: number,
             exist: boolean
         },
-        mode: "view" | "report",
+        mode: MapViewMode,
         toggle: boolean
     }>({
         count: {
@@ -80,7 +85,7 @@ const MapComponent = () => {
             val: 0,
             exist: false,
         },
-        mode: mode == "report" ? mode : "view",
+        mode: ViewMode.indexOf(mode_val) !== -1 ? mode_val : "view",
         toggle: true
     });
 
@@ -383,23 +388,54 @@ const MapComponent = () => {
                     <MarkerOnClick />
                 )}
             </MapContainer>
-            <div className="fixed right-5 top-50 z-1200 flex flex-col items-center max-w-1/2 md:w-[30vw] lg:w-[25vw] h-1/2 bg-gray-100 shadow-lg rounded text-black ">
-                <div className="h-full w-full grid grid-cols-1 content-start">
-                    {filters.mode == "view" ? (
-                        <ViewPanelComponent filters={filters} year={year} selectYear={selectYear} selectN={selectN} />
-                    ) : (
-                        <ReportPanelComponent markerRef={markerRef} />
-                    )}
+            {showPanel ? (
+                <div className="fixed right-auto sm:right-[2vw] top-[25vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[400px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black ">
+                    <div className="h-full w-full grid grid-cols-1 content-start">
+                        {filters.mode == "view" ? (
+                            <>
+                                <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
+                                    <span className="text-white text-md">
+                                        Data View Panel
+                                    </span>
+                                    <Button type="submit" color="bg-transparent" className="w-fit bg-transparent" onClick={(e: any) => {
+                                        setShowPanel(false);
+                                    }}>
+                                        <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M23 4C23 2.34315 21.6569 1 20 1H8C6.34315 1 5 2.34315 5 4V5H4C2.34315 5 1 6.34315 1 8V20C1 21.6569 2.34315 23 4 23H16C17.6569 23 19 21.6569 19 20V19H20C21.6569 19 23 17.6569 23 16V4ZM19 17H20C20.5523 17 21 16.5523 21 16V4C21 3.44772 20.5523 3 20 3H8C7.44772 3 7 3.44772 7 4V5H16C17.6569 5 19 6.34315 19 8V17ZM16 7C16.5523 7 17 7.44772 17 8V20C17 20.5523 16.5523 21 16 21H4C3.44772 21 3 20.5523 3 20V8C3 7.44772 3.44772 7 4 7H16Z" fill="#ffffff"></path> </g></svg>
+                                    </Button>
+                                </div>
+                                <ViewPanelComponent filters={filters} year={year} selectYear={selectYear} selectN={selectN} />
+                            </>
+                        ) : (
+                            <>
+                                <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
+                                    <span className="text-white text-md">
+                                        Accident Report Panel
+                                    </span>
+                                    <Button type="submit" color="bg-transparent" className="w-fit bg-transparent" onClick={(e: any) => {
+                                        setShowPanel(false);
+                                    }}>
+                                        <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M23 4C23 2.34315 21.6569 1 20 1H8C6.34315 1 5 2.34315 5 4V5H4C2.34315 5 1 6.34315 1 8V20C1 21.6569 2.34315 23 4 23H16C17.6569 23 19 21.6569 19 20V19H20C21.6569 19 23 17.6569 23 16V4ZM19 17H20C20.5523 17 21 16.5523 21 16V4C21 3.44772 20.5523 3 20 3H8C7.44772 3 7 3.44772 7 4V5H16C17.6569 5 19 6.34315 19 8V17ZM16 7C16.5523 7 17 7.44772 17 8V20C17 20.5523 16.5523 21 16 21H4C3.44772 21 3 20.5523 3 20V8C3 7.44772 3.44772 7 4 7H16Z" fill="#ffffff"></path> </g></svg>
+                                    </Button>
+                                </div>
+                                <ReportPanelComponent markerRef={markerRef} />
+                            </>
+                        )}
+                    </div>
                 </div>
-            </div>
+            ) : (null)}
             <div className="fixed bottom-2 z-1200 flex flex-col items-center max-w-1/2 w-fit h-[30px] bg-gray-700 shadow-lg rounded text-black">
                 <div className="w-full h-full grid grid-cols-2 text-white">
                     <div className="w-[70px] h-full flex flex-col items-center relative justify-self-center">
-                        <Tooltip content="Data View" theme={{ target: "absolute w-[50px] h-[50px] flex flex-col items-center bg-sky-400 rounded-full shadow-md " + (filters.mode == "view" ? "bottom-4" : "bottom-3"), base: "absolute inline-block whitespace-nowrap z-10 rounded-lg py-2 px-3 text-sm font-medium shadow-sm" }}>
+                        <Tooltip content="Data View" theme={{ target: "absolute w-[50px] h-[50px] flex flex-col items-center bg-sky-400 rounded-full shadow-md " + ((filters.mode == "view" && showPanel) ? "bottom-4" : "bottom-3"), base: "absolute inline-block whitespace-nowrap z-10 rounded-lg py-2 px-3 text-sm font-medium shadow-sm" }}>
                             <button className="w-full h-full flex flex-col items-center" onClick={() => {
-                                markerRef.remove();
-                                setFilters({ ...filters, n: 0, mode: "view", toggle: !filters.toggle });
-                                window.history.replaceState("", "", "/map?mode=view");
+                                if (filters.mode != "view") {
+                                    markerRef.remove();
+                                    setFilters({ ...filters, n: 0, mode: "view", toggle: !filters.toggle });
+                                    window.history.replaceState("", "", "/map?mode=view");
+                                    setShowPanel(true);
+                                    return;
+                                }
+                                setShowPanel(!showPanel);
                             }}>
                                 <svg width="25px" height="25px" className="h-full" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
                                     <g id="SVGRepo_bgCarrier" strokeWidth="0">
@@ -413,13 +449,18 @@ const MapComponent = () => {
                                 </svg>
                             </button>
                         </Tooltip>
-                        <span className={"absolute bottom-0 font-black " + (filters.mode == "view" ? "" : "hidden")}>.</span>
+                        <span className={"absolute bottom-0 font-black " + ((filters.mode == "view" && showPanel) ? "" : "hidden")}>.</span>
                     </div>
                     <div className="w-full h-full flex flex-col items-center relative justify-self-center">
-                        <Tooltip content="Data Report" theme={{ target: "absolute w-[50px] h-[50px] flex flex-col items-center bg-green-400 rounded-full shadow-md " + (filters.mode == "report" ? "bottom-4" : "bottom-3"), base: "absolute inline-block whitespace-nowrap z-10 rounded-lg py-2 px-3 text-sm font-medium shadow-sm" }}>
+                        <Tooltip content="Data Report" theme={{ target: "absolute w-[50px] h-[50px] flex flex-col items-center bg-green-400 rounded-full shadow-md " + ((filters.mode == "report" && showPanel) ? "bottom-4" : "bottom-3"), base: "absolute inline-block whitespace-nowrap z-10 rounded-lg py-2 px-3 text-sm font-medium shadow-sm" }}>
                             <button className="w-full h-full flex flex-col items-center" onClick={() => {
-                                setFilters({ ...filters, mode: "report" });
-                                window.history.replaceState("", "", "/map?mode=report");
+                                if (filters.mode != "report") {
+                                    setFilters({ ...filters, mode: "report" });
+                                    window.history.replaceState("", "", "/map?mode=report");
+                                    setShowPanel(true);
+                                    return;
+                                }
+                                setShowPanel(!showPanel);
                             }}>
                                 <svg width="18px" height="18px" className="h-full" viewBox="0 -0.5 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" fill="#ffffff" stroke="#ffffff">
                                     <g id="SVGRepo_bgCarrier" strokeWidth="0">
@@ -444,7 +485,7 @@ const MapComponent = () => {
                                 </svg>
                             </button>
                         </Tooltip>
-                        <span className={"absolute bottom-0 font-black " + (filters.mode == "report" ? "" : "hidden")}>.</span>
+                        <span className={"absolute bottom-0 font-black " + ((filters.mode == "report" && showPanel) ? "" : "hidden")}>.</span>
                     </div>
                 </div>
             </div>
