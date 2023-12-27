@@ -44,7 +44,7 @@ const ViewPanelComponent = ({
                 <div className="grid grid-cols-1 gap-3 py-2 px-4">
                     <div className="w-full">
                         <div className="mb-2">
-                            <Label htmlFor="year" value="Select year" />
+                            <Label htmlFor="year" value="Pilih tahun" />
                         </div>
                         <Select id="year" value={year.selected} onChange={(e) => {
                             selectYear(e);
@@ -55,61 +55,61 @@ const ViewPanelComponent = ({
                         </Select>
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="w-10 lg:w-20 ">
+                        <div className="w-30 lg:w-35 ">
                             <Label htmlFor="nval" value="n" />
                         </div>
-                        <TextInput id="nval" type="number" value={filters.n} min={0.1} onChange={({ target }) => {
+                        <TextInput className="w-1/2 bg-white" id="nval" type="number" value={filters.n} min={0.1} onChange={({ target }) => {
                             selectN(target);
                         }} step={0.1} shadow />
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="h-full w-10 lg:w-20">
-                            <div className="h-full w-1/2 bg-red-200 border-2 border-black">
+                        <div className="h-full flex items-center w-5 lg:w-10">
+                            <div className="w-[15px] h-[15px] rounded-full bg-red-200 border-2 border-black">
                             </div>
                         </div>
                         <div className="mx-2">
-                            <Label value={`High Risk (count : ${filters.count.high})`} />
+                            <Label className="w-full block truncate" value={`Risiko Tinggi (jumlah : ${filters.count.high})`} />
                             <span></span>
                         </div>
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="h-full w-10 lg:w-20">
-                            <div className="h-full w-1/2 bg-yellow-200 border-2 border-black">
+                        <div className="h-full flex items-center w-5 lg:w-10">
+                            <div className="w-[15px] h-[15px] rounded-full bg-yellow-200 border-2 border-black">
                             </div>
                         </div>
                         <div className="mx-2">
-                            <Label className="truncate " value={`Moderate Risk (count : ${filters.count.med})`} />
+                            <Label className="w-full block truncate" value={`Risiko Sedang (jumlah : ${filters.count.med})`} />
                         </div>
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="h-full w-10 lg:w-20">
-                            <div className="h-full w-1/2 bg-green-200 border-2 border-black">
+                        <div className="h-full flex items-center w-5 lg:w-10">
+                            <div className="w-[15px] h-[15px] rounded-full bg-green-200 border-2 border-black">
                             </div>
                         </div>
                         <div className="mx-2">
-                            <Label value={`Low Risk (count : ${filters.count.low})`} />
+                            <Label className="w-full block truncate" value={`Risiko Rendah (jumlah : ${filters.count.low})`} />
                         </div>
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="h-full w-10 lg:w-20">
-                            <div className="h-full w-1/2 bg-blue-200 border-2 border-black">
+                        <div className="h-full flex items-center w-5 lg:w-10">
+                            <div className="w-[15px] h-[15px] rounded-full bg-blue-200 border-2 border-black">
                             </div>
                         </div>
                         <div className="mx-2">
-                            <Label value={`No Data`} />
+                            <Label className="w-full block truncate" value={`Tidak ada data`} />
                         </div>
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="w-10 lg:w-20 ">
-                            <Label htmlFor="mean" value="Mean" />
+                        <div className="w-30 lg:w-35 ">
+                            <Label className="w-full block truncate" htmlFor="mean" value="Rata-rata" />
                         </div>
-                        <TextInput id="mean" type="number" value={filters.mean} shadow disabled />
+                        <TextInput className="w-1/2 bg-white" id="mean" type="number" value={filters.mean} shadow disabled />
                     </div>
                     <div className="flex items-center w-full">
-                        <div className="w-10 lg:w-20 ">
-                            <Label htmlFor="std" value="Std" />
+                        <div className="w-30 lg:w-35">
+                            <Label className="w-full block truncate" htmlFor="std" value="Deviasi Standar" />
                         </div>
-                        <TextInput id="std" type="number" value={filters.std} shadow disabled />
+                        <TextInput className="w-1/2 bg-white" id="std" type="number" value={filters.std} shadow disabled />
                     </div>
                 </div>
             </div>

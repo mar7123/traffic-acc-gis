@@ -59,13 +59,14 @@ model User {
 // }
 
 model GeoLocation {
-    id       String    @id @default(auto()) @map("_id") @db.ObjectId
-    geoId    Int
-    geoId2   Int
-    name     String
-    name2    String
-    geojs    Json
-    geodatas GeoData[]
+    id         String    @id @default(auto()) @map("_id") @db.ObjectId
+    geoId      Int
+    geoId2     Int
+    name       String
+    name2      String
+    geojs      Json
+    geodatas   GeoData[]
+    georeports Reports[]
 }
 
 model GeoData {
@@ -75,6 +76,7 @@ model GeoData {
     name              String
     latitude          Float
     longitude         Float
+    geojs             Json
     wilayah           String
     datetime_crash    DateTime
     jumlah_kecelakaan Float
@@ -85,10 +87,13 @@ model GeoData {
 }
 
 model Reports {
-    id                String   @id @default(auto()) @map("_id") @db.ObjectId
+    id                String       @id @default(auto()) @map("_id") @db.ObjectId
+    geoloc_id         String?      @db.ObjectId
+    geoloc            GeoLocation? @relation(fields: [geoloc_id], references: [id], onDelete: SetNull)
     name              String
     latitude          Float
     longitude         Float
+    geojs             Json
     datetime_crash    DateTime
     jumlah_kecelakaan Float
     meninggal         Float

@@ -2,9 +2,16 @@ import { Metadata } from "next";
 import { permanentRedirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { editGeoData, getGeoDataByID } from "@/lib/prisma/geodata";
+import { GeoData } from "@prisma/client";
+
+type GeoDataMod = Omit<GeoData, 'id' | 'geoloc_id' | 'geojs' | 'latitude' | 'longitude' | 'datetime_crash' | 'wilayah'>
+interface GeoDataInput extends GeoDataMod {
+    datetime_crash: string
+}
+
 export const metadata: Metadata = {
-    title: "Form Layout Page | Next.js E-commerce Dashboard Template",
-    description: "This is Form Layout page for TailAdmin Next.js",
+    title: "Edit Form | TRASK",
+    description: "TRASK adalah sistem informasi geografis yang memetakan data berkaitan dengan risiko kecelakaan",
     // other metadata
 };
 
@@ -16,10 +23,11 @@ const EditFormPage = async ({
     async function editData(dataID: string, formData: FormData) {
         'use server'
 
-        const rawFormData = {
-            name: formData.get('nama'),
-            datetime_crash: new Date(String(formData.get('waktu_kecelakaan')?.toString())).toISOString(),
+        const rawFormData: GeoDataInput = {
+            name: formData.get('nama')?.toString() ?? "",
+            datetime_crash: new Date(formData.get('waktu_kecelakaan')?.toString() ?? "").toISOString(),
             jumlah_kecelakaan: Number(formData.get('jumlah_kecelakaan')?.toString()),
+            meninggal: Number(formData.get('meninggal')),
             luka_berat: Number(formData.get('luka_berat')),
             luka_ringan: Number(formData.get('luka_ringan')),
             kerugian: Number(formData.get('kerugian')),
@@ -93,6 +101,14 @@ const EditFormPage = async ({
                                             </label>
                                         </div>
                                         <input id="jumlah_kecelakaan" className="w-full" name="jumlah_kecelakaan" type="number" placeholder="Masukan jumlah kecelakaan" defaultValue={res.jumlah_kecelakaan} required />
+                                    </div>
+                                    <div>
+                                        <div className="mb-2 block">
+                                            <label className="text-md" htmlFor="meninggal" >
+                                                Meninggal
+                                            </label>
+                                        </div>
+                                        <input id="meninggal" className="w-full" name="meninggal" type="number" placeholder="Masukan jumlah korban meninggal" defaultValue={res.meninggal} required />
                                     </div>
                                     <div>
                                         <div className="mb-2 block">

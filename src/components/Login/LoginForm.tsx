@@ -22,7 +22,7 @@ function LoginForm() {
                 <div className="justify-self-center w-full py-3 xl:py-15 px-[5%] lg:px-[10%] ">
                     <form className="flex w-full flex-col gap-4" action={loginFormAction}>
                         <h2 className="text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                            Sign In to RISKA Admin
+                            Sign In to TRASK Admin
                         </h2>
 
                         <div>

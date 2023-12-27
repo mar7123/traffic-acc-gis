@@ -12,8 +12,8 @@ import AdminNavbarComponent from "@/components/Navbar/AdminNavbarComponent";
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-    title: 'RISKA | Sistem Informasi Geografis untuk Pemetaan Risiko Kecelakaan',
-    description: 'RISKA adalah sistem informasi geografis yang memetakan data berkaitan dengan risiko kecelakaan',
+    title: 'TRASK | Sistem Informasi Geografis untuk Pemetaan Risiko Kecelakaan',
+    description: 'TRASK adalah sistem informasi geografis yang memetakan data berkaitan dengan risiko kecelakaan',
 }
 
 export default async function RootLayout({

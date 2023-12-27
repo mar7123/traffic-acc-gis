@@ -2,30 +2,19 @@ import prisma from "../lib/prisma";
 import bcrypt from "bcrypt";
 import ind_kabkota from "./INDKabKota.json";
 import data_kecelakaan from "./data kecelakaan jawa tengah.json";
-import { Prisma } from "@prisma/client";
+import { Prisma, GeoLocation, GeoData, Reports } from "@prisma/client";
 // import { writeFileSync } from "fs";
 
-
-interface GeoDataInput {
-    name: string,
-    latitude: number,
-    longitude: number,
-    wilayah: string,
+type GeoLocInput = Omit<GeoLocation, 'id'> & {
+    geodatas: { create?: GeoDataInput[] },
+}
+type GeoDataInput = Omit<GeoData, 'id' | 'geoloc_id' | 'datetime_crash'> & {
     datetime_crash: string,
-    jumlah_kecelakaan: number,
-    meninggal: number,
-    luka_berat: number,
-    luka_ringan: number,
-    kerugian: number,
 }
-interface GeoLocInput {
-    geoId: number,
-    geoId2: number,
-    name: string,
-    name2: string,
-    geojs: Prisma.InputJsonValue
-    geodatas: { create?: GeoDataInput[] }
+type ReportsInput = Omit<Reports, 'id' | 'geoloc_id' | 'datetime_crash'> & {
+    datetime_crash: string,
 }
+
 /**
  * Polygon Provinsi
  * @returns 
@@ -61,6 +50,17 @@ function datakecjson() {
             name: item.name,
             latitude: item.latitude,
             longitude: item.longitude,
+            geojs: {
+                type: "Feature",
+                properties: {
+                    name: item.name,
+                    wilayah: item.wilayah
+                },
+                geometry: {
+                    type: "Point",
+                    coordinates: [item.longitude, item.latitude]
+                }
+            },
             wilayah: item.wilayah,
             datetime_crash: new Date(String(item.tahun) + "-12-31").toISOString(),
             jumlah_kecelakaan: item.jumlah_kecelakaan,
@@ -88,14 +88,17 @@ async function main() {
 
     // Drop Collection
     try {
-        const dropuser = await prisma.$runCommandRaw({
+        await prisma.$runCommandRaw({
             drop: "User",
         });
-        const dropgeoloc = await prisma.$runCommandRaw({
+        await prisma.$runCommandRaw({
             drop: "GeoLocation",
         });
-        const dropgeodata = await prisma.$runCommandRaw({
+        await prisma.$runCommandRaw({
             drop: "GeoData",
+        });
+        await prisma.$runCommandRaw({
+            drop: "Reports",
         });
     } catch (error: any) {
         // console.log(error);
@@ -103,7 +106,7 @@ async function main() {
 
     // Insert Account
     const rand1 = await bcrypt.genSalt(10);
-    const johndoe = await prisma.user.create({
+    await prisma.user.create({
         data: {
             email: 'johndoe19@email.com',
             name: 'John Doe',
@@ -112,7 +115,7 @@ async function main() {
         },
     })
     const rand2 = await bcrypt.genSalt(10);
-    const janedoe = await prisma.user.create({
+    await prisma.user.create({
         data: {
             email: 'janedoe19@email.com',
             name: 'Jane Doe',
@@ -123,13 +126,13 @@ async function main() {
 
     // Insert Geoloc and Geodata
     for (let i = 0; i < prismageoloc.length; i++) {
-        const gjs = await prisma.geoLocation.create({
+        await prisma.geoLocation.create({
             data: prismageoloc[i]
         });
     }
 
     // Build Geo Index
-    const geoidx = await prisma.$runCommandRaw({
+    await prisma.$runCommandRaw({
         createIndexes: "GeoLocation",
         indexes: [
             {
@@ -140,6 +143,99 @@ async function main() {
             }
         ]
     });
+    await prisma.$runCommandRaw({
+        createIndexes: "GeoData",
+        indexes: [
+            {
+                key: {
+                    "geojs.geometry": "2dsphere"
+                },
+                name: "geospat"
+            }
+        ]
+    });
+    const replng = 110.233370;
+    const replat = -7.535368;
+    const geopolyfind = await prisma.geoLocation.findRaw({
+        filter: {
+            "geojs.geometry": {
+                $geoIntersects: {
+                    $geometry: {
+                        type: "Point",
+                        coordinates: [replng, replat]
+                    }
+                }
+            }
+        }
+    }) as any;
+    await prisma.reports.create({
+        data: {
+            name: "example report",
+            latitude: replat,
+            longitude: replng,
+            geojs: {
+                type: "Feature",
+                properties: {
+                    name: "example report",
+                },
+                geometry: {
+                    type: "Point",
+                    coordinates: [replng, replat]
+                }
+            },
+            datetime_crash: new Date().toISOString(),
+            jumlah_kecelakaan: 1,
+            meninggal: 0,
+            luka_berat: 0,
+            luka_ringan: 1,
+            kerugian: 100000,
+            geoloc: {
+                connect: {
+                    id: geopolyfind[0]._id.$oid
+                }
+            }
+        }
+    });
+    await prisma.reports.create({
+        data: {
+            name: "example report 2",
+            latitude: replat,
+            longitude: replng,
+            geojs: {
+                type: "Feature",
+                properties: {
+                    name: "example report 2",
+                },
+                geometry: {
+                    type: "Point",
+                    coordinates: [replng, replat]
+                }
+            },
+            datetime_crash: new Date().toISOString(),
+            jumlah_kecelakaan: 1,
+            meninggal: 0,
+            luka_berat: 0,
+            luka_ringan: 1,
+            kerugian: 100000,
+        }
+    });
+    const georeportidx = await prisma.$runCommandRaw({
+        createIndexes: "Reports",
+        indexes: [
+            {
+                key: {
+                    "geojs.geometry": "2dsphere"
+                },
+                name: "geospat"
+            }
+        ]
+    });
+    const reportNoRel = await prisma.reports.findMany({
+        where: {
+            geoloc: null
+        }
+    });
+    console.log(reportNoRel);
     // const geofind = await prisma.geoLocation.findRaw({
     //     filter: {
     //         geometry: {

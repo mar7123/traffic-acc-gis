@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
     try {
-        const year = Number(request.nextUrl.searchParams.get('year') != undefined ? request.nextUrl.searchParams.get('year') : 2013);
+        const year = Number(request.nextUrl.searchParams.get('year') ?? 2013);
         const { res, error } = await getGeoLocsPerYear(year);
         if (error) {
             return Response.json({ message: "internal server error" }, { status: 500 });

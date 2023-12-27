@@ -5,8 +5,8 @@ import { permanentRedirect } from "next/navigation";
 import LoginForm from "@/components/Login/LoginForm";
 
 export const metadata: Metadata = {
-    title: "Signin Page",
-    description: "This is Signin page",
+    title: "Login Page | TRASK",
+    description: "TRASK adalah sistem informasi geografis yang memetakan data berkaitan dengan risiko kecelakaan",
     // other metadata
 };
 

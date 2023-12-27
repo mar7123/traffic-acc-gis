@@ -4,7 +4,16 @@ import { NextRequest } from "next/server";
 export async function POST(request: NextRequest) {
     try {
         const reqjson = await request.json();
-        const { res, error } = await addReport(reqjson.data);
+        const data = reqjson.geoloc_id == null ? reqjson.data :
+            ({
+                ...reqjson.data,
+                geoloc: {
+                    connect: {
+                        id: reqjson.geoloc_id
+                    }
+                }
+            });
+        const { res, error } = await addReport(data);
         if (error) {
             return Response.json({ message: error }, { status: 500 });
         }

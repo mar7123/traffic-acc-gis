@@ -4,12 +4,24 @@ export async function getGeoLocsPerYear(tahun: number) {
     try {
         const geolocs = await prisma.geoLocation.findMany({
             include: {
-                geodatas: {
-                    where: {
-                        datetime_crash: {
-                            gte: new Date(String(tahun) + "-01-01"),
-                            lte: new Date(String(tahun + 1) + "-01-01"),
-                        },
+                // geodatas: {
+                //     where: {
+                //         datetime_crash: {
+                //             gte: new Date(String(tahun) + "-01-01"),
+                //             lte: new Date(String(tahun + 1) + "-01-01"),
+                //         },
+                //     }
+                // },
+                _count: {
+                    select: {
+                        georeports: {
+                            where: {
+                                datetime_crash: {
+                                    gte: new Date(String(tahun) + "-01-01"),
+                                    lte: new Date(String(tahun + 1) + "-01-01"),
+                                },
+                            }
+                        }
                     }
                 }
             }

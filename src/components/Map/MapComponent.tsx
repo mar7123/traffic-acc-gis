@@ -4,7 +4,7 @@ import Loader from "@/components/common/Loader";
 import ViewPanelComponent from "./ViewPanelComponent";
 import ReportPanelComponent from "./ReportPanelComponent";
 import { useSearchParams } from 'next/navigation'
-import { MapContainer, TileLayer, GeoJSON, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, useMapEvents, useMap, Popup } from "react-leaflet";
 import L from "leaflet";
 import MarkerIcon from "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/leaflet.css";
@@ -15,25 +15,37 @@ import { Tooltip, Button } from "flowbite-react";
 type GeoLocationMod = Omit<GeoLocation, 'geojs'> & {
     geojs: GeoJSON.GeoJsonObject
 }
+type GeoDataMod = Omit<GeoData, 'geojs'> & {
+    geojs: GeoJSON.GeoJsonObject
+}
 
 interface Geolocs extends GeoLocationMod {
     geojs: GeoJSON.GeoJsonObject,
     color?: string,
+    fillOpacity?: number,
     agregate: {
         geoloc_id: string,
         _sum: {
             jumlah_kecelakaan: number,
         }
     }[],
-    geodatas: GeoData[]
+    geodatas: GeoDatas[]
+    _count: {
+        georeports: number,
+    }
+}
+interface GeoDatas extends GeoDataMod {
+    geojs: GeoJSON.GeoJsonObject,
 }
 
 const ViewMode = ['view', 'report'];
 type MapViewMode = typeof ViewMode[number];
 
+
 const MapComponent = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [geolocs, setGeolocs] = useState<Geolocs[]>([]);
+    const [focusedGeolocs, setFocusedGeolocs] = useState<Geolocs>();
     const [markerRef, setMarkerRef] = useState<L.Marker<any>>(new L.Marker([0, 0]));
     const [showPanel, setShowPanel] = useState(true);
     const [year, setYear] = useState<{ selected: number, yearDD: { _id: number }[] }>({
@@ -112,28 +124,6 @@ const MapComponent = () => {
         });
     }
 
-    const MarkerOnClick = () => {
-        const map = useMapEvents({
-            click: (e) => {
-                markerRef.remove();
-                const { lat, lng } = e.latlng;
-                const marker = L.marker([lat, lng],
-                    {
-                        icon: L.icon({
-                            iconUrl: MarkerIcon.src,
-                            iconRetinaUrl: MarkerIcon.src,
-                            iconSize: [25, 41],
-                            iconAnchor: [12.5, 41],
-                            popupAnchor: [0, -41],
-                        }),
-                    });
-                setMarkerRef(marker);
-                marker.addTo(map);
-            }
-        });
-        return null;
-    }
-
     const mean = (
         data: Geolocs[],
         calc: {
@@ -199,6 +189,7 @@ const MapComponent = () => {
         calc.count.low = 0;
         const result = data.map((elem) => {
             if (elem.agregate.length == 1) {
+                elem.fillOpacity = 0.5;
                 if (elem.agregate[0]?._sum.jumlah_kecelakaan > calc.upper.val) {
                     calc.count.high += 1;
                     calc.upper.exist = true;
@@ -335,6 +326,171 @@ const MapComponent = () => {
         geolocsAPI()
     }, [filters.toggle])
 
+    const MarkerOnClick = () => {
+        const map = useMapEvents({
+            click: (e) => {
+                markerRef.remove();
+                const { lat, lng } = e.latlng;
+                const marker = L.marker([lat, lng],
+                    {
+                        icon: L.icon({
+                            iconUrl: MarkerIcon.src,
+                            iconRetinaUrl: MarkerIcon.src,
+                            iconSize: [25, 41],
+                            iconAnchor: [12.5, 41],
+                            popupAnchor: [0, -41],
+                        }),
+                    });
+                setMarkerRef(marker);
+                marker.addTo(map);
+            }
+        });
+        return null;
+    }
+
+    const MapPanel = ({ mode }: { mode: string }) => {
+        const MinBttn = () => {
+            return (
+                <Button type="submit" color="custom-link bg-transparent focus:ring-0" className="w-fit custom-link bg-transparent focus:ring-0" onClick={(e: any) => {
+                    setShowPanel(false);
+                }}>
+                    <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M23 4C23 2.34315 21.6569 1 20 1H8C6.34315 1 5 2.34315 5 4V5H4C2.34315 5 1 6.34315 1 8V20C1 21.6569 2.34315 23 4 23H16C17.6569 23 19 21.6569 19 20V19H20C21.6569 19 23 17.6569 23 16V4ZM19 17H20C20.5523 17 21 16.5523 21 16V4C21 3.44772 20.5523 3 20 3H8C7.44772 3 7 3.44772 7 4V5H16C17.6569 5 19 6.34315 19 8V17ZM16 7C16.5523 7 17 7.44772 17 8V20C17 20.5523 16.5523 21 16 21H4C3.44772 21 3 20.5523 3 20V8C3 7.44772 3.44772 7 4 7H16Z" fill="#ffffff"></path> </g></svg>
+                </Button>
+            );
+        };
+        if (mode == "report") {
+            return (
+                <>
+                    <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
+                        <span className="text-white text-md">
+                            Panel Laporan Kecelakaan
+                        </span>
+                        <MinBttn />
+                    </div>
+                    <ReportPanelComponent markerRef={markerRef} />
+                </>
+            );
+        }
+        return (
+            <>
+                <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
+                    <span className="text-white text-md">
+                        Panel Tampilan Data
+                    </span>
+                    <MinBttn />
+                </div>
+                <ViewPanelComponent filters={filters} year={year} selectYear={selectYear} selectN={selectN} />
+            </>
+        );
+    }
+
+    const MapLayersComponent = ({ mode }: { mode: string }) => {
+        const map = useMap();
+        if (mode == "report") {
+            return (
+                <MarkerOnClick />
+            );
+        }
+        return (
+            <>
+                {geolocs?.map((item: Geolocs) => {
+                    const bbox = require('geojson-bbox');
+                    const extent = bbox(item.geojs);
+
+                    return (<GeoJSON
+                        key={JSON.stringify(item)}
+                        data={item.geojs}
+                        pathOptions={{
+                            fillColor: item.color ?? "#2563eb",
+                            fillOpacity: item.fillOpacity ?? 0.5,
+                            weight: 1,
+                            opacity: 1,
+                            color: "black"
+                        }} >
+                        <Popup>
+                            <div
+                                onClick={async () => {
+                                    const fillop = item.fillOpacity ?? 0.5;
+                                    if (fillop == 0.2) {
+                                        return;
+                                    }
+                                    setLoading(true);
+                                    map.fitBounds([
+                                        [extent[1], extent[0]],
+                                        [extent[3], extent[2]]
+                                    ]);
+                                    const res = await fetch('/api/geodata/loc?' + new URLSearchParams({
+                                        year: year.selected.toString(),
+                                        take: "30",
+                                        page: "1",
+                                        geoloc_id: item.id,
+                                    }), {
+                                        method: "GET",
+                                    }).then(async (res) => {
+                                        const { data }: { data: GeoDatas[] } = await res.json()
+                                        const new_geolocs = geolocs.map((filter_item) => {
+                                            if (filter_item.id == item.id) {
+                                                setFocusedGeolocs(filter_item);
+                                                return {
+                                                    ...filter_item,
+                                                    color: "#334155",
+                                                    fillOpacity: 0.2,
+                                                    geodatas: data
+                                                }
+                                            }
+                                            if (filter_item.id == focusedGeolocs?.id) {
+                                                return {
+                                                    ...focusedGeolocs
+                                                }
+                                            }
+                                            return filter_item
+                                        });
+                                        setGeolocs(new_geolocs);
+                                        setTimeout(() => setLoading(false), 500);
+                                    }
+                                    )
+                                }}
+                            >
+                                {item.name2}<br />
+                                {item.agregate[0]?._sum.jumlah_kecelakaan ? (item.agregate[0]?._sum.jumlah_kecelakaan + " accident(s)") :
+                                    ("no data")}<br />
+                                {item._count.georeports > 0 ? (item._count.georeports + " unprocessed report(s)") : (null)}
+                                <b>Klik untuk melihat detail</b>
+                            </div>
+                        </Popup>
+                    </GeoJSON>
+                    )
+                })}
+                {geolocs?.map((item) => {
+                    if (item.geodatas != undefined) {
+                        const geojs_group = item.geodatas.map((geodata_item) => {
+                            return (
+                                <GeoJSON
+                                    key={JSON.stringify(geodata_item)}
+                                    data={geodata_item.geojs}
+                                    pointToLayer={function (geoJsonPoint, latlng) {
+                                        return L.marker(latlng, {
+                                            icon: new L.Icon({
+                                                iconUrl: MarkerIcon.src,
+                                                iconRetinaUrl: MarkerIcon.src,
+                                                iconSize: [25, 41],
+                                                iconAnchor: [12.5, 41],
+                                                popupAnchor: [0, -41],
+                                            })
+                                        }).bindPopup(`${geodata_item.name}</br>${geodata_item.jumlah_kecelakaan} accident(s)`);
+                                    }
+                                    }
+                                />
+                            )
+                        })
+                        return geojs_group
+                    }
+                    return null;
+                })}
+            </>
+        );
+    }
+
     return (
         <div className="relative flex flex-col items-center h-full">
             {loading ? (<Loader />) : (null)}
@@ -351,82 +507,19 @@ const MapComponent = () => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                {filters.mode == "view" ? geolocs?.map((item: Geolocs) => {
-                    const percent = Math.floor(Math.random() * (80 - 20 + 1) + 20)
-                    return (<GeoJSON
-                        key={JSON.stringify(item)}
-                        data={item.geojs}
-                        pointToLayer={function (geoJsonPoint, latlng) {
-                            return L.marker(latlng, {
-                                icon: new L.Icon({
-                                    iconUrl: MarkerIcon.src,
-                                    iconRetinaUrl: MarkerIcon.src,
-                                    iconSize: [25, 41],
-                                    iconAnchor: [12.5, 41],
-                                    popupAnchor: [0, -41],
-                                })
-                            });
-                        }
-                        }
-                        onEachFeature={function (feature, layer) {
-                            let sumstr = "";
-                            sumstr += item.name2 + " " + item.agregate[0]?._sum.jumlah_kecelakaan + " accident(s)<br />";
-                            const popUpContent = (`<Popup>
-                                ${sumstr}
-                            </Popup>`);
-                            layer.bindPopup(popUpContent);
-                            // layer.bindTooltip(item.name2 != undefined ? item.name2 : "", { permanent: true, direction: "center" })
-                        }}
-                        pathOptions={{
-                            fillColor: item.color != undefined ? item.color : "#2563eb",
-                            fillOpacity: 0.5,
-                            weight: 1,
-                            opacity: 1,
-                            color: "black"
-                        }} />)
-                }) : (
-                    <MarkerOnClick />
-                )}
+                <MapLayersComponent mode={filters.mode} />
             </MapContainer>
             {showPanel ? (
                 <div className="fixed right-auto sm:right-[2vw] top-[25vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[400px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black ">
                     <div className="h-full w-full grid grid-cols-1 content-start">
-                        {filters.mode == "view" ? (
-                            <>
-                                <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
-                                    <span className="text-white text-md">
-                                        Data View Panel
-                                    </span>
-                                    <Button type="submit" color="bg-transparent" className="w-fit bg-transparent" onClick={(e: any) => {
-                                        setShowPanel(false);
-                                    }}>
-                                        <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M23 4C23 2.34315 21.6569 1 20 1H8C6.34315 1 5 2.34315 5 4V5H4C2.34315 5 1 6.34315 1 8V20C1 21.6569 2.34315 23 4 23H16C17.6569 23 19 21.6569 19 20V19H20C21.6569 19 23 17.6569 23 16V4ZM19 17H20C20.5523 17 21 16.5523 21 16V4C21 3.44772 20.5523 3 20 3H8C7.44772 3 7 3.44772 7 4V5H16C17.6569 5 19 6.34315 19 8V17ZM16 7C16.5523 7 17 7.44772 17 8V20C17 20.5523 16.5523 21 16 21H4C3.44772 21 3 20.5523 3 20V8C3 7.44772 3.44772 7 4 7H16Z" fill="#ffffff"></path> </g></svg>
-                                    </Button>
-                                </div>
-                                <ViewPanelComponent filters={filters} year={year} selectYear={selectYear} selectN={selectN} />
-                            </>
-                        ) : (
-                            <>
-                                <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
-                                    <span className="text-white text-md">
-                                        Accident Report Panel
-                                    </span>
-                                    <Button type="submit" color="bg-transparent" className="w-fit bg-transparent" onClick={(e: any) => {
-                                        setShowPanel(false);
-                                    }}>
-                                        <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M23 4C23 2.34315 21.6569 1 20 1H8C6.34315 1 5 2.34315 5 4V5H4C2.34315 5 1 6.34315 1 8V20C1 21.6569 2.34315 23 4 23H16C17.6569 23 19 21.6569 19 20V19H20C21.6569 19 23 17.6569 23 16V4ZM19 17H20C20.5523 17 21 16.5523 21 16V4C21 3.44772 20.5523 3 20 3H8C7.44772 3 7 3.44772 7 4V5H16C17.6569 5 19 6.34315 19 8V17ZM16 7C16.5523 7 17 7.44772 17 8V20C17 20.5523 16.5523 21 16 21H4C3.44772 21 3 20.5523 3 20V8C3 7.44772 3.44772 7 4 7H16Z" fill="#ffffff"></path> </g></svg>
-                                    </Button>
-                                </div>
-                                <ReportPanelComponent markerRef={markerRef} />
-                            </>
-                        )}
+                        <MapPanel mode={filters.mode} />
                     </div>
                 </div>
             ) : (null)}
             <div className="fixed bottom-2 z-1200 flex flex-col items-center max-w-1/2 w-fit h-[30px] bg-gray-700 shadow-lg rounded text-black">
                 <div className="w-full h-full grid grid-cols-2 text-white">
                     <div className="w-[70px] h-full flex flex-col items-center relative justify-self-center">
-                        <Tooltip content="Data View" theme={{ target: "absolute w-[50px] h-[50px] flex flex-col items-center bg-sky-400 rounded-full shadow-md " + ((filters.mode == "view" && showPanel) ? "bottom-4" : "bottom-3"), base: "absolute inline-block whitespace-nowrap z-10 rounded-lg py-2 px-3 text-sm font-medium shadow-sm" }}>
+                        <Tooltip content="Tampilan Data" theme={{ target: "absolute w-[50px] h-[50px] flex flex-col items-center bg-sky-400 rounded-full shadow-md " + ((filters.mode == "view" && showPanel) ? "bottom-4" : "bottom-3"), base: "absolute inline-block whitespace-nowrap z-10 rounded-lg py-2 px-3 text-sm font-medium shadow-sm" }}>
                             <button className="w-full h-full flex flex-col items-center" onClick={() => {
                                 if (filters.mode != "view") {
                                     markerRef.remove();
@@ -452,7 +545,7 @@ const MapComponent = () => {
                         <span className={"absolute bottom-0 font-black " + ((filters.mode == "view" && showPanel) ? "" : "hidden")}>.</span>
                     </div>
                     <div className="w-full h-full flex flex-col items-center relative justify-self-center">
-                        <Tooltip content="Data Report" theme={{ target: "absolute w-[50px] h-[50px] flex flex-col items-center bg-green-400 rounded-full shadow-md " + ((filters.mode == "report" && showPanel) ? "bottom-4" : "bottom-3"), base: "absolute inline-block whitespace-nowrap z-10 rounded-lg py-2 px-3 text-sm font-medium shadow-sm" }}>
+                        <Tooltip content="Pelaporan Data" theme={{ target: "absolute w-[50px] h-[50px] flex flex-col items-center bg-green-400 rounded-full shadow-md " + ((filters.mode == "report" && showPanel) ? "bottom-4" : "bottom-3"), base: "absolute inline-block whitespace-nowrap z-10 rounded-lg py-2 px-3 text-sm font-medium shadow-sm" }}>
                             <button className="w-full h-full flex flex-col items-center" onClick={() => {
                                 if (filters.mode != "report") {
                                     setFilters({ ...filters, mode: "report" });

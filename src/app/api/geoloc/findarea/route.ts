@@ -3,8 +3,8 @@ import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
     try {
-        const lat = Number(request.nextUrl.searchParams.get('lat') != undefined ? request.nextUrl.searchParams.get('lat') : 2013);
-        const lng = Number(request.nextUrl.searchParams.get('lng') != undefined ? request.nextUrl.searchParams.get('lng') : 2013);
+        const lat = Number(request.nextUrl.searchParams.get('lat') ?? 0);
+        const lng = Number(request.nextUrl.searchParams.get('lng') ?? 0);
         const { res, error } = await findGeoCompByPoint(lat, lng);
         if (error) {
             return Response.json({ message: error }, { status: 500 });
