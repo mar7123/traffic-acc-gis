@@ -13,6 +13,7 @@ const initialState = {
 
 function LoginForm() {
     const [state, loginFormAction] = useFormState(LoginAction, initialState);
+    const [disableLogin, setDisableLogin] = useState(false);
     const [optModal, setOptModal] = useState<{
         open: boolean,
         status: "success" | "error",
@@ -30,6 +31,7 @@ function LoginForm() {
         if (state.message == null || state.message == "Success") {
             return
         }
+        setDisableLogin(false);
         setOptModal({ open: true, status: "error", message: state.message });
     }, [state])
 
@@ -44,7 +46,9 @@ function LoginForm() {
                         </Link>
                     </div>
                     <div className="justify-self-center w-full py-3 xl:py-15 px-[5%] lg:px-[10%] ">
-                        <form className="flex w-full flex-col gap-4" action={loginFormAction}>
+                        <form className="flex w-full flex-col gap-4" action={loginFormAction} onSubmit={(e)=>{
+                            setDisableLogin(true);
+                        }}>
                             <h2 className="text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
                                 Sign In to TRASK Admin<br />
                             </h2>
@@ -61,7 +65,7 @@ function LoginForm() {
                                 </div>
                                 <TextInput id="password" name="password" type="password" placeholder="Enter your password" required shadow />
                             </div>
-                            <Button className="bg-black hover:bg-opacity-80 text-white" color="bg-black hover:bg-opacity-80 text-white" type="submit">
+                            <Button id="login-bttn" className="bg-black hover:bg-opacity-80 text-white" color="bg-black hover:bg-opacity-80 text-white" type="submit" disabled={disableLogin}>
                                 <span className="my-2 font-extrabold">
                                     Sign In
                                 </span>
