@@ -26,16 +26,16 @@ function NavbarComponent() {
                     </Navbar.Brand>
                     <div className="flex md:order-2">
                         <Button href="/" className="custom-link bg-transparent focus:ring-0 text-white">
-                            <span className="text-md mx-0 sm:mx-4">Contact Us</span>
+                            <span className="text-md mx-0 sm:mx-4">Kontak Kami</span>
                         </Button>
                         <Navbar.Toggle />
                     </div>
                     <Navbar.Collapse>
                         <Button href="/" className={`custom-link bg-transparent focus:ring-0 hover:text-white text-gray-400 ${pathname == '/' && "text-white"}`}>
-                            <span className="text-md mx-4">Home</span>
+                            <span className="text-md mx-4">Beranda</span>
                         </Button>
                         <Button href="/map?mode=view" className={`custom-link bg-transparent focus:ring-0 hover:text-white text-gray-400 ${pathname.includes("/map") && "text-white"}`}>
-                            <span className="text-md mx-4">Map</span>
+                            <span className="text-md mx-4">Peta</span>
                         </Button>
                         <Button href="/data" className={`custom-link bg-transparent focus:ring-0 hover:text-white text-gray-400 ${pathname == "/data" && "text-white"}`}>
                             <span className="text-md mx-4">Data</span>
@@ -48,7 +48,7 @@ function NavbarComponent() {
                     <div className='p-12'>
                         <h1 className="text-2xl sm:text-4xl xl:text-6xl font-bold text-white mb-4">TRASK GIS</h1>
                         <h2 className="text-sm sm:text-md xl:text-lg font-bold text-white mb-4">Traffic Accident Risk Geographic Information System</h2>
-                        <p className="text-md sm:text-lg md:text-xl text-white">TRASK adalah sistem informasi geografis yang memetakan data berkaitan dengan risiko kecelakaan. Data dikumpulkan berdasarkan kejadian kecelakaan yang terjadi pada setiap kota.</p>
+                        <p className="text-md sm:text-lg md:text-xl text-white">TRASK adalah sistem informasi geografis yang memetakan data berkaitan dengan risiko kecelakaan. Data dikumpulkan berdasarkan kejadian kecelakaan yang terjadi pada beberapa kota.</p>
                         <Button type='submit' color='mt-4 py-1 bg-transparent hover:bg-white border-white hover:text-black w-full md:w-auto md:inline-block py-1 font-semibold text-white' onClick={scrollHeaderClick} className="mt-4 py-1 bg-transparent hover:bg-white border-white border-2 hover:text-black w-full md:w-auto md:inline-block py-1 font-semibold text-white">
                             Mulai
                         </Button>

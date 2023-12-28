@@ -9,7 +9,7 @@ import L from "leaflet";
 import MarkerIcon from "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/leaflet.css";
 import { ChangeEvent, useEffect, useState } from "react";
-import { GeoLocation, GeoData } from "@prisma/client";
+import { GeoLocation, GeoData, Reports } from "@prisma/client";
 import { Tooltip, Button } from "flowbite-react";
 
 type GeoLocationMod = Omit<GeoLocation, 'geojs'> & {
@@ -18,7 +18,16 @@ type GeoLocationMod = Omit<GeoLocation, 'geojs'> & {
 type GeoDataMod = Omit<GeoData, 'geojs'> & {
     geojs: GeoJSON.GeoJsonObject
 }
+type ReportsMod = Omit<Reports, 'geojs'> & {
+    geojs: GeoJSON.GeoJsonObject
+}
 
+interface GeoDatas extends GeoDataMod {
+    geojs: GeoJSON.GeoJsonObject,
+}
+interface ReportsData extends ReportsMod {
+    geojs: GeoJSON.GeoJsonObject,
+}
 interface Geolocs extends GeoLocationMod {
     geojs: GeoJSON.GeoJsonObject,
     color?: string,
@@ -29,13 +38,11 @@ interface Geolocs extends GeoLocationMod {
             jumlah_kecelakaan: number,
         }
     }[],
-    geodatas: GeoDatas[]
+    geodatas: GeoDatas[],
+    reports: ReportsData[],
     _count: {
         georeports: number,
     }
-}
-interface GeoDatas extends GeoDataMod {
-    geojs: GeoJSON.GeoJsonObject,
 }
 
 const ViewMode = ['view', 'report'];
@@ -44,11 +51,22 @@ type MapViewMode = typeof ViewMode[number];
 
 const MapComponent = () => {
     const [loading, setLoading] = useState<boolean>(true);
+    const defaultMapOptions = {
+        center: {
+            lat: -7.2752731,
+            lng: 110.1234954
+        },
+        zoom: 9
+    };
     const [geolocs, setGeolocs] = useState<Geolocs[]>([]);
     const [focusedGeolocs, setFocusedGeolocs] = useState<Geolocs>();
-    const [markerRef, setMarkerRef] = useState<L.Marker<any>>(new L.Marker([0, 0]));
+    const focusedGeolocStyle = {
+        fillOpacity: 0.4,
+        color: "#1f2937",
+    }
+    const [markerRef, setMarkerRef] = useState<L.Marker<any> | undefined>(undefined);
     const [showPanel, setShowPanel] = useState(true);
-    const [year, setYear] = useState<{ selected: number, yearDD: { _id: number }[] }>({
+    const [year, setYear] = useState<{ selected: number, yearDD: number[] }>({
         selected: 0,
         yearDD: []
     });
@@ -105,6 +123,7 @@ const MapComponent = () => {
         if (String(year.selected) != e.currentTarget.value) {
             setYear({ ...year, selected: Number(e.currentTarget.value) });
             setFilters({ ...filters, n: 0, toggle: !filters.toggle })
+            setFocusedGeolocs(undefined);
         }
     }
 
@@ -142,6 +161,9 @@ const MapComponent = () => {
         if (count != 0) {
             calc.count.data = count;
             calc.mean = sum / count;
+        } else {
+            calc.count.data = 0;
+            calc.mean = 0;
         }
     }
 
@@ -153,6 +175,9 @@ const MapComponent = () => {
             std: number
         }
     ) => {
+        if (calc.count.data <= 1) {
+            calc.std = 0;
+        }
         let sum = 0;
         data.forEach((elem) => {
             if (elem.agregate.length == 1) {
@@ -277,8 +302,8 @@ const MapComponent = () => {
             const yearDB = await fetch('/api/geodata/year', {
                 method: "GET",
             }).then(async (year_res) => {
-                const { data: yearjson }: { data: { _id: number }[] } = await year_res.json()
-                const year_q = year.selected == 0 ? yearjson[0]._id : year.selected;
+                const { data: yearjson }: { data: number[] } = await year_res.json()
+                const year_q = year.selected == 0 ? yearjson[0] : year.selected;
                 setYear({ selected: year_q, yearDD: yearjson });
                 const res = await fetch('/api/geoloc?' + new URLSearchParams({
                     year: year_q.toString(),
@@ -295,28 +320,46 @@ const MapComponent = () => {
                     calc_var.n = 5;
                     calc_var.upper.exist = false;
                     calc_var.lower.exist = false;
+                    calc_var.count.high = 0;
+                    calc_var.count.med = 0;
+                    calc_var.count.low = 0;
                     mean(data, calc_var);
                     std(data, calc_var);
-                    calc_var.max = data.reduce(function (prev, current) {
-                        if (prev.agregate.length == 1 && current.agregate.length == 1) {
-                            return (prev && prev.agregate[0]?._sum.jumlah_kecelakaan > current.agregate[0]?._sum.jumlah_kecelakaan) ? prev : current
-                        }
-                        return current;
-                    }).agregate[0]._sum.jumlah_kecelakaan
-                    calc_var.min = data.reduce(function (prev, current) {
-                        if (prev.agregate.length == 1 && current.agregate.length == 1) {
-                            return (prev && prev.agregate[0]?._sum.jumlah_kecelakaan < current.agregate[0]?._sum.jumlah_kecelakaan) ? prev : current
-                        }
-                        return current;
-                    }).agregate[0]._sum.jumlah_kecelakaan
+                    if (calc_var.count.data != 0) {
+                        calc_var.max = data.reduce(function (prev, current) {
+                            if (prev.agregate.length == 1 && current.agregate.length == 1) {
+                                return (prev && prev.agregate[0]?._sum.jumlah_kecelakaan > current.agregate[0]?._sum.jumlah_kecelakaan) ? prev : current
+                            }
+                            return current;
+                        }).agregate[0]._sum.jumlah_kecelakaan
+                        calc_var.min = data.reduce(function (prev, current) {
+                            if (prev.agregate.length == 1 && current.agregate.length == 1) {
+                                return (prev && prev.agregate[0]?._sum.jumlah_kecelakaan < current.agregate[0]?._sum.jumlah_kecelakaan) ? prev : current
+                            }
+                            return current;
+                        }).agregate[0]._sum.jumlah_kecelakaan
+                    }
                     const result = calculate(data, calc_var);
                     setGeolocs(result);
                 })
             })
 
         } else {
-            const result = calculate(geolocs, filters);
-            setGeolocs(result);
+            if (focusedGeolocs) {
+                const new_geolocs = geolocs.map((filter_item) => {
+                    if (filter_item.id == focusedGeolocs?.id) {
+                        return {
+                            ...focusedGeolocs
+                        }
+                    }
+                    return filter_item
+                });
+                const result = calculate(new_geolocs, filters);
+                setGeolocs(result);
+            } else {
+                const result = calculate(geolocs, filters);
+                setGeolocs(result);
+            }
         }
         setLoading(false);
     }
@@ -329,8 +372,11 @@ const MapComponent = () => {
     const MarkerOnClick = () => {
         const map = useMapEvents({
             click: (e) => {
-                markerRef.remove();
                 const { lat, lng } = e.latlng;
+                if (markerRef) {
+                    markerRef.setLatLng([lat, lng])
+                    return
+                }
                 const marker = L.marker([lat, lng],
                     {
                         icon: L.icon({
@@ -393,99 +439,141 @@ const MapComponent = () => {
         }
         return (
             <>
-                {geolocs?.map((item: Geolocs) => {
+                {geolocs?.map((item: Geolocs, idx) => {
                     const bbox = require('geojson-bbox');
                     const extent = bbox(item.geojs);
-
-                    return (<GeoJSON
-                        key={JSON.stringify(item)}
-                        data={item.geojs}
-                        pathOptions={{
-                            fillColor: item.color ?? "#2563eb",
-                            fillOpacity: item.fillOpacity ?? 0.5,
-                            weight: 1,
-                            opacity: 1,
-                            color: "black"
-                        }} >
-                        <Popup>
-                            <div
-                                onClick={async () => {
-                                    const fillop = item.fillOpacity ?? 0.5;
-                                    if (fillop == 0.2) {
-                                        return;
-                                    }
-                                    setLoading(true);
-                                    map.fitBounds([
-                                        [extent[1], extent[0]],
-                                        [extent[3], extent[2]]
-                                    ]);
-                                    const res = await fetch('/api/geodata/loc?' + new URLSearchParams({
-                                        year: year.selected.toString(),
-                                        take: "30",
-                                        page: "1",
-                                        geoloc_id: item.id,
-                                    }), {
-                                        method: "GET",
-                                    }).then(async (res) => {
-                                        const { data }: { data: GeoDatas[] } = await res.json()
-                                        const new_geolocs = geolocs.map((filter_item) => {
-                                            if (filter_item.id == item.id) {
-                                                setFocusedGeolocs(filter_item);
-                                                return {
-                                                    ...filter_item,
-                                                    color: "#334155",
-                                                    fillOpacity: 0.2,
-                                                    geodatas: data
-                                                }
-                                            }
-                                            if (filter_item.id == focusedGeolocs?.id) {
-                                                return {
-                                                    ...focusedGeolocs
-                                                }
-                                            }
-                                            return filter_item
-                                        });
-                                        setGeolocs(new_geolocs);
-                                        setTimeout(() => setLoading(false), 500);
-                                    }
-                                    )
+                    const geodata_focus = (item.geodatas != undefined ? (item.geodatas.map((geodata_item) => {
+                        return (
+                            <GeoJSON
+                                key={JSON.stringify(geodata_item)}
+                                data={geodata_item.geojs}
+                                pointToLayer={function (geoJsonPoint, latlng) {
+                                    return L.marker(latlng, {
+                                        icon: new L.Icon({
+                                            iconUrl: MarkerIcon.src,
+                                            iconRetinaUrl: MarkerIcon.src,
+                                            iconSize: [25, 41],
+                                            iconAnchor: [12.5, 41],
+                                            popupAnchor: [0, -41],
+                                        })
+                                    }).bindPopup(`${geodata_item.name}</br>${geodata_item.jumlah_kecelakaan} kecelakaan`);
+                                }
+                                }
+                            />
+                        )
+                    })) : (null));
+                    const georeport_focus = (item.reports != undefined ? (item.reports.map((report_item) => {
+                        return (
+                            <GeoJSON
+                                key={JSON.stringify(report_item)}
+                                data={report_item.geojs}
+                                pointToLayer={function (geoJsonPoint, latlng) {
+                                    return L.marker(latlng, {
+                                        icon: new L.Icon({
+                                            iconUrl: MarkerIcon.src,
+                                            iconRetinaUrl: MarkerIcon.src,
+                                            iconSize: [25, 41],
+                                            iconAnchor: [12.5, 41],
+                                            popupAnchor: [0, -41],
+                                        })
+                                    }).bindPopup(`${report_item.name}</br>${report_item.jumlah_kecelakaan} laporan`);
+                                }
+                                }
+                            />
+                        )
+                    })) : (null));
+                    return (
+                        <div key={idx}>
+                            <GeoJSON
+                                key={JSON.stringify(item)}
+                                data={item.geojs}
+                                pathOptions={{
+                                    fillColor: item.color ?? "#2563eb",
+                                    fillOpacity: item.fillOpacity ?? 0.5,
+                                    weight: 1,
+                                    opacity: 1,
+                                    color: "black"
                                 }}
                             >
-                                {item.name2}<br />
-                                {item.agregate[0]?._sum.jumlah_kecelakaan ? (item.agregate[0]?._sum.jumlah_kecelakaan + " accident(s)") :
-                                    ("no data")}<br />
-                                {item._count.georeports > 0 ? (item._count.georeports + " unprocessed report(s)") : (null)}
-                                <b>Klik untuk melihat detail</b>
-                            </div>
-                        </Popup>
-                    </GeoJSON>
+                                <Popup
+                                >
+                                    <div className="max-w-[180px]">
+                                        {item.name2}<br />
+                                        <ul className="list-disc list-inside">
+                                            <li className="truncate">
+                                                {item.agregate[0]?._sum.jumlah_kecelakaan ? (item.agregate[0]?._sum.jumlah_kecelakaan + " kecelakaan") :
+                                                    ("tidak ada data kecelakaan")}
+                                            </li>
+                                            {item._count.georeports > 0 ? (
+                                                <li className="truncate">
+                                                    {item._count.georeports + " laporan belum diproses"}
+                                                </li>
+                                            ) : (null)}
+                                        </ul>
+                                        <div className="w-full mt-1">
+                                            <Button type="submit" color="bg-black text-white hover:bg-opacity-80" className="mx-auto bg-black text-white hover:bg-opacity-80" size="xs"
+                                                onClick={async () => {
+                                                    if (item.color == focusedGeolocStyle.color) {
+                                                        const new_geolocs = geolocs.map((filter_item) => {
+                                                            if (filter_item.id == focusedGeolocs?.id) {
+                                                                return {
+                                                                    ...focusedGeolocs
+                                                                }
+                                                            }
+                                                            return filter_item
+                                                        });
+                                                        setFocusedGeolocs(undefined);
+                                                        setGeolocs(new_geolocs);
+                                                        map.setView(defaultMapOptions.center, defaultMapOptions.zoom)
+                                                        return;
+                                                    }
+                                                    setLoading(true);
+                                                    map.fitBounds([
+                                                        [extent[1], extent[0]],
+                                                        [extent[3], extent[2]]
+                                                    ]);
+                                                    const res = await fetch('/api/geoloc/child?' + new URLSearchParams({
+                                                        year: year.selected.toString(),
+                                                        take: "30",
+                                                        page: "1",
+                                                        geoloc_id: item.id,
+                                                    }), {
+                                                        method: "GET",
+                                                    }).then(async (res) => {
+                                                        const { data: { geodatas: geodata_data, reports: report_data } }: { data: { geodatas: GeoDatas[], reports: ReportsData[] } } = await res.json()
+                                                        const new_geolocs = geolocs.map((filter_item) => {
+                                                            if (filter_item.id == item.id) {
+                                                                setFocusedGeolocs(filter_item);
+                                                                return {
+                                                                    ...filter_item,
+                                                                    color: focusedGeolocStyle.color,
+                                                                    fillOpacity: focusedGeolocStyle.fillOpacity,
+                                                                    geodatas: geodata_data,
+                                                                    reports: report_data
+                                                                }
+                                                            }
+                                                            if (filter_item.id == focusedGeolocs?.id) {
+                                                                return {
+                                                                    ...focusedGeolocs
+                                                                }
+                                                            }
+                                                            return filter_item
+                                                        });
+                                                        setGeolocs(new_geolocs);
+                                                        setTimeout(() => setLoading(false), 500);
+                                                    }
+                                                    )
+                                                }}>
+                                                {item.color == focusedGeolocStyle.color ? ("Kembali") : ("Lihat Detail")}
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </Popup>
+                            </GeoJSON>
+                            {geodata_focus}
+                            {georeport_focus}
+                        </div>
                     )
-                })}
-                {geolocs?.map((item) => {
-                    if (item.geodatas != undefined) {
-                        const geojs_group = item.geodatas.map((geodata_item) => {
-                            return (
-                                <GeoJSON
-                                    key={JSON.stringify(geodata_item)}
-                                    data={geodata_item.geojs}
-                                    pointToLayer={function (geoJsonPoint, latlng) {
-                                        return L.marker(latlng, {
-                                            icon: new L.Icon({
-                                                iconUrl: MarkerIcon.src,
-                                                iconRetinaUrl: MarkerIcon.src,
-                                                iconSize: [25, 41],
-                                                iconAnchor: [12.5, 41],
-                                                popupAnchor: [0, -41],
-                                            })
-                                        }).bindPopup(`${geodata_item.name}</br>${geodata_item.jumlah_kecelakaan} accident(s)`);
-                                    }
-                                    }
-                                />
-                            )
-                        })
-                        return geojs_group
-                    }
-                    return null;
                 })}
             </>
         );
@@ -495,8 +583,8 @@ const MapComponent = () => {
         <div className="relative flex flex-col items-center h-full">
             {loading ? (<Loader />) : (null)}
             <MapContainer
-                center={[-7.2752731, 110.1234954]}
-                zoom={9}
+                center={defaultMapOptions.center}
+                zoom={defaultMapOptions.zoom}
                 scrollWheelZoom={true}
                 style={{
                     width: "100%",
@@ -522,7 +610,10 @@ const MapComponent = () => {
                         <Tooltip content="Tampilan Data" theme={{ target: "absolute w-[50px] h-[50px] flex flex-col items-center bg-sky-400 rounded-full shadow-md " + ((filters.mode == "view" && showPanel) ? "bottom-4" : "bottom-3"), base: "absolute inline-block whitespace-nowrap z-10 rounded-lg py-2 px-3 text-sm font-medium shadow-sm" }}>
                             <button className="w-full h-full flex flex-col items-center" onClick={() => {
                                 if (filters.mode != "view") {
-                                    markerRef.remove();
+                                    if (markerRef) {
+                                        markerRef.remove();
+                                    }
+                                    setMarkerRef(undefined);
                                     setFilters({ ...filters, n: 0, mode: "view", toggle: !filters.toggle });
                                     window.history.replaceState("", "", "/map?mode=view");
                                     setShowPanel(true);
@@ -549,6 +640,7 @@ const MapComponent = () => {
                             <button className="w-full h-full flex flex-col items-center" onClick={() => {
                                 if (filters.mode != "report") {
                                     setFilters({ ...filters, mode: "report" });
+                                    setGeolocs([]);
                                     window.history.replaceState("", "", "/map?mode=report");
                                     setShowPanel(true);
                                     return;

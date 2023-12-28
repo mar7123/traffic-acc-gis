@@ -36,11 +36,11 @@ async function auth(req: NextRequest, res: any) {
                         throw new Error("Request cannot be processed");
                     }
                     if (!res) {
-                        throw new Error("No user Found with Email Please Sign Up...!");
+                        throw new Error("Akun tidak ditemukan");
                     }
                     const checkPassword = await bcrypt.compare(password, res.password);
                     if (!checkPassword || res.email !== email) {
-                        throw new Error("Email or Password doesn't match");
+                        throw new Error("Email atau password salah");
                     }
                     return res;
                 } catch (error: any) {

@@ -67,6 +67,7 @@ model GeoLocation {
     geojs      Json
     geodatas   GeoData[]
     georeports Reports[]
+    createdAt  DateTime  @default(now())
 }
 
 model GeoData {
@@ -84,6 +85,7 @@ model GeoData {
     luka_berat        Float
     luka_ringan       Float
     kerugian          Float
+    createdAt         DateTime    @default(now())
 }
 
 model Reports {
@@ -100,4 +102,5 @@ model Reports {
     luka_berat        Float
     luka_ringan       Float
     kerugian          Float
+    createdAt         DateTime     @default(now())
 }

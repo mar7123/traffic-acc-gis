@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { GeoData } from "@prisma/client";
 import { useRouter } from 'next/navigation';
+import ModalComponent from "@/components/Modal/ModalComponent";
 
 type GeoDataMod = Omit<GeoData, 'datetime_crash'> & {
     datetime_crash: string,
@@ -17,6 +18,16 @@ function DataComponent() {
     const { status } = useSession();
     const router = useRouter()
     const [loading, setLoading] = useState<boolean>(true);
+
+    const [optModal, setOptModal] = useState<{
+        open: boolean,
+        status: "success" | "error",
+        message: string
+    }>({
+        open: false,
+        status: "success",
+        message: ""
+    });
 
     // Fetch Data
     const [geodatas, setGeodatas] = useState<{ data: GeoDataMod[], count: number }>({ data: [], count: 0 });
@@ -65,6 +76,10 @@ function DataComponent() {
             setCurrentFilter({ ...currentFilter, toggle: !currentFilter.toggle })
         }
     }
+    const setModal = ({ open, status, message }: { open: boolean, status: "success" | "error", message: string }) => {
+        setOptModal({ open: open, status: status, message: message });
+    }
+
 
     // Mount
     useEffect(() => {
@@ -80,8 +95,9 @@ function DataComponent() {
     return (
         <>
             <div className="flex max-w-full w-full sm:w-5/6 gap-2 my-2">
+                <ModalComponent optModal={optModal} setModal={setModal} />
                 <div className="w-9/12">
-                    <TextInput id="search-bar" type="text" placeholder="Search" value={currentFilter.search} onChange={({ target }) => { setCurrentFilter({ ...currentFilter, search: target.value }) }} onKeyDown={(e: any) => {
+                    <TextInput id="search-bar" type="text" placeholder="Magelang..." value={currentFilter.search} onChange={({ target }) => { setCurrentFilter({ ...currentFilter, search: target.value }) }} onKeyDown={(e: any) => {
                         if (e.key == "Enter") {
                             if (currentFilter.search == "") {
                                 setCurrentFilter({ ...currentFilter, mode: "default", toggle: !currentFilter.toggle, page: 1 });
@@ -99,12 +115,12 @@ function DataComponent() {
                         setCurrentFilter({ ...currentFilter, mode: "default", toggle: !currentFilter.toggle, page: 1 });
                         return;
                     } else if (currentFilter.search.length <= 3) {
-                        window.alert("Please enter more than 3 charaters")
+                        setOptModal({ message: "Masukan 4 karakter atau lebih", status: "error", open: true })
                         return;
                     }
                     setCurrentFilter({ ...currentFilter, mode: "search", toggle: !currentFilter.toggle, page: 1 });
                 }}>
-                    Search
+                    Cari
                 </Button>
             </div>
             <div className="flex justify-between h-fit w-full my-2 px-2">

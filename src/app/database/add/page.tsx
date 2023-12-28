@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import dynamic from 'next/dynamic'
 
-const AddForm = dynamic(() => import('@/components/GeoData/AddForm'), { ssr: false });
+const AddForm = dynamic(() => import('@/components/Database/AddForm'), { ssr: false });
 
 export const metadata: Metadata = {
     title: "Add Form Page | TRASK",

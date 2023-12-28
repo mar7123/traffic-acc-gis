@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { editGeoData, getGeoDataByID } from "@/lib/prisma/geodata";
 import { GeoData } from "@prisma/client";
 
-type GeoDataMod = Omit<GeoData, 'id' | 'geoloc_id' | 'geojs' | 'latitude' | 'longitude' | 'datetime_crash' | 'wilayah'>
+type GeoDataMod = Omit<GeoData, 'id' | 'geoloc_id' | 'geojs' | 'latitude' | 'longitude' | 'datetime_crash' | 'wilayah'| 'createdAt'>
 interface GeoDataInput extends GeoDataMod {
     datetime_crash: string
 }

@@ -1,17 +1,26 @@
-import { Button, Checkbox, Label, TextInput } from "flowbite-react";
+import { Button, Checkbox, Label, TextInput, Modal } from "flowbite-react";
 import Loader from "@/components/common/Loader";
 import L from "leaflet";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Reports } from "@prisma/client";
+import ModalComponent from "@/components/Modal/ModalComponent";
 
-type ReportsMod = Omit<Reports, 'id' | 'geoloc_id'>
+type ReportsMod = Omit<Reports, 'id' | 'geoloc_id' | 'createdAt'>
 
 const ReportPanelComponent = ({
     markerRef
 }: {
-    markerRef: L.Marker<any>
+    markerRef: L.Marker<any> | undefined
 }) => {
-    const { lat, lng } = markerRef.getLatLng();
+    const [optModal, setOptModal] = useState<{
+        open: boolean,
+        status: "success" | "error",
+        message: string
+    }>({
+        open: false,
+        status: "success",
+        message: ""
+    });
     const [loading, setLoading] = useState<boolean>(false);
     const [checkTime, setCheckTime] = useState<{
         interval: NodeJS.Timeout | undefined,
@@ -33,42 +42,51 @@ const ReportPanelComponent = ({
         kerugian: 0,
     });
     const addReport = async () => {
-        setLoading(true);
-        const geolocid = await getMarkerGeoComp();
-        const formDataInput = {
-            ...formData,
-            latitude: markerRef.getLatLng().lat,
-            longitude: markerRef.getLatLng().lng,
-            geojs: {
-                type: "Feature",
-                properties: {
-                    name: formData.name,
+        if (markerRef) {
+            if (formData.name == "") {
+                setOptModal({ message: "Input identifier kosong", status: "error", open: true })
+                return
+            }
+            setLoading(true);
+            const geolocid = await getMarkerGeoComp();
+            const formDataInput = {
+                ...formData,
+                latitude: markerRef.getLatLng().lat,
+                longitude: markerRef.getLatLng().lng,
+                geojs: {
+                    type: "Feature",
+                    properties: {
+                        name: formData.name,
+                    },
+                    geometry: {
+                        type: "Point",
+                        coordinates: [markerRef.getLatLng().lng, markerRef.getLatLng().lat]
+                    }
                 },
-                geometry: {
-                    type: "Point",
-                    coordinates: [formData.longitude, formData.latitude]
-                }
-            },
-        }
-        const addrep = await fetch('/api/report/add', {
-            method: "POST",
-            body: JSON.stringify({
-                data: formDataInput,
-                geoloc_id: geolocid
+            }
+            const addrep = await fetch('/api/report/add', {
+                method: "POST",
+                body: JSON.stringify({
+                    data: formDataInput,
+                    geoloc_id: geolocid
+                })
             })
-        })
-        const { data } = await addrep.json()
-        if (addrep.status == 201) {
-            alert('success')
-            setLoading(false)
+            const { data } = await addrep.json()
+            if (addrep.status == 201) {
+                setOptModal({ message: "Input data berhasil", status: "success", open: true })
+                setLoading(false)
+            } else {
+                setOptModal({ message: "Input data gagal", status: "error", open: true })
+                setLoading(false)
+            }
         } else {
-            alert('fail')
+            setOptModal({ message: "Tidak ada pilihan lokasi. Klik peta untuk menentukan lokasi", status: "error", open: true })
         }
     }
     const getMarkerGeoComp = async () => {
         const res = await fetch('/api/geoloc/findarea?' + new URLSearchParams({
-            lat: String(markerRef.getLatLng().lat),
-            lng: String(markerRef.getLatLng().lng),
+            lat: String(markerRef ? markerRef.getLatLng().lat : 0),
+            lng: String(markerRef ? markerRef.getLatLng().lng : 0),
         }), {
             method: "GET",
         })
@@ -78,11 +96,15 @@ const ReportPanelComponent = ({
         }
         return null;
     }
+    const setModal = ({ open, status, message }: { open: boolean, status: "success" | "error", message: string }) => {
+        setOptModal({ open: open, status: status, message: message });
+    }
 
     return (
         <>
             {loading ? (<Loader />) : (null)}
             <div className="overflow-y-auto">
+                <ModalComponent optModal={optModal} setModal={setModal} />
                 <div className="grid grid-cols-1 gap-3 py-2 px-4">
                     <div className="h-full w-full">
                         <div className="mb-2">
@@ -110,17 +132,17 @@ const ReportPanelComponent = ({
                         <div className="mb-2">
                             <Label htmlFor="latitude" value="Latitude" />
                         </div>
-                        <TextInput id="latitude" type="number" value={markerRef.getLatLng().lat} shadow disabled />
+                        <TextInput id="latitude" type="number" value={markerRef ? markerRef.getLatLng().lat : 0} shadow disabled />
                     </div>
                     <div className="h-full w-full">
                         <div className="mb-2">
                             <Label htmlFor="longitude" value="Longitude" />
                         </div>
-                        <TextInput id="longitude" type="number" value={markerRef.getLatLng().lng} shadow disabled />
+                        <TextInput id="longitude" type="number" value={markerRef ? markerRef.getLatLng().lng : 0} shadow disabled />
                     </div>
                     <div className="h-full w-full">
                         <div className="mb-2">
-                            <Label htmlFor="name" value="Nama" />
+                            <Label htmlFor="name" value="Nama / Identifikasi" />
                         </div>
                         <TextInput id="name" type="text" onChange={({ target }) => { setFormData({ ...formData, name: target.value }) }} value={formData.name} shadow required />
                     </div>

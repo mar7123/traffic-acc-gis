@@ -25,15 +25,11 @@ const ViewPanelComponent = ({
             val: number,
             exist: boolean
         },
-        mode: string,
         toggle: boolean
     },
     year: {
         selected: number,
-        yearDD:
-        {
-            _id: number
-        }[]
+        yearDD: number[]
     },
     selectYear: (e: ChangeEvent<HTMLSelectElement>) => void,
     selectN: (target: EventTarget & HTMLInputElement) => void
@@ -50,7 +46,7 @@ const ViewPanelComponent = ({
                             selectYear(e);
                         }} required>
                             {year.yearDD?.map((item, idx) => {
-                                return (<option key={idx} value={item._id}>{item._id}</option>)
+                                return (<option key={idx} value={item}>{item}</option>)
                             })}
                         </Select>
                     </div>
@@ -58,9 +54,9 @@ const ViewPanelComponent = ({
                         <div className="w-30 lg:w-35 ">
                             <Label htmlFor="nval" value="n" />
                         </div>
-                        <TextInput className="w-1/2 bg-white" id="nval" type="number" value={filters.n} min={0.1} onChange={({ target }) => {
+                        <TextInput className="w-1/2 bg-white" id="nval" type="number" value={filters.n == 5 ? 0 : filters.n} min={0.1} onChange={({ target }) => {
                             selectN(target);
-                        }} step={0.1} shadow />
+                        }} step={0.1} shadow disabled={filters.n == 5 ? true : false} />
                     </div>
                     <div className="flex items-center w-full">
                         <div className="h-full flex items-center w-5 lg:w-10">

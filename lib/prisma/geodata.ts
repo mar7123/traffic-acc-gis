@@ -107,7 +107,17 @@ export async function getGeoDataByLoc(take: number, page: number, tahun: number,
                 },
             ]
         })
-        const count = await prisma.geoData.count();
+        const count = await prisma.geoData.count({
+            where: {
+                datetime_crash: {
+                    gte: new Date(String(tahun) + "-01-01"),
+                    lte: new Date(String(tahun + 1) + "-01-01"),
+                },
+                geoloc: {
+                    id: geoloc_id
+                }
+            },
+        });
         return { res, count };
     } catch (error) {
         return { error };

@@ -5,13 +5,10 @@ import data_kecelakaan from "./data kecelakaan jawa tengah.json";
 import { Prisma, GeoLocation, GeoData, Reports } from "@prisma/client";
 // import { writeFileSync } from "fs";
 
-type GeoLocInput = Omit<GeoLocation, 'id'> & {
+type GeoLocInput = Omit<GeoLocation, 'id' | 'createdAt'> & {
     geodatas: { create?: GeoDataInput[] },
 }
-type GeoDataInput = Omit<GeoData, 'id' | 'geoloc_id' | 'datetime_crash'> & {
-    datetime_crash: string,
-}
-type ReportsInput = Omit<Reports, 'id' | 'geoloc_id' | 'datetime_crash'> & {
+type GeoDataInput = Omit<GeoData, 'id' | 'geoloc_id' | 'createdAt' | 'datetime_crash'> & {
     datetime_crash: string,
 }
 
