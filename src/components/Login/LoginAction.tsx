@@ -13,6 +13,6 @@ export async function LoginAction(prevState: any, formData: FormData) {
         }
         return { message: "Success" };
     } catch (e) {
-        return { messasge: "Login failed" };
+        return { message: "Login failed" };
     }
 }

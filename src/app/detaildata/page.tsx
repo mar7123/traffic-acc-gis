@@ -42,7 +42,7 @@ async function DetailData({
                                     <span className="inline-block w-50 font-semibold">Waktu</span>
                                     <span className="font-semibold">: {res.datetime_crash.toISOString()}</span><br />
                                     <span className="inline-block w-50 font-semibold">Wilayah</span>
-                                    <span className="font-semibold">: {res.wilayah}</span><br />
+                                    <span className="font-semibold">: {res.geoloc.name2}</span><br />
                                     <span className="inline-block w-50 font-semibold">Jumlah Kecelakaan</span>
                                     <span className="font-semibold">: {res.jumlah_kecelakaan}</span><br />
                                     <span className="inline-block w-50 font-semibold">Meninggal</span>

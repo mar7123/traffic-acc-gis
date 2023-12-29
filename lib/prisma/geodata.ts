@@ -5,6 +5,19 @@ export async function getGeoDatas(take: number, page: number) {
         const res = await prisma.geoData.findMany({
             skip: (page - 1) * take,
             take: take,
+            select: {
+                id: true,
+                name: true,
+                datetime_crash: true,
+                latitude: true,
+                longitude: true,
+                jumlah_kecelakaan: true,
+                geoloc: {
+                    select: {
+                        name2: true
+                    }
+                }
+            },
             orderBy: [
                 {
                     datetime_crash: 'asc',
@@ -12,7 +25,7 @@ export async function getGeoDatas(take: number, page: number) {
                 {
                     id: 'asc',
                 },
-            ]
+            ],
         })
         const count = await prisma.geoData.count();
         return { res, count };
@@ -26,6 +39,13 @@ export async function getGeoDataByID(id: string) {
         const res = await prisma.geoData.findFirst({
             where: {
                 id: id
+            },
+            include: {
+                geoloc: {
+                    select: {
+                        name2: true
+                    }
+                }
             }
         })
         return { res };
@@ -41,9 +61,11 @@ export async function getGeoDataByName(name: string, take: number, page: number)
             take: take,
             where: {
                 OR: [{
-                    wilayah: {
-                        contains: name,
-                        mode: "insensitive"
+                    geoloc: {
+                        name2: {
+                            contains: name,
+                            mode: "insensitive"
+                        }
                     }
                 }, {
                     name: {
@@ -65,9 +87,11 @@ export async function getGeoDataByName(name: string, take: number, page: number)
         const count = await prisma.geoData.count({
             where: {
                 OR: [{
-                    wilayah: {
-                        contains: name,
-                        mode: "insensitive"
+                    geoloc: {
+                        name2: {
+                            contains: name,
+                            mode: "insensitive"
+                        }
                     }
                 }, {
                     name: {

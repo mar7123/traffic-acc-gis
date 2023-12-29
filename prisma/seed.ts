@@ -107,7 +107,7 @@ async function main() {
         data: {
             email: 'johndoe19@email.com',
             name: 'John Doe',
-            password: await bcrypt.hash('johndoe123', rand1),
+            password: await bcrypt.hash('John#Doe28', rand1),
             salt: rand1
         },
     })
@@ -116,7 +116,7 @@ async function main() {
         data: {
             email: 'janedoe19@email.com',
             name: 'Jane Doe',
-            password: await bcrypt.hash('janedoe123', rand2),
+            password: await bcrypt.hash('Jane#Doe28', rand2),
             salt: rand2
         },
     })

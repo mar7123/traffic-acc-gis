@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth/next"
 import { permanentRedirect } from "next/navigation";
 
-const DatabaseLayout = async ({
+const ReportLayout = async ({
     children
 }: {
     children: React.ReactNode
@@ -17,4 +17,4 @@ const DatabaseLayout = async ({
     )
 }
 
-export default DatabaseLayout;
+export default ReportLayout;

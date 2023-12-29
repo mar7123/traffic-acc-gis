@@ -263,7 +263,7 @@ const MapComponent = () => {
             }
         },
     ) => {
-        if (calc_var.count.data <= 1) {
+        if (calc_var.count.data == 0) {
             return data;
         }
         let tries = 0;
@@ -272,7 +272,7 @@ const MapComponent = () => {
             calc_var.upper.val = calc_var.mean + (calc_var.n * calc_var.std);
             calc_var.lower.val = calc_var.mean - (calc_var.n * calc_var.std);
             temp = assignColor(data, calc_var);
-            if (!calc_var.upper.exist || !calc_var.lower.exist) {
+            if ((!calc_var.upper.exist || !calc_var.lower.exist) && calc_var.std != 0) {
                 if (Math.abs(calc_var.max - calc_var.mean) < Math.abs(calc_var.mean - calc_var.min)) {
                     calc_var.n = Math.abs(calc_var.max - calc_var.mean) / calc_var.std;
                 } else {
@@ -317,36 +317,52 @@ const MapComponent = () => {
                     }
 
                     // Calculations
-                    let calc_var = filters;
-                    calc_var.n = 5;
-                    calc_var.upper.exist = false;
-                    calc_var.lower.exist = false;
-                    calc_var.count.high = 0;
-                    calc_var.count.med = 0;
-                    calc_var.count.low = 0;
+                    let calc_var = {
+                        ...filters,
+                        n: 5,
+                        upper: {
+                            ...filters.upper,
+                            exist: false,
+                        },
+                        lower: {
+                            ...filters.lower,
+                            exist: false,
+                        },
+                        count: {
+                            data: 0,
+                            high: 0,
+                            med: 0,
+                            low: 0
+                        },
+                        min: 0,
+                        max: 0
+                    };
                     mean(data, calc_var);
                     std(data, calc_var);
-                    if (calc_var.count.data != 0) {
-                        calc_var.max = data.reduce(function (prev, current) {
-                            if (prev.agregate.length == 1 && current.agregate.length == 1) {
-                                return (prev && prev.agregate[0]?._sum.jumlah_kecelakaan > current.agregate[0]?._sum.jumlah_kecelakaan) ? prev : current
+                    if (calc_var.count.data > 0) {
+                        let flag = { max: true, min: true };
+                        data.forEach((item) => {
+                            if (item.agregate.length == 1) {
+                                if (calc_var.min == 0 && flag.min) {
+                                    calc_var.min = item.agregate[0]._sum.jumlah_kecelakaan
+                                    flag.min = false;
+                                }
+                                if (calc_var.max == 0 && flag.max) {
+                                    calc_var.max = item.agregate[0]._sum.jumlah_kecelakaan
+                                    flag.max = false;
+                                }
+                                if (calc_var.max < item.agregate[0]._sum.jumlah_kecelakaan) {
+                                    calc_var.max = item.agregate[0]._sum.jumlah_kecelakaan;
+                                }
+                                if (calc_var.min > item.agregate[0]._sum.jumlah_kecelakaan) {
+                                    calc_var.min = item.agregate[0]._sum.jumlah_kecelakaan;
+                                }
                             }
-                            return current;
-                        }).agregate[0]._sum.jumlah_kecelakaan
-                        calc_var.min = data.reduce(function (prev, current) {
-                            if (prev.agregate.length == 1 && current.agregate.length == 1) {
-                                return (prev && prev.agregate[0]?._sum.jumlah_kecelakaan < current.agregate[0]?._sum.jumlah_kecelakaan) ? prev : current
-                            }
-                            return current;
-                        }).agregate[0]._sum.jumlah_kecelakaan
+                        })
                     }
                     const result = calculate(data, calc_var);
                     setGeolocs(result);
-                }).catch((err) => {
-                    window.alert("Error on fetching data")
                 })
-            }).catch((err) => {
-                window.alert("Error on fetching data")
             })
 
         } else {
@@ -465,9 +481,11 @@ const MapComponent = () => {
                                 position={[geodata_item.latitude, geodata_item.longitude]}
                             >
                                 <Popup>
-                                    {geodata_item.name} <br />
-                                    {new Date(geodata_item.datetime_crash).toUTCString()}<br />
-                                    {geodata_item.jumlah_kecelakaan} kecelakaan
+                                    <div className="max-w-[240px]">
+                                        {geodata_item.name} <br />
+                                        {new Date(geodata_item.datetime_crash).toUTCString()}<br />
+                                        {geodata_item.jumlah_kecelakaan} kecelakaan
+                                    </div>
                                 </Popup>
                             </Marker>
                         )
@@ -490,9 +508,11 @@ const MapComponent = () => {
                                 position={[report_item.latitude, report_item.longitude]}
                             >
                                 <Popup>
-                                    {report_item.name} <br />
-                                    {new Date(report_item.datetime_crash).toUTCString()}<br />
-                                    1 laporan
+                                    <div className="max-w-[240px]">
+                                        {report_item.name} <br />
+                                        {new Date(report_item.datetime_crash).toUTCString()}<br />
+                                        1 laporan
+                                    </div>
                                 </Popup>
                             </Marker>
                         )

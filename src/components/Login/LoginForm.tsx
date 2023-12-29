@@ -6,7 +6,6 @@ import { useFormState } from "react-dom";
 import { LoginAction } from "./LoginAction";
 import ModalComponent from "@/components/Modal/ModalComponent";
 
-
 const initialState = {
     message: null,
 }

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Loading from "./loading";
 
-const DashboardLayout = async ({
+const DetailDataLayout = async ({
     children
 }: {
     children: React.ReactNode
@@ -15,4 +15,4 @@ const DashboardLayout = async ({
     )
 }
 
-export default DashboardLayout;
+export default DetailDataLayout;

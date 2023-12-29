@@ -64,6 +64,12 @@ export async function findGeoCompByPoint(lat: number, lng: number) {
                             coordinates: [lng, lat]
                         }
                     }
+                },
+            },
+            options: {
+                projection: {
+                    _id: 1,
+                    name2: 1
                 }
             }
         });
