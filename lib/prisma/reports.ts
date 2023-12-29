@@ -33,7 +33,8 @@ export async function getReportByLoc(take: number, page: number, tahun: number, 
                 },
                 geoloc: {
                     id: geoloc_id
-                }
+                },
+                processed: false
             },
             orderBy: [
                 {
@@ -52,7 +53,8 @@ export async function getReportByLoc(take: number, page: number, tahun: number, 
                 },
                 geoloc: {
                     id: geoloc_id
-                }
+                },
+                processed: false
             },
         });
         return { res, count };
@@ -83,6 +85,44 @@ export async function getReportYear() {
                     }
                 }
             ]
+        });
+        return { res };
+    } catch (error) {
+        return { error };
+    }
+}
+
+export async function getReportCount() {
+    try {
+        const res = await prisma.reports.count();
+        return { res };
+    } catch (error) {
+        return { error };
+    }
+}
+
+export async function getEligibleReportCount() {
+    try {
+        const res = await prisma.reports.count({
+            where: {
+                geoloc_id: {
+                    not: null
+                },
+                processed: false
+            }
+        });
+        return { res };
+    } catch (error) {
+        return { error };
+    }
+}
+
+export async function getUnprocessedReportCount() {
+    try {
+        const res = await prisma.reports.count({
+            where: {
+                processed: false
+            }
         });
         return { res };
     } catch (error) {

@@ -20,6 +20,7 @@ export async function getGeoLocsPerYear(tahun: number) {
                                     gte: new Date(String(tahun) + "-01-01"),
                                     lte: new Date(String(tahun + 1) + "-01-01"),
                                 },
+                                processed: false
                             }
                         }
                     }

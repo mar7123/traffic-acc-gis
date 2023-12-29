@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Reports } from "@prisma/client";
 import ModalComponent from "@/components/Modal/ModalComponent";
 
-type ReportsMod = Omit<Reports, 'id' | 'geoloc_id' | 'createdAt'>
+type ReportsMod = Omit<Reports, 'id' | 'geoloc_id' | 'createdAt' | 'processed'>
 
 const ReportPanelComponent = ({
     markerRef

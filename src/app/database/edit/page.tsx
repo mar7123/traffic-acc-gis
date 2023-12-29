@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { editGeoData, getGeoDataByID } from "@/lib/prisma/geodata";
 import { GeoData } from "@prisma/client";
 
-type GeoDataMod = Omit<GeoData, 'id' | 'geoloc_id' | 'geojs' | 'latitude' | 'longitude' | 'datetime_crash' | 'wilayah'| 'createdAt'>
+type GeoDataMod = Omit<GeoData, 'id' | 'geoloc_id' | 'geojs' | 'latitude' | 'longitude' | 'datetime_crash' | 'wilayah' | 'createdAt'>
 interface GeoDataInput extends GeoDataMod {
     datetime_crash: string
 }
@@ -23,6 +23,12 @@ const EditFormPage = async ({
     async function editData(dataID: string, formData: FormData) {
         'use server'
 
+        if (Number(formData.get('jumlah_kecelakaan')?.toString()) == 0) {
+            permanentRedirect('/database/edit?' + new URLSearchParams({
+                id: String(searchParams.id),
+                error: "Jumlah kecelakaan tidak bisa 0"
+            }))
+        }
         const rawFormData: GeoDataInput = {
             name: formData.get('nama')?.toString() ?? "",
             datetime_crash: new Date(formData.get('waktu_kecelakaan')?.toString() ?? "").toISOString(),
@@ -36,13 +42,13 @@ const EditFormPage = async ({
         if (error) {
             permanentRedirect('/database/edit?' + new URLSearchParams({
                 id: String(searchParams.id),
-                error: "error updating data"
+                error: "Update data gagal"
             }))
         }
         revalidatePath('/')
         permanentRedirect('/database/edit?' + new URLSearchParams({
             id: String(searchParams.id),
-            message: "data updated"
+            message: "Update data berhasil"
         }))
     }
     if (typeof (searchParams.id) == "string") {
@@ -74,8 +80,10 @@ const EditFormPage = async ({
                                         Edit Data
                                     </h3>
                                 </div>
-                                <div className={showAlert + "p-4 mb-4 text-sm text-" + alertOpt.color + "-800 rounded-lg bg-" + alertOpt.color + "-50 dark:bg-gray-800 dark:text-" + alertOpt.color + "-400"} role="alert">
-                                    <span className="font-medium">{alertOpt.msg}!</span>
+                                <div className="flex w-[90%] mx-auto">
+                                    <div className={showAlert + "p-4 mt-2 border-2 border-" + alertOpt.color + "-800 text-sm text-" + alertOpt.color + "-800 rounded-lg bg-" + alertOpt.color + "-50 dark:bg-gray-500 dark:text-" + alertOpt.color + "-400 w-full mx-auto"} role="alert">
+                                        <span className="font-medium">{alertOpt.msg}</span>
+                                    </div>
                                 </div>
                                 <form className="flex w-full flex-col gap-4 py-4 px-8" action={editDataWithId}>
                                     <div>

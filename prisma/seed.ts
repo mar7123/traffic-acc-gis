@@ -180,7 +180,7 @@ async function main() {
                     coordinates: [replng, replat]
                 }
             },
-            datetime_crash: new Date().toISOString(),
+            datetime_crash: new Date("2018-02-02").toISOString(),
             jumlah_kecelakaan: 1,
             meninggal: 0,
             luka_berat: 0,
@@ -201,6 +201,92 @@ async function main() {
             geojs: {
                 type: "Feature",
                 properties: {
+                    name: "example report",
+                },
+                geometry: {
+                    type: "Point",
+                    coordinates: [replng, replat]
+                }
+            },
+            datetime_crash: new Date("2018-02-02").toISOString(),
+            jumlah_kecelakaan: 1,
+            meninggal: 0,
+            luka_berat: 0,
+            luka_ringan: 1,
+            kerugian: 100000,
+            geoloc: {
+                connect: {
+                    id: geopolyfind[0]._id.$oid
+                }
+            },
+            processed: true
+        }
+    });
+    await prisma.reports.create({
+        data: {
+            name: "example report 3",
+            latitude: replat,
+            longitude: replng,
+            geojs: {
+                type: "Feature",
+                properties: {
+                    name: "example report",
+                },
+                geometry: {
+                    type: "Point",
+                    coordinates: [replng, replat]
+                }
+            },
+            datetime_crash: new Date("2018-03-03").toISOString(),
+            jumlah_kecelakaan: 1,
+            meninggal: 2,
+            luka_berat: 1,
+            luka_ringan: 0,
+            kerugian: 100000,
+            geoloc: {
+                connect: {
+                    id: geopolyfind[0]._id.$oid
+                }
+            },
+        }
+    });
+    await prisma.geoData.create({
+        data: {
+            name: "example processed report 3",
+            wilayah: "",
+            latitude: replat,
+            longitude: replng,
+            geojs: {
+                type: "Feature",
+                properties: {
+                    name: "example report",
+                },
+                geometry: {
+                    type: "Point",
+                    coordinates: [replng, replat]
+                }
+            },
+            datetime_crash: new Date("2018-03-03").toISOString(),
+            jumlah_kecelakaan: 1,
+            meninggal: 2,
+            luka_berat: 1,
+            luka_ringan: 0,
+            kerugian: 100000,
+            geoloc: {
+                connect: {
+                    id: geopolyfind[0]._id.$oid
+                }
+            },
+        }
+    });
+    await prisma.reports.create({
+        data: {
+            name: "example report 4",
+            latitude: replat,
+            longitude: replng,
+            geojs: {
+                type: "Feature",
+                properties: {
                     name: "example report 2",
                 },
                 geometry: {
@@ -208,7 +294,7 @@ async function main() {
                     coordinates: [replng, replat]
                 }
             },
-            datetime_crash: new Date().toISOString(),
+            datetime_crash: new Date("2018-02-02").toISOString(),
             jumlah_kecelakaan: 1,
             meninggal: 0,
             luka_berat: 0,

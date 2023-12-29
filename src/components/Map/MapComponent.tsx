@@ -4,7 +4,8 @@ import Loader from "@/components/common/Loader";
 import ViewPanelComponent from "./ViewPanelComponent";
 import ReportPanelComponent from "./ReportPanelComponent";
 import { useSearchParams } from 'next/navigation'
-import { MapContainer, TileLayer, GeoJSON, useMapEvents, useMap, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, useMapEvents, useMap, Popup, Marker } from "react-leaflet";
+import MarkerClusterGroup from 'react-leaflet-cluster'
 import L from "leaflet";
 import MarkerIcon from "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/leaflet.css";
@@ -341,7 +342,11 @@ const MapComponent = () => {
                     }
                     const result = calculate(data, calc_var);
                     setGeolocs(result);
+                }).catch((err) => {
+                    window.alert("Error on fetching data")
                 })
+            }).catch((err) => {
+                window.alert("Error on fetching data")
             })
 
         } else {
@@ -444,42 +449,50 @@ const MapComponent = () => {
                     const extent = bbox(item.geojs);
                     const geodata_focus = (item.geodatas != undefined ? (item.geodatas.map((geodata_item) => {
                         return (
-                            <GeoJSON
-                                key={JSON.stringify(geodata_item)}
-                                data={geodata_item.geojs}
-                                pointToLayer={function (geoJsonPoint, latlng) {
-                                    return L.marker(latlng, {
-                                        icon: new L.Icon({
-                                            iconUrl: MarkerIcon.src,
-                                            iconRetinaUrl: MarkerIcon.src,
-                                            iconSize: [25, 41],
-                                            iconAnchor: [12.5, 41],
-                                            popupAnchor: [0, -41],
-                                        })
-                                    }).bindPopup(`${geodata_item.name}</br>${geodata_item.jumlah_kecelakaan} kecelakaan`);
+                            <Marker
+                                icon={
+                                    new L.Icon({
+                                        iconUrl: MarkerIcon.src,
+                                        iconRetinaUrl: MarkerIcon.src,
+                                        iconSize: [25, 41],
+                                        iconAnchor: [12.5, 41],
+                                        popupAnchor: [0, -41],
+                                        // shadowUrl: MarkerShadow.src,
+                                        // shadowSize: [41, 41],
+                                    })
                                 }
-                                }
-                            />
+                                position={[geodata_item.latitude, geodata_item.longitude]}
+                            >
+                                <Popup>
+                                    {geodata_item.name} <br />
+                                    {new Date(geodata_item.datetime_crash).toUTCString()}<br />
+                                    {geodata_item.jumlah_kecelakaan} kecelakaan
+                                </Popup>
+                            </Marker>
                         )
                     })) : (null));
                     const georeport_focus = (item.reports != undefined ? (item.reports.map((report_item) => {
                         return (
-                            <GeoJSON
-                                key={JSON.stringify(report_item)}
-                                data={report_item.geojs}
-                                pointToLayer={function (geoJsonPoint, latlng) {
-                                    return L.marker(latlng, {
-                                        icon: new L.Icon({
-                                            iconUrl: MarkerIcon.src,
-                                            iconRetinaUrl: MarkerIcon.src,
-                                            iconSize: [25, 41],
-                                            iconAnchor: [12.5, 41],
-                                            popupAnchor: [0, -41],
-                                        })
-                                    }).bindPopup(`${report_item.name}</br>${report_item.jumlah_kecelakaan} laporan`);
+                            <Marker
+                                icon={
+                                    new L.Icon({
+                                        iconUrl: MarkerIcon.src,
+                                        iconRetinaUrl: MarkerIcon.src,
+                                        iconSize: [25, 41],
+                                        iconAnchor: [12.5, 41],
+                                        popupAnchor: [0, -41],
+                                        // shadowUrl: MarkerShadow.src,
+                                        // shadowSize: [41, 41],
+                                    })
                                 }
-                                }
-                            />
+                                position={[report_item.latitude, report_item.longitude]}
+                            >
+                                <Popup>
+                                    {report_item.name} <br />
+                                    {new Date(report_item.datetime_crash).toUTCString()}<br />
+                                    1 laporan
+                                </Popup>
+                            </Marker>
                         )
                     })) : (null));
                     return (
@@ -570,8 +583,10 @@ const MapComponent = () => {
                                     </div>
                                 </Popup>
                             </GeoJSON>
-                            {geodata_focus}
-                            {georeport_focus}
+                            <MarkerClusterGroup chunkedLoading>
+                                {geodata_focus}
+                                {georeport_focus}
+                            </MarkerClusterGroup>
                         </div>
                     )
                 })}

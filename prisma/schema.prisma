@@ -102,5 +102,6 @@ model Reports {
     luka_berat        Float
     luka_ringan       Float
     kerugian          Float
+    processed         Boolean      @default(false)
     createdAt         DateTime     @default(now())
 }
