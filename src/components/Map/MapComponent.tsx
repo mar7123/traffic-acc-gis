@@ -450,6 +450,7 @@ const MapComponent = () => {
                     const geodata_focus = (item.geodatas != undefined ? (item.geodatas.map((geodata_item) => {
                         return (
                             <Marker
+                                key={JSON.stringify(geodata_item)}
                                 icon={
                                     new L.Icon({
                                         iconUrl: MarkerIcon.src,
@@ -474,6 +475,7 @@ const MapComponent = () => {
                     const georeport_focus = (item.reports != undefined ? (item.reports.map((report_item) => {
                         return (
                             <Marker
+                                key={JSON.stringify(report_item)}
                                 icon={
                                     new L.Icon({
                                         iconUrl: MarkerIcon.src,
