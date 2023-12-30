@@ -1,7 +1,14 @@
 import Breadcrumb from "@/components/Breadcrumbs/BreadcrumbComponent";
 import { getGeoDataByID } from "@/lib/prisma/geodata";
+import { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 import dynamic from "next/dynamic";
+
+export const metadata: Metadata = {
+    title: "Detail Data Page | TRASK",
+    description: "TRASK adalah sistem informasi geografis yang memetakan data berkaitan dengan risiko kecelakaan",
+    // other metadata
+};
 
 const DetailMapComponent = dynamic(() => import('@/components/DetailMap/DetailMapComponent'), { ssr: false });
 

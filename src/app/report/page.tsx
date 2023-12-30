@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import ReportDataComponent from "@/components/Report/ReportDataComponent";
 
 export const metadata: Metadata = {
-    title: "Database Page | TRASK",
+    title: "Reports Page | TRASK",
     description: "TRASK adalah sistem informasi geografis yang memetakan data berkaitan dengan risiko kecelakaan",
     // other metadata
 };
