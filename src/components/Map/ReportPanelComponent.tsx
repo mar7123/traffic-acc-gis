@@ -5,7 +5,10 @@ import { useState } from "react";
 import { Reports } from "@prisma/client";
 import ModalComponent from "@/components/Modal/ModalComponent";
 
-type ReportsMod = Omit<Reports, 'id' | 'geoloc_id' | 'createdAt' | 'processed'>
+type ReportsMod = Omit<Reports, 'id' | 'geoloc_id' | 'createdAt' | 'processed' | 'datetime_crash'>
+interface ReportInput extends ReportsMod {
+    datetime_crash: string,
+}
 
 const ReportPanelComponent = ({
     markerRef
@@ -32,8 +35,8 @@ const ReportPanelComponent = ({
         interval: undefined,
         time_disable: false,
     });
-    const [formData, setFormData] = useState<ReportsMod>({
-        datetime_crash: new Date(),
+    const [formData, setFormData] = useState<ReportInput>({
+        datetime_crash: "",
         name: "",
         latitude: 0,
         longitude: 0,
@@ -48,6 +51,10 @@ const ReportPanelComponent = ({
         if (markerRef.marker) {
             if (formData.name == "") {
                 setOptModal({ message: "Input identifier kosong", status: "error", open: true })
+                return
+            }
+            if (formData.datetime_crash == null) {
+                setOptModal({ message: "Input waktu kecelakaan", status: "error", open: true })
                 return
             }
             setLoading(true);
@@ -87,7 +94,7 @@ const ReportPanelComponent = ({
         }
     }
     const getMarkerGeoComp = async () => {
-        if(markerRef.marker){
+        if (markerRef.marker) {
             const res = await fetch('/api/geoloc/findarea?' + new URLSearchParams({
                 lat: String(markerRef ? markerRef.marker.getLatLng().lat : 0),
                 lng: String(markerRef ? markerRef.marker.getLatLng().lng : 0),
@@ -110,7 +117,10 @@ const ReportPanelComponent = ({
             {loading ? (<Loader />) : (null)}
             <div className="overflow-y-auto">
                 <ModalComponent optModal={optModal} setModal={setModal} />
-                <div className="grid grid-cols-1 gap-3 py-2 px-4">
+                <form className="grid grid-cols-1 gap-3 py-2 px-4" onSubmit={(e) => {
+                    e.preventDefault();
+                    addReport();
+                }}>
                     <div className="h-full w-full">
                         <div className="mb-2">
                             <Label htmlFor="datetime_crash" value="Waktu Kecelakaan" />
@@ -118,10 +128,10 @@ const ReportPanelComponent = ({
                         <div className="flex items-center gap-2 mb-1">
                             <Checkbox id="now" onChange={(e) => {
                                 if (e.target.checked) {
-                                    setFormData({ ...formData, datetime_crash: new Date() });
+                                    setFormData({ ...formData, datetime_crash: new Date().toISOString() });
                                     setCheckTime({
                                         interval: setInterval(() => {
-                                            setFormData({ ...formData, datetime_crash: new Date() });
+                                            setFormData({ ...formData, datetime_crash: new Date().toISOString() });
                                         }, 60000), time_disable: true
                                     })
                                 } else {
@@ -131,19 +141,21 @@ const ReportPanelComponent = ({
                             }} />
                             <Label htmlFor="now">sekarang</Label>
                         </div>
-                        <input type="datetime-local" id="datetime_crash" name="datetime_crash" onChange={({ target }) => { setFormData({ ...formData, datetime_crash: new Date(target.value) }) }} value={formData.datetime_crash.toLocaleString('sv-SE').substring(0, 16)} disabled={checkTime.time_disable}></input>
+                        <input type="datetime-local" id="datetime_crash" name="datetime_crash" onChange={({ target }) => {
+                            setFormData({ ...formData, datetime_crash: (target.value == "" ? "" : new Date(target.value).toISOString()) })
+                        }} value={formData.datetime_crash != "" ? new Date(formData.datetime_crash).toLocaleString('sv-SE').substring(0, 16) : ""} readOnly={checkTime.time_disable} required></input>
                     </div>
                     <div className="h-full w-full">
                         <div className="mb-2">
                             <Label htmlFor="latitude" value="Latitude" />
                         </div>
-                        <TextInput id="latitude" type="number" value={markerRef.marker ? markerRef.marker.getLatLng().lat : 0} shadow disabled />
+                        <TextInput id="latitude" type="number" value={markerRef.marker ? markerRef.marker.getLatLng().lat : 0} shadow readOnly required />
                     </div>
                     <div className="h-full w-full">
                         <div className="mb-2">
                             <Label htmlFor="longitude" value="Longitude" />
                         </div>
-                        <TextInput id="longitude" type="number" value={markerRef.marker ? markerRef.marker.getLatLng().lng : 0} shadow disabled />
+                        <TextInput id="longitude" type="number" value={markerRef.marker ? markerRef.marker.getLatLng().lng : 0} shadow readOnly required />
                     </div>
                     <div className="h-full w-full">
                         <div className="mb-2">
@@ -175,8 +187,8 @@ const ReportPanelComponent = ({
                         </div>
                         <TextInput id="material_loss" type="number" onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0} onChange={({ target }) => { setFormData({ ...formData, kerugian: Number(target.value) }) }} value={formData.kerugian} shadow required />
                     </div>
-                    <Button type="submit" onClick={addReport}>Submit</Button>
-                </div>
+                    <Button type="submit">Submit</Button>
+                </form>
             </div>
         </>
     )
