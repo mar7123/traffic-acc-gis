@@ -142,6 +142,9 @@ const ReportPanelComponent = ({
                             <Label htmlFor="now">sekarang</Label>
                         </div>
                         <input type="datetime-local" id="datetime_crash" name="datetime_crash" onChange={({ target }) => {
+                            if (target.value != "" && new Date(target.value) > new Date()) {
+                                target.value = new Date().toLocaleString('sv-SE').substring(0, 16);
+                            }
                             setFormData({ ...formData, datetime_crash: (target.value == "" ? "" : new Date(target.value).toISOString()) })
                         }} value={formData.datetime_crash != "" ? new Date(formData.datetime_crash).toLocaleString('sv-SE').substring(0, 16) : ""} readOnly={checkTime.time_disable} required></input>
                     </div>

@@ -158,7 +158,11 @@ export default function AddForm() {
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="longitude" value="Longitude" />
                                 </div>
-                                <TextInput id="longitude" name="longitude" type="number" readOnly value={mapLocation.markerRef ? mapLocation.markerRef.getLatLng().lng : ""} required shadow />
+                                <TextInput id="longitude" name="longitude" type="number" readOnly value={mapLocation.markerRef ? mapLocation.markerRef.getLatLng().lng : ""} onChange={(e) => {
+                                    if (e.target.value != "" && new Date(e.target.value) > new Date()) {
+                                        e.target.value = new Date().toLocaleString('sv-SE').substring(0, 16);
+                                    }
+                                }} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
@@ -171,7 +175,11 @@ export default function AddForm() {
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="waktu_kecelakaan" value="Waktu Kecelakaan" />
                                 </div>
-                                <TextInput id="waktu_kecelakaan" name="waktu_kecelakaan" type="datetime-local" placeholder="Masukan waktu kecelakaan" required shadow />
+                                <TextInput id="waktu_kecelakaan" name="waktu_kecelakaan" type="datetime-local" placeholder="Masukan waktu kecelakaan" onChange={(e) => {
+                                    if (e.target.value != "" && new Date(e.target.value) > new Date()) {
+                                        e.target.value = new Date().toLocaleString('sv-SE').substring(0, 16);
+                                    }
+                                }} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">

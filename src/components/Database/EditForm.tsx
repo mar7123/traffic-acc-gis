@@ -68,7 +68,11 @@ export default function EditForm({ data }: { data: GeoData }) {
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="waktu_kecelakaan" value="Waktu Kecelakaan" />
                                 </div>
-                                <TextInput id="waktu_kecelakaan" name="waktu_kecelakaan" type="datetime-local" placeholder="Masukan waktu kecelakaan" defaultValue={data.datetime_crash.toLocaleString('sv-SE').substring(0, 16)} required shadow />
+                                <TextInput id="waktu_kecelakaan" name="waktu_kecelakaan" type="datetime-local" placeholder="Masukan waktu kecelakaan" defaultValue={data.datetime_crash.toLocaleString('sv-SE').substring(0, 16)} onChange={(e) => {
+                                    if (e.target.value != "" && new Date(e.target.value) > new Date()) {
+                                        e.target.value = new Date().toLocaleString('sv-SE').substring(0, 16);
+                                    }
+                                }} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
