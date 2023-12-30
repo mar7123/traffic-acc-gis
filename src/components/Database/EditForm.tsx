@@ -5,6 +5,7 @@ import { Button, Label, TextInput } from 'flowbite-react';
 import { useFormState } from "react-dom";
 import ModalComponent from "@/components/Modal/ModalComponent";
 import { GeoData } from "@prisma/client";
+import { useRouter } from 'next/navigation'
 
 const initialState = {
     message: null,
@@ -22,12 +23,17 @@ export default function EditForm({ data }: { data: GeoData }) {
         status: "success",
         message: ""
     });
-
+    const router = useRouter()
     const setModal = ({ open, status, message }: { open: boolean, status: "success" | "error", message: string }) => {
         setOptModal({ open: open, status: status, message: message });
     }
     useEffect(() => {
-        if (state.message == null || state.message == "Success") {
+        if (state.message == null) {
+            return
+        }
+        if (state.message == "Update data berhasil") {
+            setOptModal({ open: true, status: "success", message: state.message });
+            router.push('/database')
             return
         }
         setDisableEdit(false);

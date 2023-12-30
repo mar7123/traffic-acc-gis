@@ -7,14 +7,16 @@ import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import MarkerIcon from "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/leaflet.css";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
+import { useRouter } from 'next/navigation'
 
 const initialState = {
     message: null,
 }
 
 export default function AddForm() {
+    const router = useRouter()
     const center = {
         lat: -3.3675549,
         lng: 117.1377759,
@@ -99,6 +101,11 @@ export default function AddForm() {
         if (state.message == null || state.message == "Success") {
             return
         }
+        if (state.message == "Tambah data berhasil") {
+            setOptModal({ open: true, status: "success", message: state.message });
+            router.push('/database')
+            return
+        }
         setDisableAdd(false);
         setOptModal({ open: true, status: "error", message: state.message });
     }, [state])
@@ -167,31 +174,31 @@ export default function AddForm() {
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="jumlah_kecelakaan" value="Jumlah Kecelakaan" />
                                 </div>
-                                <TextInput id="jumlah_kecelakaan" name="jumlah_kecelakaan" type="number" min={1} placeholder="Masukan jumlah kecelakaan" onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} required shadow />
+                                <TextInput id="jumlah_kecelakaan" name="jumlah_kecelakaan" type="number" min={1} placeholder="Masukan jumlah kecelakaan" onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="meninggal" value="Meninggal" />
                                 </div>
-                                <TextInput id="meninggal" name="meninggal" type="number" min={0} placeholder="Masukan jumlah korban meninggal" onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} required shadow />
+                                <TextInput id="meninggal" name="meninggal" type="number" min={0} placeholder="Masukan jumlah korban meninggal" onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="luka_berat" value="Korban Luka Berat" />
                                 </div>
-                                <TextInput id="luka_berat" name="luka_berat" type="number" min={0} placeholder="Masukan jumlah korban luka berat" onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} required shadow />
+                                <TextInput id="luka_berat" name="luka_berat" type="number" min={0} placeholder="Masukan jumlah korban luka berat" onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="luka_ringan" value="Korban Luka Ringan" />
                                 </div>
-                                <TextInput id="luka_ringan" name="luka_ringan" type="number" min={0} placeholder="Masukan jumlah korban luka ringan" onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} required shadow />
+                                <TextInput id="luka_ringan" name="luka_ringan" type="number" min={0} placeholder="Masukan jumlah korban luka ringan" onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="kerugian" value="Jumlah kerugian" />
                                 </div>
-                                <TextInput id="kerugian" name="kerugian" type="number" min={0} placeholder="Masukan jumlah kerugian" required onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} shadow />
+                                <TextInput id="kerugian" name="kerugian" type="number" min={0} placeholder="Masukan jumlah kerugian" required onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} shadow />
                             </div>
                             <div className="relative flex w-full h-full flex-col">
                                 {disableAdd ? (
