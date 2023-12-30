@@ -17,7 +17,7 @@ const EditFormPage = async ({
         const { res } = await getGeoDataByID(searchParams.id);
         if (res) {
             return (
-                <div className="flex flex-col items-center min-h-screen h-fit w-full px-[2vw] sm:px-[5vw] lg:px-[10vw] py-5 sm:py-10 lg:py-15 bg-gray-100">
+                <div className="flex flex-col items-center min-h-screen h-fit w-full px-[2vw] sm:px-[5vw] lg:px-[8vw] py-5 sm:py-10 lg:py-15 bg-gray-100">
                     <EditForm data={res} />
                 </div>
             )

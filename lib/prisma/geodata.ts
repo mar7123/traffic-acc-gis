@@ -59,6 +59,19 @@ export async function getGeoDataByName(name: string, take: number, page: number)
         const res = await prisma.geoData.findMany({
             skip: (page - 1) * take,
             take: take,
+            select: {
+                id: true,
+                name: true,
+                datetime_crash: true,
+                latitude: true,
+                longitude: true,
+                jumlah_kecelakaan: true,
+                geoloc: {
+                    select: {
+                        name2: true
+                    }
+                }
+            },
             where: {
                 OR: [{
                     geoloc: {
@@ -82,7 +95,7 @@ export async function getGeoDataByName(name: string, take: number, page: number)
                 {
                     id: 'asc',
                 },
-            ]
+            ],
         });
         const count = await prisma.geoData.count({
             where: {

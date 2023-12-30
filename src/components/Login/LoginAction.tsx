@@ -11,7 +11,7 @@ export async function LoginAction(prevState: any, formData: FormData) {
         if(status?.error){
             return { message: status?.error };
         }
-        return { message: "Success" };
+        return { message: "success" };
     } catch (e) {
         return { message: "Login failed" };
     }

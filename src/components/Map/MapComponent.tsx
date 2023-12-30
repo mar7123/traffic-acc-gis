@@ -65,7 +65,13 @@ const MapComponent = () => {
         fillOpacity: 0.4,
         color: "#1f2937",
     }
-    const [markerRef, setMarkerRef] = useState<L.Marker<any> | undefined>(undefined);
+    const [markerRef, setMarkerRef] = useState<{
+        marker: L.Marker<any> | undefined,
+        toggle: boolean,
+    }>({
+        marker: undefined,
+        toggle: true,
+    });
     const [showPanel, setShowPanel] = useState(true);
     const [year, setYear] = useState<{ selected: number, yearDD: number[] }>({
         selected: 0,
@@ -269,8 +275,8 @@ const MapComponent = () => {
         let tries = 0;
         let temp = data;
         while ((!calc_var.upper.exist || !calc_var.lower.exist) && tries != 3) {
-            calc_var.upper.val = calc_var.mean + (calc_var.n * calc_var.std);
-            calc_var.lower.val = calc_var.mean - (calc_var.n * calc_var.std);
+            calc_var.upper.val = Number((calc_var.mean + (calc_var.n * calc_var.std)).toFixed(3));
+            calc_var.lower.val = Number((calc_var.mean - (calc_var.n * calc_var.std)).toFixed(3));
             temp = assignColor(data, calc_var);
             if ((!calc_var.upper.exist || !calc_var.lower.exist) && calc_var.std != 0) {
                 if (Math.abs(calc_var.max - calc_var.mean) < Math.abs(calc_var.mean - calc_var.min)) {
@@ -284,12 +290,11 @@ const MapComponent = () => {
         }
         setFilters({
             ...filters,
-            count: {
-                ...filters.count,
-                high: calc_var.count.high,
-                med: calc_var.count.med,
-                low: calc_var.count.low,
-            },
+            max: calc_var.max,
+            min: calc_var.min,
+            upper: calc_var.upper,
+            lower: calc_var.lower,
+            count: calc_var.count,
             mean: (Number(calc_var.mean.toFixed(3)) == undefined ? calc_var.mean : Number(calc_var.mean.toFixed(3))),
             std: (Number(calc_var.std.toFixed(3)) == undefined ? calc_var.std : Number(calc_var.std.toFixed(3))),
             n: calc_var.n
@@ -394,8 +399,9 @@ const MapComponent = () => {
         const map = useMapEvents({
             click: (e) => {
                 const { lat, lng } = e.latlng;
-                if (markerRef) {
-                    markerRef.setLatLng([lat, lng])
+                if (markerRef.marker) {
+                    markerRef.marker.setLatLng([lat, lng])
+                    setMarkerRef({ ...markerRef, toggle: !markerRef.toggle })
                     return
                 }
                 const marker = L.marker([lat, lng],
@@ -408,56 +414,25 @@ const MapComponent = () => {
                             popupAnchor: [0, -41],
                         }),
                     });
-                setMarkerRef(marker);
+                setMarkerRef({ ...markerRef, marker: marker });
                 marker.addTo(map);
             }
         });
         return null;
     }
 
-    const MapPanel = ({ mode }: { mode: string }) => {
-        const MinBttn = () => {
-            return (
-                <Button type="submit" color="custom-link bg-transparent focus:ring-0" className="w-fit custom-link bg-transparent focus:ring-0" onClick={(e: any) => {
-                    setShowPanel(false);
-                }}>
-                    <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M23 4C23 2.34315 21.6569 1 20 1H8C6.34315 1 5 2.34315 5 4V5H4C2.34315 5 1 6.34315 1 8V20C1 21.6569 2.34315 23 4 23H16C17.6569 23 19 21.6569 19 20V19H20C21.6569 19 23 17.6569 23 16V4ZM19 17H20C20.5523 17 21 16.5523 21 16V4C21 3.44772 20.5523 3 20 3H8C7.44772 3 7 3.44772 7 4V5H16C17.6569 5 19 6.34315 19 8V17ZM16 7C16.5523 7 17 7.44772 17 8V20C17 20.5523 16.5523 21 16 21H4C3.44772 21 3 20.5523 3 20V8C3 7.44772 3.44772 7 4 7H16Z" fill="#ffffff"></path> </g></svg>
-                </Button>
-            );
-        };
-        if (mode == "report") {
-            return (
-                <>
-                    <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
-                        <span className="text-white text-md">
-                            Panel Laporan Kecelakaan
-                        </span>
-                        <MinBttn />
-                    </div>
-                    <ReportPanelComponent markerRef={markerRef} />
-                </>
-            );
-        }
+    const MinBttn = () => {
         return (
-            <>
-                <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
-                    <span className="text-white text-md">
-                        Panel Tampilan Data
-                    </span>
-                    <MinBttn />
-                </div>
-                <ViewPanelComponent filters={filters} year={year} selectYear={selectYear} selectN={selectN} />
-            </>
+            <Button type="submit" color="custom-link bg-transparent focus:ring-0" className="w-fit custom-link bg-transparent focus:ring-0" onClick={(e: any) => {
+                setShowPanel(false);
+            }}>
+                <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M23 4C23 2.34315 21.6569 1 20 1H8C6.34315 1 5 2.34315 5 4V5H4C2.34315 5 1 6.34315 1 8V20C1 21.6569 2.34315 23 4 23H16C17.6569 23 19 21.6569 19 20V19H20C21.6569 19 23 17.6569 23 16V4ZM19 17H20C20.5523 17 21 16.5523 21 16V4C21 3.44772 20.5523 3 20 3H8C7.44772 3 7 3.44772 7 4V5H16C17.6569 5 19 6.34315 19 8V17ZM16 7C16.5523 7 17 7.44772 17 8V20C17 20.5523 16.5523 21 16 21H4C3.44772 21 3 20.5523 3 20V8C3 7.44772 3.44772 7 4 7H16Z" fill="#ffffff"></path> </g></svg>
+            </Button>
         );
-    }
+    };
 
-    const MapLayersComponent = ({ mode }: { mode: string }) => {
+    const MapViewMode = () => {
         const map = useMap();
-        if (mode == "report") {
-            return (
-                <MarkerOnClick />
-            );
-        }
         return (
             <>
                 {geolocs?.map((item: Geolocs, idx) => {
@@ -632,12 +607,36 @@ const MapComponent = () => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <MapLayersComponent mode={filters.mode} />
+                {filters.mode == "view" ? (
+                    <MapViewMode />
+                ) : (filters.mode == "report" ? (
+                    <MarkerOnClick />
+                ) : (null))}
             </MapContainer>
             {showPanel ? (
                 <div className="fixed right-auto sm:right-[2vw] top-[25vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[400px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black ">
                     <div className="h-full w-full grid grid-cols-1 content-start">
-                        <MapPanel mode={filters.mode} />
+                        {filters.mode == "view" ? (
+                            <>
+                                <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
+                                    <span className="text-white text-md">
+                                        Panel Tampilan Data
+                                    </span>
+                                    <MinBttn />
+                                </div>
+                                <ViewPanelComponent filters={filters} year={year} selectYear={selectYear} selectN={selectN} />
+                            </>
+                        ) : (filters.mode == "report" ? (
+                            <>
+                                <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
+                                    <span className="text-white text-md">
+                                        Panel Laporan Kecelakaan
+                                    </span>
+                                    <MinBttn />
+                                </div>
+                                <ReportPanelComponent markerRef={markerRef} />
+                            </>
+                        ) : (null))}
                     </div>
                 </div>
             ) : (null)}
@@ -647,10 +646,10 @@ const MapComponent = () => {
                         <Tooltip content="Tampilan Data" theme={{ target: "absolute w-[50px] h-[50px] flex flex-col items-center bg-sky-400 rounded-full shadow-md " + ((filters.mode == "view" && showPanel) ? "bottom-4" : "bottom-3"), base: "absolute inline-block whitespace-nowrap z-10 rounded-lg py-2 px-3 text-sm font-medium shadow-sm" }}>
                             <button className="w-full h-full flex flex-col items-center" onClick={() => {
                                 if (filters.mode != "view") {
-                                    if (markerRef) {
-                                        markerRef.remove();
+                                    if (markerRef.marker) {
+                                        markerRef.marker.remove();
                                     }
-                                    setMarkerRef(undefined);
+                                    setMarkerRef({ ...markerRef, marker: undefined });
                                     setFilters({ ...filters, n: 0, mode: "view", toggle: !filters.toggle });
                                     window.history.replaceState("", "", "/map?mode=view");
                                     setShowPanel(true);

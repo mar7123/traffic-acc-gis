@@ -20,7 +20,7 @@ export async function editDataAction(prevState: any, formData: FormData) {
         const rawFormData: GeoDataEdit = {
             name: formData.get('nama')?.toString() ?? "",
             datetime_crash: new Date(formData.get('waktu_kecelakaan')?.toString() ?? "").toISOString(),
-            jumlah_kecelakaan: Number(formData.get('jumlah_kecelakaan')?.toString()),
+            jumlah_kecelakaan: Number(formData.get('jumlah_kecelakaan')),
             meninggal: Number(formData.get('meninggal')),
             luka_berat: Number(formData.get('luka_berat')),
             luka_ringan: Number(formData.get('luka_ringan')),

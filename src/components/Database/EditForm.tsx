@@ -65,31 +65,31 @@ export default function EditForm({ data }: { data: GeoData }) {
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="jumlah_kecelakaan" value="Jumlah Kecelakaan" />
                                 </div>
-                                <TextInput id="jumlah_kecelakaan" name="jumlah_kecelakaan" type="number" placeholder="Masukan jumlah kecelakaan" defaultValue={data.jumlah_kecelakaan} required shadow />
+                                <TextInput id="jumlah_kecelakaan" name="jumlah_kecelakaan" type="number" placeholder="Masukan jumlah kecelakaan" defaultValue={data.jumlah_kecelakaan} onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="meninggal" value="Meninggal" />
                                 </div>
-                                <TextInput id="meninggal" name="meninggal" type="number" placeholder="Masukan jumlah korban meninggal" defaultValue={data.meninggal} required shadow />
+                                <TextInput id="meninggal" name="meninggal" type="number" placeholder="Masukan jumlah korban meninggal" defaultValue={data.meninggal} onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="luka_berat" value="Korban Luka Berat" />
                                 </div>
-                                <TextInput id="luka_berat" name="luka_berat" type="number" placeholder="Masukan jumlah korban luka berat" defaultValue={data.luka_berat} required shadow />
+                                <TextInput id="luka_berat" name="luka_berat" type="number" placeholder="Masukan jumlah korban luka berat" defaultValue={data.luka_berat} onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="luka_ringan" value="Korban Luka Ringan" />
                                 </div>
-                                <TextInput id="luka_ringan" name="luka_ringan" type="number" placeholder="Masukan jumlah korban luka ringan" defaultValue={data.luka_ringan} required shadow />
+                                <TextInput id="luka_ringan" name="luka_ringan" type="number" placeholder="Masukan jumlah korban luka ringan" defaultValue={data.luka_ringan} onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="kerugian" value="Jumlah kerugian" />
                                 </div>
-                                <TextInput id="kerugian" name="kerugian" type="number" placeholder="Masukan jumlah kerugian" defaultValue={data.kerugian} required shadow />
+                                <TextInput id="kerugian" name="kerugian" type="number" placeholder="Masukan jumlah kerugian" defaultValue={data.kerugian} onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} required shadow />
                             </div>
                             <div className="relative flex w-full h-full flex-col">
                                 {disableEdit ? (

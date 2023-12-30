@@ -13,7 +13,7 @@ type GeoDataMod = Omit<GeoData, 'datetime_crash'> & {
     datetime_crash: string,
     geoloc: {
         name2: string
-    }
+    } | null
 }
 
 function DataComponent() {
@@ -176,7 +176,7 @@ function DataComponent() {
                                 <Table.Head >
                                     <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Wilayah</Table.HeadCell>
                                     <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Nama</Table.HeadCell>
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Waktu</Table.HeadCell>
+                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Waktu Kecelakaan</Table.HeadCell>
                                     <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Latitude</Table.HeadCell>
                                     <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Longitude</Table.HeadCell>
                                     <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Jumlah Kecelakaan</Table.HeadCell>
@@ -185,13 +185,13 @@ function DataComponent() {
                                 <Table.Body className="divide-y">
                                     {geodatas.data?.map((item: GeoDataMod, key: number) => (
                                         <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" key={key}>
-                                            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                                {item.geoloc.name2}
+                                            <Table.Cell className="font-medium text-gray-900 dark:text-white">
+                                                {item.geoloc?.name2}
                                             </Table.Cell>
-                                            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                            <Table.Cell className="font-medium text-gray-900 dark:text-white">
                                                 {item.name}
                                             </Table.Cell>
-                                            <Table.Cell>{item.datetime_crash}</Table.Cell>
+                                            <Table.Cell>{new Date(item.datetime_crash).toUTCString()}</Table.Cell>
                                             <Table.Cell>{item.latitude}</Table.Cell>
                                             <Table.Cell>{item.longitude}</Table.Cell>
                                             <Table.Cell>{item.jumlah_kecelakaan}</Table.Cell>

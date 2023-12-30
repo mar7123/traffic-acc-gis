@@ -10,7 +10,10 @@ type ReportsMod = Omit<Reports, 'id' | 'geoloc_id' | 'createdAt' | 'processed'>
 const ReportPanelComponent = ({
     markerRef
 }: {
-    markerRef: L.Marker<any> | undefined
+    markerRef: {
+        marker: L.Marker<any> | undefined,
+        toggle: boolean
+    }
 }) => {
     const [optModal, setOptModal] = useState<{
         open: boolean,
@@ -42,7 +45,7 @@ const ReportPanelComponent = ({
         kerugian: 0,
     });
     const addReport = async () => {
-        if (markerRef) {
+        if (markerRef.marker) {
             if (formData.name == "") {
                 setOptModal({ message: "Input identifier kosong", status: "error", open: true })
                 return
@@ -51,8 +54,8 @@ const ReportPanelComponent = ({
             const geolocid = await getMarkerGeoComp();
             const formDataInput = {
                 ...formData,
-                latitude: markerRef.getLatLng().lat,
-                longitude: markerRef.getLatLng().lng,
+                latitude: markerRef.marker.getLatLng().lat,
+                longitude: markerRef.marker.getLatLng().lng,
                 geojs: {
                     type: "Feature",
                     properties: {
@@ -60,7 +63,7 @@ const ReportPanelComponent = ({
                     },
                     geometry: {
                         type: "Point",
-                        coordinates: [markerRef.getLatLng().lng, markerRef.getLatLng().lat]
+                        coordinates: [markerRef.marker.getLatLng().lng, markerRef.marker.getLatLng().lat]
                     }
                 },
             }
@@ -84,15 +87,17 @@ const ReportPanelComponent = ({
         }
     }
     const getMarkerGeoComp = async () => {
-        const res = await fetch('/api/geoloc/findarea?' + new URLSearchParams({
-            lat: String(markerRef ? markerRef.getLatLng().lat : 0),
-            lng: String(markerRef ? markerRef.getLatLng().lng : 0),
-        }), {
-            method: "GET",
-        })
-        const { data } = await res.json()
-        if (data.length != 0) {
-            return data[0]?._id.$oid;
+        if(markerRef.marker){
+            const res = await fetch('/api/geoloc/findarea?' + new URLSearchParams({
+                lat: String(markerRef ? markerRef.marker.getLatLng().lat : 0),
+                lng: String(markerRef ? markerRef.marker.getLatLng().lng : 0),
+            }), {
+                method: "GET",
+            })
+            const { data } = await res.json()
+            if (data.length != 0) {
+                return data[0]?._id.$oid;
+            }
         }
         return null;
     }
@@ -132,13 +137,13 @@ const ReportPanelComponent = ({
                         <div className="mb-2">
                             <Label htmlFor="latitude" value="Latitude" />
                         </div>
-                        <TextInput id="latitude" type="number" value={markerRef ? markerRef.getLatLng().lat : 0} shadow disabled />
+                        <TextInput id="latitude" type="number" value={markerRef.marker ? markerRef.marker.getLatLng().lat : 0} shadow disabled />
                     </div>
                     <div className="h-full w-full">
                         <div className="mb-2">
                             <Label htmlFor="longitude" value="Longitude" />
                         </div>
-                        <TextInput id="longitude" type="number" value={markerRef ? markerRef.getLatLng().lng : 0} shadow disabled />
+                        <TextInput id="longitude" type="number" value={markerRef.marker ? markerRef.marker.getLatLng().lng : 0} shadow disabled />
                     </div>
                     <div className="h-full w-full">
                         <div className="mb-2">
@@ -150,25 +155,25 @@ const ReportPanelComponent = ({
                         <div className="mb-2">
                             <Label htmlFor="death_toll" value="Korban Meninggal" />
                         </div>
-                        <TextInput id="death_toll" type="number" min={0} onChange={({ target }) => { setFormData({ ...formData, meninggal: Number(target.value) }) }} value={formData.meninggal} shadow required />
+                        <TextInput id="death_toll" type="number" onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0} onChange={({ target }) => { setFormData({ ...formData, meninggal: Number(target.value) }) }} value={formData.meninggal} shadow required />
                     </div>
                     <div className="h-full w-full">
                         <div className="mb-2">
                             <Label htmlFor="severe_injuries" value="Luka Berat" />
                         </div>
-                        <TextInput id="severe_injuries" type="number" min={0} onChange={({ target }) => { setFormData({ ...formData, luka_berat: Number(target.value) }) }} value={formData.luka_berat} shadow required />
+                        <TextInput id="severe_injuries" type="number" onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0} onChange={({ target }) => { setFormData({ ...formData, luka_berat: Number(target.value) }) }} value={formData.luka_berat} shadow required />
                     </div>
                     <div className="h-full w-full">
                         <div className="mb-2">
                             <Label htmlFor="minor_injuries" value="Luka Ringan" />
                         </div>
-                        <TextInput id="minor_injuries" type="number" min={0} onChange={({ target }) => { setFormData({ ...formData, luka_ringan: Number(target.value) }) }} value={formData.luka_ringan} shadow required />
+                        <TextInput id="minor_injuries" type="number" onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0} onChange={({ target }) => { setFormData({ ...formData, luka_ringan: Number(target.value) }) }} value={formData.luka_ringan} shadow required />
                     </div>
                     <div className="h-full w-full">
                         <div className="mb-2">
                             <Label htmlFor="material_loss" value="Kerugian" />
                         </div>
-                        <TextInput id="material_loss" type="number" min={0} onChange={({ target }) => { setFormData({ ...formData, kerugian: Number(target.value) }) }} value={formData.kerugian} shadow required />
+                        <TextInput id="material_loss" type="number" onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0} onChange={({ target }) => { setFormData({ ...formData, kerugian: Number(target.value) }) }} value={formData.kerugian} shadow required />
                     </div>
                     <Button type="submit" onClick={addReport}>Submit</Button>
                 </div>

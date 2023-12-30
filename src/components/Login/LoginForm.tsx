@@ -27,11 +27,11 @@ function LoginForm() {
         setOptModal({ open: open, status: status, message: message });
     }
     useEffect(() => {
-        if (state.message == null || state.message == "Success") {
+        if (state.message == null) {
             return
         }
         setDisableLogin(false);
-        setOptModal({ open: true, status: "error", message: state.message });
+        setOptModal({ open: true, status: state.message == "success" ? "success" : "error", message: state.message });
     }, [state])
 
     return (

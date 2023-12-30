@@ -167,31 +167,31 @@ export default function AddForm() {
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="jumlah_kecelakaan" value="Jumlah Kecelakaan" />
                                 </div>
-                                <TextInput id="jumlah_kecelakaan" name="jumlah_kecelakaan" type="number" min={1} placeholder="Masukan jumlah kecelakaan" required shadow />
+                                <TextInput id="jumlah_kecelakaan" name="jumlah_kecelakaan" type="number" min={1} placeholder="Masukan jumlah kecelakaan" onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="meninggal" value="Meninggal" />
                                 </div>
-                                <TextInput id="meninggal" name="meninggal" type="number" min={0} placeholder="Masukan jumlah korban meninggal" required shadow />
+                                <TextInput id="meninggal" name="meninggal" type="number" min={0} placeholder="Masukan jumlah korban meninggal" onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="luka_berat" value="Korban Luka Berat" />
                                 </div>
-                                <TextInput id="luka_berat" name="luka_berat" type="number" min={0} placeholder="Masukan jumlah korban luka berat" required shadow />
+                                <TextInput id="luka_berat" name="luka_berat" type="number" min={0} placeholder="Masukan jumlah korban luka berat" onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="luka_ringan" value="Korban Luka Ringan" />
                                 </div>
-                                <TextInput id="luka_ringan" name="luka_ringan" type="number" min={0} placeholder="Masukan jumlah korban luka ringan" required shadow />
+                                <TextInput id="luka_ringan" name="luka_ringan" type="number" min={0} placeholder="Masukan jumlah korban luka ringan" onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="kerugian" value="Jumlah kerugian" />
                                 </div>
-                                <TextInput id="kerugian" name="kerugian" type="number" min={0} placeholder="Masukan jumlah kerugian" required shadow />
+                                <TextInput id="kerugian" name="kerugian" type="number" min={0} placeholder="Masukan jumlah kerugian" required onKeyDown={(e)=>{["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}} shadow />
                             </div>
                             <div className="relative flex w-full h-full flex-col">
                                 {disableAdd ? (

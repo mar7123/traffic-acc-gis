@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import prisma from ".";
 
 export async function getReports(take: number, page: number) {
@@ -13,6 +14,7 @@ export async function getReports(take: number, page: number) {
                 longitude: true,
                 jumlah_kecelakaan: true,
                 processed: true,
+                createdAt: true,
                 geoloc: {
                     select: {
                         name2: true
@@ -218,6 +220,42 @@ export async function addReport(data: any) {
             data: data
         });
         return { res };
+    } catch (error) {
+        return { error };
+    }
+}
+
+export async function approveReport(id: string) {
+    try {
+        const report = await prisma.reports.findFirst({
+            where: {
+                id: id,
+            }
+        });
+        if (report && report.geoloc_id) {
+            const { id, geoloc_id, geojs, processed, ...deletedReport } = report;
+            const reportMod = { ...deletedReport, geojs: geojs as Prisma.InputJsonValue, wilayah: "" };
+            const res = await prisma.geoLocation.update({
+                where: {
+                    id: geoloc_id
+                },
+                data: {
+                    geodatas: {
+                        create: reportMod
+                    }
+                }
+            })
+            await prisma.reports.update({
+                where: {
+                    id: id,
+                },
+                data: {
+                    processed: true,
+                }
+            })
+            return { res };
+        }
+        throw new Error("invalid report")
     } catch (error) {
         return { error };
     }

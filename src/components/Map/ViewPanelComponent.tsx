@@ -59,6 +59,18 @@ const ViewPanelComponent = ({
                         }} step={0.1} shadow disabled={filters.n == 5 ? true : false} />
                     </div>
                     <div className="flex items-center w-full">
+                        <div className="w-30 lg:w-35">
+                            <Label className="w-full block truncate" htmlFor="upper_bound" value="Batas Atas" />
+                        </div>
+                        <TextInput className="w-1/2 bg-white" id="upper_bound" type="number" value={filters.upper.val} shadow disabled />
+                    </div>
+                    <div className="flex items-center w-full">
+                        <div className="w-30 lg:w-35">
+                            <Label className="w-full block truncate" htmlFor="lower_bound" value="Batas Bawah" />
+                        </div>
+                        <TextInput className="w-1/2 bg-white" id="lower_bound" type="number" value={filters.lower.val} shadow disabled />
+                    </div>
+                    <div className="flex items-center w-full">
                         <div className="h-full flex items-center w-5 lg:w-10">
                             <div className="w-[15px] h-[15px] rounded-full bg-red-200 border-2 border-black">
                             </div>
