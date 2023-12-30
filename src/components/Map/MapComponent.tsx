@@ -614,7 +614,7 @@ const MapComponent = () => {
                 ) : (null))}
             </MapContainer>
             {showPanel ? (
-                <div className="fixed right-auto sm:right-[2vw] top-[25vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[400px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black ">
+                <div className="fixed right-auto sm:right-[3vw] top-[25vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[400px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black ">
                     <div className="h-full w-full grid grid-cols-1 content-start">
                         {filters.mode == "view" ? (
                             <>

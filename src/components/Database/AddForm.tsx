@@ -115,8 +115,11 @@ export default function AddForm() {
             <div className="grid  w-full gap-9 ">
                 <div className="flex flex-col w-full gap-9">
                     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                        <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-                            <h3 className="font-medium text-black dark:text-white">
+                        <div className="flex h-fit border-b border-stroke  dark:border-strokedark">
+                            <a href='/database' className="px-3 sm:px-5 my-auto bg-transparent hover:text-primary">
+                                <svg width="20" height="20" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#000000" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"></path><path fill="#000000" d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"></path></g></svg>
+                            </a>
+                            <h3 className="my-4 mx-2 w-fit font-medium text-black dark:text-white">
                                 Tambah Data
                             </h3>
                         </div>

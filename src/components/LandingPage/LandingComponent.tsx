@@ -5,7 +5,7 @@ import AccidentReportComponent from '@/components/LandingPage/AccidentReportComp
 function LandingComponent() {
     return (
         <div className='h-fit w-full bg-gray-100'>
-            <div className='min-h-screen w-full max-w-screen-2xl flex items-center px-[2vw] sm:px-[7vw] lg:px-[15vw] py-6 sm:py-10 lg:py-15 bg-gray-100 mx-auto'>
+            <div className='min-h-screen w-full max-w-screen-2xl flex items-center px-[3vw] sm:px-[7vw] lg:px-[15vw] py-6 sm:py-10 lg:py-15 bg-gray-100 mx-auto'>
                 <CardComponent />
             </div>
             <div className='h-screen min-h-fit flex items-center bg-fixed bg-top bg-cover' style={{ backgroundImage: "url('/assets/bg/bgreportfixed.jpg')" }}>

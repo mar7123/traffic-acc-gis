@@ -30,7 +30,7 @@ function NavbarComponent() {
                         </Button>
                         <Navbar.Toggle />
                     </div>
-                    <Navbar.Collapse>
+                    <Navbar.Collapse theme={{list:"mt-4 flex flex-col absolute top-[60px] left-0 bg-black w-screen md:w-fit md:static md:mt-0 md:flex-row md:space-x-8 md:text-sm md:font-medium"}}>
                         <Button href="/" className={`custom-link bg-transparent focus:ring-0 hover:text-white text-gray-400 ${pathname == '/' && "text-white"}`}>
                             <span className="text-md mx-4">Beranda</span>
                         </Button>
