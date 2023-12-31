@@ -209,7 +209,7 @@ export default function AddForm() {
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="kerugian" value="Jumlah kerugian" />
                                 </div>
-                                <TextInput id="kerugian" name="kerugian" type="number" min={0} placeholder="Masukan jumlah kerugian" required onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} shadow />
+                                <TextInput id="kerugian" name="kerugian" type="number" min={0} step={100000} placeholder="Masukan jumlah kerugian" required onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} shadow />
                             </div>
                             <div className="relative flex w-full h-full flex-col">
                                 {disableAdd ? (
@@ -225,7 +225,7 @@ export default function AddForm() {
                                 ) : (null)}
                                 <Button className="bg-black hover:bg-opacity-80 text-white" color="bg-black hover:bg-opacity-80 text-white" type="submit" disabled={(disableAdd || (mapLocation.prov == ""))}>
                                     <span className="my-2 font-extrabold">
-                                        Submit
+                                        Tambah
                                     </span>
                                 </Button>
                             </div>

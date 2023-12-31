@@ -138,7 +138,7 @@ function DataComponent() {
             </div>
             <div className="flex justify-between h-fit w-full my-2 px-2">
                 {status == "authenticated" ? (
-                    <Button color="bg-black text-white hover:bg-opacity-80" as="a" className="bg-black text-white hover:bg-opacity-80" href="/database/add">Add Data</Button>
+                    <Button color="bg-black text-white hover:bg-opacity-80" as="a" className="bg-black text-white hover:bg-opacity-80" href="/database/add">Tambah Data</Button>
                 ) : (
                     <div></div>
                 )}

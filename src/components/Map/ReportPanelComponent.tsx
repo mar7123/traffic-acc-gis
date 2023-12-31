@@ -188,7 +188,7 @@ const ReportPanelComponent = ({
                         <div className="mb-2">
                             <Label htmlFor="material_loss" value="Kerugian" />
                         </div>
-                        <TextInput id="material_loss" type="number" onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0} onChange={({ target }) => { setFormData({ ...formData, kerugian: Number(target.value) }) }} value={formData.kerugian} shadow required />
+                        <TextInput id="material_loss" type="number" onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0} step={100000} onChange={({ target }) => { setFormData({ ...formData, kerugian: Number(target.value) }) }} value={formData.kerugian} shadow required />
                     </div>
                     <Button type="submit">Submit</Button>
                 </form>
