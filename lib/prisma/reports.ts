@@ -1,8 +1,18 @@
 import { Prisma } from "@prisma/client";
 import prisma from ".";
+import { SortableReportKeys, SortReportWithGeoLocs } from "@/types/reports";
 
-export async function getReports(take: number, page: number) {
+export async function getReports(take: number, page: number, sortFilter: SortableReportKeys, sortOrder: 'asc' | 'desc') {
     try {
+        let sorter: SortReportWithGeoLocs = {};
+        sorter[sortFilter] = sortOrder;
+        if (sortFilter == 'wilayah') {
+            sorter = {
+                geoloc: {
+                    name2: sortOrder
+                }
+            }
+        }
         const res = await prisma.reports.findMany({
             skip: (page - 1) * take,
             take: take,
@@ -22,9 +32,7 @@ export async function getReports(take: number, page: number) {
                 }
             },
             orderBy: [
-                {
-                    datetime_crash: 'asc',
-                },
+                sorter,
                 {
                     id: 'asc',
                 },

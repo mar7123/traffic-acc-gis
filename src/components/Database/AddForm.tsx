@@ -44,7 +44,12 @@ export default function AddForm() {
         status: "success",
         message: ""
     });
-
+    useEffect(() => {
+        if (optModal.open) {
+            
+            setTimeout(() => { setOptModal({ ...optModal, open: false }) }, 1500)
+        }
+    }, [optModal])
     const setModal = ({ open, status, message }: { open: boolean, status: "success" | "error", message: string }) => {
         setOptModal({ open: open, status: status, message: message });
     }
@@ -209,7 +214,7 @@ export default function AddForm() {
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="kerugian" value="Jumlah kerugian" />
                                 </div>
-                                <TextInput id="kerugian" name="kerugian" type="number" min={0} step={100000} placeholder="Masukan jumlah kerugian" required onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} shadow />
+                                <TextInput id="kerugian" name="kerugian" type="number" min={0} placeholder="Masukan jumlah kerugian" required onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} shadow />
                             </div>
                             <div className="relative flex w-full h-full flex-col">
                                 {disableAdd ? (

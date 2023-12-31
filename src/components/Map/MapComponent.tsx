@@ -613,33 +613,31 @@ const MapComponent = () => {
                     <MarkerOnClick />
                 ) : (null))}
             </MapContainer>
-            {showPanel ? (
-                <div className="fixed right-auto sm:right-[3vw] top-[25vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[400px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black ">
-                    <div className="h-full w-full grid grid-cols-1 content-start">
-                        {filters.mode == "view" ? (
-                            <>
-                                <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
-                                    <span className="text-white text-md">
-                                        Panel Tampilan Data
-                                    </span>
-                                    <MinBttn />
-                                </div>
-                                <ViewPanelComponent filters={filters} year={year} selectYear={selectYear} selectN={selectN} />
-                            </>
-                        ) : (filters.mode == "report" ? (
-                            <>
-                                <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
-                                    <span className="text-white text-md">
-                                        Panel Laporan Kecelakaan
-                                    </span>
-                                    <MinBttn />
-                                </div>
-                                <ReportPanelComponent markerRef={markerRef} />
-                            </>
-                        ) : (null))}
-                    </div>
+            <div className={"fixed right-auto sm:right-[3vw] top-[25vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[400px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black " + (showPanel ? "" : "hidden")}>
+                <div className="h-full w-full grid grid-cols-1 content-start">
+                    {filters.mode == "view" ? (
+                        <>
+                            <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
+                                <span className="text-white text-md">
+                                    Panel Tampilan Data
+                                </span>
+                                <MinBttn />
+                            </div>
+                            <ViewPanelComponent filters={filters} year={year} selectYear={selectYear} selectN={selectN} />
+                        </>
+                    ) : (filters.mode == "report" ? (
+                        <>
+                            <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
+                                <span className="text-white text-md">
+                                    Panel Laporan Kecelakaan
+                                </span>
+                                <MinBttn />
+                            </div>
+                            <ReportPanelComponent markerRef={markerRef} />
+                        </>
+                    ) : (null))}
                 </div>
-            ) : (null)}
+            </div>
             <div className="fixed bottom-2 z-1200 flex flex-col items-center max-w-1/2 w-fit h-[30px] bg-gray-700 shadow-lg rounded text-black">
                 <div className="w-full h-full grid grid-cols-2 text-white">
                     <div className="w-[70px] h-full flex flex-col items-center relative justify-self-center">

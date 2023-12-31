@@ -39,6 +39,11 @@ export default function EditForm({ data }: { data: GeoData }) {
         setDisableEdit(false);
         setOptModal({ open: true, status: "error", message: state.message });
     }, [state])
+    useEffect(() => {
+        if (optModal.open) {
+            setTimeout(() => { setOptModal({ ...optModal, open: false }) }, 1500)
+        }
+    }, [optModal])
 
     return (
         <>
@@ -102,7 +107,7 @@ export default function EditForm({ data }: { data: GeoData }) {
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="kerugian" value="Jumlah kerugian" />
                                 </div>
-                                <TextInput id="kerugian" name="kerugian" type="number" placeholder="Masukan jumlah kerugian" min={0} step={100000} defaultValue={data.kerugian} onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} required shadow />
+                                <TextInput id="kerugian" name="kerugian" type="number" placeholder="Masukan jumlah kerugian" min={0} defaultValue={data.kerugian} onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} required shadow />
                             </div>
                             <div className="relative flex w-full h-full flex-col">
                                 {disableEdit ? (

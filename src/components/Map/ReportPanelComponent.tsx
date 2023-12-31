@@ -1,7 +1,7 @@
 import { Button, Checkbox, Label, TextInput, Modal } from "flowbite-react";
 import Loader from "@/components/common/Loader";
 import L from "leaflet";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Reports } from "@prisma/client";
 import ModalComponent from "@/components/Modal/ModalComponent";
 
@@ -84,13 +84,28 @@ const ReportPanelComponent = ({
             const { data } = await addrep.json()
             if (addrep.status == 201) {
                 setOptModal({ message: "Input data berhasil", status: "success", open: true })
+                setFormData({
+                    datetime_crash: "",
+                    name: "",
+                    latitude: 0,
+                    longitude: 0,
+                    geojs: {},
+                    jumlah_kecelakaan: 1,
+                    meninggal: 0,
+                    luka_berat: 0,
+                    luka_ringan: 0,
+                    kerugian: 0,
+                })
                 setLoading(false)
+                return
             } else {
                 setOptModal({ message: "Input data gagal", status: "error", open: true })
                 setLoading(false)
+                return
             }
         } else {
             setOptModal({ message: "Tidak ada pilihan lokasi. Klik peta untuk menentukan lokasi", status: "error", open: true })
+            return
         }
     }
     const getMarkerGeoComp = async () => {
@@ -111,6 +126,11 @@ const ReportPanelComponent = ({
     const setModal = ({ open, status, message }: { open: boolean, status: "success" | "error", message: string }) => {
         setOptModal({ open: open, status: status, message: message });
     }
+    useEffect(() => {
+        if (optModal.open) {
+            setTimeout(() => { setOptModal({ ...optModal, open: false }) }, 1500)
+        }
+    }, [optModal])
 
     return (
         <>
@@ -188,7 +208,7 @@ const ReportPanelComponent = ({
                         <div className="mb-2">
                             <Label htmlFor="material_loss" value="Kerugian" />
                         </div>
-                        <TextInput id="material_loss" type="number" onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0} step={100000} onChange={({ target }) => { setFormData({ ...formData, kerugian: Number(target.value) }) }} value={formData.kerugian} shadow required />
+                        <TextInput id="material_loss" type="number" onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0} onChange={({ target }) => { setFormData({ ...formData, kerugian: Number(target.value) }) }} value={formData.kerugian} shadow required />
                     </div>
                     <Button type="submit">Submit</Button>
                 </form>

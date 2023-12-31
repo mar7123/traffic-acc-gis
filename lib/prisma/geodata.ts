@@ -1,7 +1,17 @@
 import prisma from ".";
+import { SortGeoDataWithGeoLocs, SortableGeoDataKeys } from "@/types/geodata";
 
-export async function getGeoDatas(take: number, page: number) {
+export async function getGeoDatas(take: number, page: number, sortFilter: SortableGeoDataKeys, sortOrder: 'asc' | 'desc') {
     try {
+        let sorter: SortGeoDataWithGeoLocs = {};
+        sorter[sortFilter] = sortOrder;
+        if (sortFilter == 'wilayah') {
+            sorter = {
+                geoloc: {
+                    name2: sortOrder
+                }
+            }
+        }
         const res = await prisma.geoData.findMany({
             skip: (page - 1) * take,
             take: take,
@@ -19,9 +29,7 @@ export async function getGeoDatas(take: number, page: number) {
                 }
             },
             orderBy: [
-                {
-                    datetime_crash: 'asc',
-                },
+                sorter,
                 {
                     id: 'asc',
                 },
@@ -54,8 +62,17 @@ export async function getGeoDataByID(id: string) {
     }
 }
 
-export async function getGeoDataByName(name: string, take: number, page: number) {
+export async function getGeoDataByName(name: string, take: number, page: number, sortFilter: SortableGeoDataKeys, sortOrder: 'asc' | 'desc') {
     try {
+        let sorter: SortGeoDataWithGeoLocs = {};
+        sorter[sortFilter] = sortOrder;
+        if (sortFilter == 'wilayah') {
+            sorter = {
+                geoloc: {
+                    name2: sortOrder
+                }
+            }
+        }
         const res = await prisma.geoData.findMany({
             skip: (page - 1) * take,
             take: take,
@@ -89,9 +106,7 @@ export async function getGeoDataByName(name: string, take: number, page: number)
                 ]
             },
             orderBy: [
-                {
-                    datetime_crash: 'asc',
-                },
+                sorter,
                 {
                     id: 'asc',
                 },

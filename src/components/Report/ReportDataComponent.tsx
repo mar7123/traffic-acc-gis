@@ -2,14 +2,17 @@
 
 import Loader from "@/components/common/Loader";
 import { Button, Modal, Select, Table, TextInput } from 'flowbite-react';
-import Link from "next/link";
 import { Pagination } from 'flowbite-react';
 import { useEffect, useState } from "react";
 import { Reports } from "@prisma/client";
 import ModalComponent from "@/components/Modal/ModalComponent";
+import { SortableReportKeys } from "@/types/reports";
 
-type ReportsMod = Omit<Reports, 'datetime_crash'> & {
+type ReportsMod = Omit<Reports, 'datetime_crash' | 'geojs' | "meninggal" | "luka_berat" | "luka_ringan" | "kerugian" | "createdAt">
+
+interface ReportsOut extends ReportsMod {
     datetime_crash: string,
+    createdAt: string,
     geoloc: {
         name2: string
     } | null
@@ -41,14 +44,24 @@ function ReportDataComponent() {
 
 
     // Fetch Data
-    const [reports, setReports] = useState<{ data: ReportsMod[], count: number }>({ data: [], count: 0 });
+    const [reports, setReports] = useState<{ data: ReportsOut[], count: number }>({ data: [], count: 0 });
 
     // Search, Pagination, Take
-    const [currentFilter, setCurrentFilter] = useState({
+    const [currentFilter, setCurrentFilter] = useState<{
+        search: string,
+        take: number,
+        page: number,
+        mode: "default" | "search",
+        sortFilter: SortableReportKeys,
+        sortOrder: boolean,
+        toggle: boolean,
+    }>({
         search: "",
         take: 10,
         page: 1,
         mode: "default",
+        sortFilter: "datetime_crash",
+        sortOrder: true,
         toggle: true
     });
 
@@ -57,7 +70,9 @@ function ReportDataComponent() {
     const reportAPI = async () => {
         const res = await fetch('/api/report?' + new URLSearchParams({
             take: currentFilter.take.toString(),
-            page: currentFilter.page.toString()
+            page: currentFilter.page.toString(),
+            sortFilter: currentFilter.sortFilter.toString(),
+            sortOrder: (currentFilter.sortOrder ? "asc" : "desc"),
         }), {
             method: "GET",
             cache: "no-store"
@@ -74,11 +89,13 @@ function ReportDataComponent() {
         const res = await fetch('/api/report/search?' + new URLSearchParams({
             filter: currentFilter.search,
             take: currentFilter.take.toString(),
-            page: currentFilter.page.toString()
+            page: currentFilter.page.toString(),
+            sortFilter: currentFilter.sortFilter.toString(),
+            sortOrder: (currentFilter.sortOrder ? "asc" : "desc"),
         }), {
             method: "GET",
         })
-        const { data, count }: { data: ReportsMod[], count: number } = await res.json()
+        const { data, count }: { data: ReportsOut[], count: number } = await res.json()
         setReports({ data: data, count: count });
         setLoading(false);
     }
@@ -118,6 +135,12 @@ function ReportDataComponent() {
         }
     }, [currentFilter.toggle])
 
+    useEffect(() => {
+        if (optModal.open) {
+            setTimeout(() => { setOptModal({ ...optModal, open: false }) }, 1500)
+        }
+    }, [optModal])
+
     return (
         <>
             <div className="flex max-w-full w-full sm:w-5/6 gap-2 my-2">
@@ -128,11 +151,12 @@ function ReportDataComponent() {
                             if (currentFilter.search == "") {
                                 setCurrentFilter({ ...currentFilter, mode: "default", toggle: !currentFilter.toggle, page: 1 });
                                 return;
-                            } else if (currentFilter.search.length <= 3) {
-                                setOptModal({ message: "Masukan 4 karakter atau lebih", status: "error", open: true })
-                                return;
                             }
-                            setCurrentFilter({ ...currentFilter, mode: "search", toggle: !currentFilter.toggle, page: 1 });
+                            // else if (currentFilter.search.length <= 3) {
+                            //     setOptModal({ message: "Masukan 4 karakter atau lebih", status: "error", open: true })
+                            //     return;
+                            // }
+                            setCurrentFilter({ ...currentFilter, sortFilter: "datetime_crash", sortOrder: true, mode: "search", toggle: !currentFilter.toggle, page: 1 })
                         }
                     }} />
                 </div>
@@ -144,7 +168,7 @@ function ReportDataComponent() {
                         setOptModal({ message: "Masukan 4 karakter atau lebih", status: "error", open: true })
                         return;
                     }
-                    setCurrentFilter({ ...currentFilter, mode: "search", toggle: !currentFilter.toggle, page: 1 });
+                    setCurrentFilter({ ...currentFilter, sortFilter: "datetime_crash", sortOrder: true, mode: "search", toggle: !currentFilter.toggle, page: 1 });
                 }}>
                     Cari
                 </Button>
@@ -182,18 +206,131 @@ function ReportDataComponent() {
                             </Modal>
                             <Table striped>
                                 <Table.Head >
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Wilayah</Table.HeadCell>
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Nama</Table.HeadCell>
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Waktu Kecelakaan</Table.HeadCell>
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Waktu Laporan Dibuat</Table.HeadCell>
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Latitude</Table.HeadCell>
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Longitude</Table.HeadCell>
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Jumlah Kecelakaan</Table.HeadCell>
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Sudah Diproses</Table.HeadCell>
-                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">Action</Table.HeadCell>
+                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">
+                                        <button onClick={(e) => {
+                                            if (currentFilter.sortFilter != "wilayah") {
+                                                setCurrentFilter({ ...currentFilter, page: 1, sortFilter: "wilayah", sortOrder: true, toggle: !currentFilter.toggle })
+                                                return;
+                                            }
+                                            setCurrentFilter({ ...currentFilter, page: 1, sortFilter: "wilayah", sortOrder: !currentFilter.sortOrder, toggle: !currentFilter.toggle })
+                                        }} className="w-full flex">
+                                            Wilayah
+                                            {currentFilter.sortFilter == "wilayah" ? (
+                                                (currentFilter.sortOrder ? (
+                                                    <div className="px-3 my-auto bg-transparent hover:text-primary">
+                                                        <svg width="15" height="15" viewBox="0 -0.5 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="si-glyph si-glyph-triangle-up" fill="#ffffff" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>1236</title> <defs> </defs> <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"> <path d="M7.96,2.392 C8.541,1.812 9.482,1.812 10.064,2.392 L16.506,8.836 C17.088,9.417 17.345,10.939 15.506,10.939 L2.518,10.939 C0.616,10.939 0.936,9.418 1.517,8.836 L7.96,2.392 L7.96,2.392 Z" fill="#ffffff" className="si-glyph-fill"> </path> </g> </g></svg>
+                                                    </div>
+                                                ) : (
+                                                    <div className="px-3 my-auto bg-transparent hover:text-primary">
+                                                        <svg width="15" height="15" viewBox="0 -0.5 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="si-glyph si-glyph-triangle-down" fill="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>1237</title> <defs> </defs> <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"> <path d="M10.106,12.69 C9.525,13.27 8.584,13.27 8.002,12.69 L1.561,6.246 C0.979,5.665 0.722,4.143 2.561,4.143 L15.549,4.143 C17.45,4.143 17.131,5.664 16.549,6.246 L10.106,12.69 L10.106,12.69 Z" fill="#ffffff" className="si-glyph-fill"> </path> </g> </g></svg>
+                                                    </div>
+                                                ))
+                                            ) : (null)}
+                                        </button>
+                                    </Table.HeadCell>
+                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">
+                                        <button onClick={(e) => {
+                                            if (currentFilter.sortFilter != "name") {
+                                                setCurrentFilter({ ...currentFilter, page: 1, sortFilter: "name", sortOrder: true, toggle: !currentFilter.toggle })
+                                                return;
+                                            }
+                                            setCurrentFilter({ ...currentFilter, page: 1, sortFilter: "name", sortOrder: !currentFilter.sortOrder, toggle: !currentFilter.toggle })
+                                        }} className="w-full flex">
+                                            Nama
+                                            {currentFilter.sortFilter == "name" ? (
+                                                (currentFilter.sortOrder ? (
+                                                    <div className="px-3 my-auto bg-transparent hover:text-primary">
+                                                        <svg width="15" height="15" viewBox="0 -0.5 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="si-glyph si-glyph-triangle-up" fill="#ffffff" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>1236</title> <defs> </defs> <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"> <path d="M7.96,2.392 C8.541,1.812 9.482,1.812 10.064,2.392 L16.506,8.836 C17.088,9.417 17.345,10.939 15.506,10.939 L2.518,10.939 C0.616,10.939 0.936,9.418 1.517,8.836 L7.96,2.392 L7.96,2.392 Z" fill="#ffffff" className="si-glyph-fill"> </path> </g> </g></svg>
+                                                    </div>
+                                                ) : (
+                                                    <div className="px-3 my-auto bg-transparent hover:text-primary">
+                                                        <svg width="15" height="15" viewBox="0 -0.5 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="si-glyph si-glyph-triangle-down" fill="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>1237</title> <defs> </defs> <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"> <path d="M10.106,12.69 C9.525,13.27 8.584,13.27 8.002,12.69 L1.561,6.246 C0.979,5.665 0.722,4.143 2.561,4.143 L15.549,4.143 C17.45,4.143 17.131,5.664 16.549,6.246 L10.106,12.69 L10.106,12.69 Z" fill="#ffffff" className="si-glyph-fill"> </path> </g> </g></svg>
+                                                    </div>
+                                                ))
+                                            ) : (null)}
+                                        </button>
+                                    </Table.HeadCell>
+                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">
+                                        <button onClick={(e) => {
+                                            if (currentFilter.sortFilter != "datetime_crash") {
+                                                setCurrentFilter({ ...currentFilter, page: 1, sortFilter: "datetime_crash", sortOrder: true, toggle: !currentFilter.toggle })
+                                                return;
+                                            }
+                                            setCurrentFilter({ ...currentFilter, page: 1, sortFilter: "datetime_crash", sortOrder: !currentFilter.sortOrder, toggle: !currentFilter.toggle })
+                                        }} className="w-full flex">
+                                            Waktu Kecelakaan
+                                            {currentFilter.sortFilter == "datetime_crash" ? (
+                                                (currentFilter.sortOrder ? (
+                                                    <div className="px-3 my-auto bg-transparent hover:text-primary">
+                                                        <svg width="15" height="15" viewBox="0 -0.5 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="si-glyph si-glyph-triangle-up" fill="#ffffff" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>1236</title> <defs> </defs> <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"> <path d="M7.96,2.392 C8.541,1.812 9.482,1.812 10.064,2.392 L16.506,8.836 C17.088,9.417 17.345,10.939 15.506,10.939 L2.518,10.939 C0.616,10.939 0.936,9.418 1.517,8.836 L7.96,2.392 L7.96,2.392 Z" fill="#ffffff" className="si-glyph-fill"> </path> </g> </g></svg>
+                                                    </div>
+                                                ) : (
+                                                    <div className="px-3 my-auto bg-transparent hover:text-primary">
+                                                        <svg width="15" height="15" viewBox="0 -0.5 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="si-glyph si-glyph-triangle-down" fill="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>1237</title> <defs> </defs> <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"> <path d="M10.106,12.69 C9.525,13.27 8.584,13.27 8.002,12.69 L1.561,6.246 C0.979,5.665 0.722,4.143 2.561,4.143 L15.549,4.143 C17.45,4.143 17.131,5.664 16.549,6.246 L10.106,12.69 L10.106,12.69 Z" fill="#ffffff" className="si-glyph-fill"> </path> </g> </g></svg>
+                                                    </div>
+                                                ))
+                                            ) : (null)}
+                                        </button>
+                                    </Table.HeadCell>
+                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">
+                                        <button onClick={(e) => {
+                                            if (currentFilter.sortFilter != "createdAt") {
+                                                setCurrentFilter({ ...currentFilter, page: 1, sortFilter: "createdAt", sortOrder: true, toggle: !currentFilter.toggle })
+                                                return;
+                                            }
+                                            setCurrentFilter({ ...currentFilter, page: 1, sortFilter: "createdAt", sortOrder: !currentFilter.sortOrder, toggle: !currentFilter.toggle })
+                                        }} className="w-full flex">
+                                            Waktu Laporan Dibuat
+                                            {currentFilter.sortFilter == "createdAt" ? (
+                                                (currentFilter.sortOrder ? (
+                                                    <div className="px-3 my-auto bg-transparent hover:text-primary">
+                                                        <svg width="15" height="15" viewBox="0 -0.5 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="si-glyph si-glyph-triangle-up" fill="#ffffff" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>1236</title> <defs> </defs> <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"> <path d="M7.96,2.392 C8.541,1.812 9.482,1.812 10.064,2.392 L16.506,8.836 C17.088,9.417 17.345,10.939 15.506,10.939 L2.518,10.939 C0.616,10.939 0.936,9.418 1.517,8.836 L7.96,2.392 L7.96,2.392 Z" fill="#ffffff" className="si-glyph-fill"> </path> </g> </g></svg>
+                                                    </div>
+                                                ) : (
+                                                    <div className="px-3 my-auto bg-transparent hover:text-primary">
+                                                        <svg width="15" height="15" viewBox="0 -0.5 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="si-glyph si-glyph-triangle-down" fill="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>1237</title> <defs> </defs> <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"> <path d="M10.106,12.69 C9.525,13.27 8.584,13.27 8.002,12.69 L1.561,6.246 C0.979,5.665 0.722,4.143 2.561,4.143 L15.549,4.143 C17.45,4.143 17.131,5.664 16.549,6.246 L10.106,12.69 L10.106,12.69 Z" fill="#ffffff" className="si-glyph-fill"> </path> </g> </g></svg>
+                                                    </div>
+                                                ))
+                                            ) : (null)}
+                                        </button>
+                                    </Table.HeadCell>
+                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">
+                                        Latitude
+                                    </Table.HeadCell>
+                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">
+                                        Longitude
+                                    </Table.HeadCell>
+                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">
+                                        <button onClick={(e) => {
+                                            if (currentFilter.sortFilter != "jumlah_kecelakaan") {
+                                                setCurrentFilter({ ...currentFilter, page: 1, sortFilter: "jumlah_kecelakaan", sortOrder: true, toggle: !currentFilter.toggle })
+                                                return;
+                                            }
+                                            setCurrentFilter({ ...currentFilter, page: 1, sortFilter: "jumlah_kecelakaan", sortOrder: !currentFilter.sortOrder, toggle: !currentFilter.toggle })
+                                        }} className="w-full flex">
+                                            Jumlah Kecelakaan
+                                            {currentFilter.sortFilter == "jumlah_kecelakaan" ? (
+                                                (currentFilter.sortOrder ? (
+                                                    <div className="px-3 my-auto bg-transparent hover:text-primary">
+                                                        <svg width="15" height="15" viewBox="0 -0.5 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="si-glyph si-glyph-triangle-up" fill="#ffffff" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>1236</title> <defs> </defs> <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"> <path d="M7.96,2.392 C8.541,1.812 9.482,1.812 10.064,2.392 L16.506,8.836 C17.088,9.417 17.345,10.939 15.506,10.939 L2.518,10.939 C0.616,10.939 0.936,9.418 1.517,8.836 L7.96,2.392 L7.96,2.392 Z" fill="#ffffff" className="si-glyph-fill"> </path> </g> </g></svg>
+                                                    </div>
+                                                ) : (
+                                                    <div className="px-3 my-auto bg-transparent hover:text-primary">
+                                                        <svg width="15" height="15" viewBox="0 -0.5 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="si-glyph si-glyph-triangle-down" fill="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>1237</title> <defs> </defs> <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"> <path d="M10.106,12.69 C9.525,13.27 8.584,13.27 8.002,12.69 L1.561,6.246 C0.979,5.665 0.722,4.143 2.561,4.143 L15.549,4.143 C17.45,4.143 17.131,5.664 16.549,6.246 L10.106,12.69 L10.106,12.69 Z" fill="#ffffff" className="si-glyph-fill"> </path> </g> </g></svg>
+                                                    </div>
+                                                ))
+                                            ) : (null)}
+                                        </button>
+                                    </Table.HeadCell>
+                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">
+                                        Sudah Diproses
+                                    </Table.HeadCell>
+                                    <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">
+                                        Action
+                                    </Table.HeadCell>
                                 </Table.Head>
                                 <Table.Body className="divide-y">
-                                    {reports.data?.map((item: ReportsMod, key: number) => (
+                                    {reports.data?.map((item: ReportsOut, key: number) => (
                                         <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" key={key}>
                                             <Table.Cell className="font-medium text-gray-900 dark:text-white">
                                                 {item.geoloc ? item.geoloc.name2 : "null"}
@@ -203,8 +340,8 @@ function ReportDataComponent() {
                                             </Table.Cell>
                                             <Table.Cell>{new Date(item.datetime_crash).toUTCString()}</Table.Cell>
                                             <Table.Cell>{new Date(item.createdAt).toUTCString()}</Table.Cell>
-                                            <Table.Cell className="max-w-[100px] text-clip overflow-hidden">{item.latitude}</Table.Cell>
-                                            <Table.Cell className="max-w-[100px] text-clip overflow-hidden">{item.longitude}</Table.Cell>
+                                            <Table.Cell className="max-w-[100px] truncate">{item.latitude}</Table.Cell>
+                                            <Table.Cell className="max-w-[100px] truncate">{item.longitude}</Table.Cell>
                                             <Table.Cell>{item.jumlah_kecelakaan}</Table.Cell>
                                             <Table.Cell>{item.processed ? "Sudah" : "Belum"}</Table.Cell>
                                             <Table.Cell>

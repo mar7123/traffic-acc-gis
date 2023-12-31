@@ -33,6 +33,11 @@ function LoginForm() {
         setDisableLogin(false);
         setOptModal({ open: true, status: state.message == "success" ? "success" : "error", message: state.message });
     }, [state])
+    useEffect(() => {
+        if (optModal.open) {
+            setTimeout(() => { setOptModal({ ...optModal, open: false }) }, 1500)
+        }
+    }, [optModal])
 
     return (
         <>
