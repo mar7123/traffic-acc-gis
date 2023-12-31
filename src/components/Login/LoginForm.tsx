@@ -37,7 +37,7 @@ function LoginForm() {
     return (
         <>
             <ModalComponent optModal={optModal} setModal={setModal} />
-            <div className="h-fit w-full max-h-fit max-w-screen-2xl py-10 my-auto mx-autorounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div className="h-fit w-full max-h-fit max-w-screen-2xl py-5 sm:py-10 my-auto mx-autorounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div className="grid grid-cols-1 lg:grid-cols-2 h-full content-center">
                     <div className="hidden w-full lg:flex lg:flex-col lg:items-center justify-self-center sm:py-5 lg:py-15 sm:px-[5%] lg:px-[10%]">
                         <Link className="inline-block m-auto" href="/">
@@ -45,6 +45,11 @@ function LoginForm() {
                         </Link>
                     </div>
                     <div className="justify-self-center w-full py-3 xl:py-15 px-[5%] lg:px-[10%] ">
+                        <div className="lg:hidden w-full flex">
+                            <a href='/' className="w-fit pb-4 my-auto bg-transparent hover:text-primary">
+                                <svg width="25" height="25" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#000000" d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"></path><path fill="#000000" d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"></path></g></svg>
+                            </a>
+                        </div>
                         <form className="flex w-full flex-col gap-4" action={loginFormAction} onSubmit={(e) => {
                             setDisableLogin(true);
                         }}>

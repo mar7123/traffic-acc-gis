@@ -136,19 +136,21 @@ function DataComponent() {
                     Cari
                 </Button>
             </div>
-            <div className="flex justify-between h-fit w-full my-2 px-2">
-                {status == "authenticated" ? (
-                    <Button color="bg-black text-white hover:bg-opacity-80" as="a" className="bg-black text-white hover:bg-opacity-80" href="/database/add">Tambah Data</Button>
-                ) : (
-                    <div></div>
-                )}
-                <Select id="year" value={currentFilter.take} onChange={(e) => {
-                    setCurrentFilter({ ...currentFilter, take: Number(e.target.value), toggle: !currentFilter.toggle, page: 1 });
-                }} required>
-                    <option key={10} value={10}>{10}</option>
-                    <option key={25} value={25}>{25}</option>
-                    <option key={50} value={50}>{50}</option>
-                </Select>
+            <div className="flex flex-col h-fit w-full overflow-x-auto my-2 px-2">
+                <div className="min-w-full w-fit flex justify-between">
+                    {status == "authenticated" ? (
+                        <Button color="bg-black text-white hover:bg-opacity-80" as="a" className="bg-black text-white hover:bg-opacity-80" href="/database/add">Tambah Data</Button>
+                    ) : (
+                        <div ></div>
+                    )}
+                    <Select id="year" className="w-fit" value={currentFilter.take} onChange={(e) => {
+                        setCurrentFilter({ ...currentFilter, take: Number(e.target.value), toggle: !currentFilter.toggle, page: 1 });
+                    }} required>
+                        <option key={10} value={10}>{10}</option>
+                        <option key={25} value={25}>{25}</option>
+                        <option key={50} value={50}>{50}</option>
+                    </Select>
+                </div>
             </div>
             <div className="relative min-h-[96px] w-full">
                 {loading ? (<Loader />) : (
