@@ -46,7 +46,7 @@ export default function AddForm() {
     });
     useEffect(() => {
         if (optModal.open) {
-            
+
             setTimeout(() => { setOptModal({ ...optModal, open: false }) }, 1500)
         }
     }, [optModal])
@@ -108,12 +108,19 @@ export default function AddForm() {
         }
         if (state.message == "Tambah data berhasil") {
             setOptModal({ open: true, status: "success", message: state.message });
-            router.push('/database')
+            setTimeout(() => { router.push('/database') }, 2000)
             return
         }
         setDisableAdd(false);
         setOptModal({ open: true, status: "error", message: state.message });
     }, [state])
+
+    useEffect(() => {
+        if (optModal.open) {
+            setTimeout(() => { setOptModal({ ...optModal, open: false }) }, 1500)
+        }
+    }, [optModal])
+
     return (
         <>
             <ModalComponent optModal={optModal} setModal={setModal} />
