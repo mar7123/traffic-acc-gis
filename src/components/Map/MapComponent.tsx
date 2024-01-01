@@ -9,9 +9,11 @@ import MarkerClusterGroup from 'react-leaflet-cluster'
 import L from "leaflet";
 import MarkerIcon from "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/leaflet.css";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { GeoLocation, GeoData, Reports } from "@prisma/client";
 import { Tooltip, Button } from "flowbite-react";
+import Draggable from "react-draggable";
+import React from 'react';
 
 type GeoLocationMod = Omit<GeoLocation, 'geojs'> & {
     geojs: GeoJSON.GeoJsonObject
@@ -59,6 +61,7 @@ const MapComponent = () => {
         },
         zoom: 9
     };
+    const dragRef = useRef(null);
     const [geolocs, setGeolocs] = useState<Geolocs[]>([]);
     const [focusedGeolocs, setFocusedGeolocs] = useState<Geolocs>();
     const focusedGeolocStyle = {
@@ -590,7 +593,6 @@ const MapComponent = () => {
             </>
         );
     }
-
     return (
         <div className="relative flex flex-col items-center h-full">
             {loading ? (<Loader />) : (null)}
@@ -613,31 +615,47 @@ const MapComponent = () => {
                     <MarkerOnClick />
                 ) : (null))}
             </MapContainer>
-            <div className={"fixed right-auto sm:right-[3vw] top-[25vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[400px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black " + (showPanel ? "" : "hidden")}>
-                <div className="h-full w-full grid grid-cols-1 content-start">
-                    {filters.mode == "view" ? (
-                        <>
-                            <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
-                                <span className="text-white text-md">
-                                    Panel Tampilan Data
-                                </span>
-                                <MinBttn />
-                            </div>
-                            <ViewPanelComponent filters={filters} year={year} selectYear={selectYear} selectN={selectN} />
-                        </>
-                    ) : (filters.mode == "report" ? (
-                        <>
-                            <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
-                                <span className="text-white text-md">
-                                    Panel Laporan Kecelakaan
-                                </span>
-                                <MinBttn />
-                            </div>
-                            <ReportPanelComponent markerRef={markerRef} />
-                        </>
-                    ) : (null))}
+            <Draggable
+                axis="both"
+                defaultPosition={{ x: 0, y: window.innerHeight / 4 }}
+                position={undefined}
+                grid={[25, 25]}
+                scale={1}
+                bounds={{
+                    right: window.innerWidth / 2,
+                    bottom: window.innerHeight * 0.7,
+                    top: 0,
+                    left: (window.innerWidth / 2) * -1
+                }}
+                handle=".drag-here"
+                nodeRef={dragRef}
+            >
+                <div className={"fixed z-1200 flex flex-col items-center max-w-1/2 w-[300px] md:w-[400px] h-[350px] md:h-[400px] bg-gray-100 shadow-lg rounded text-black " + (showPanel ? "" : "hidden")} ref={dragRef}>
+                    <div className="h-full w-full grid grid-cols-1 content-start">
+                        {filters.mode == "view" ? (
+                            <>
+                                <div className="drag-here bg-gray-900 py-2 px-4 flex justify-between items-center">
+                                    <span className="text-white text-md">
+                                        Panel Tampilan Data
+                                    </span>
+                                    <MinBttn />
+                                </div>
+                                <ViewPanelComponent filters={filters} year={year} selectYear={selectYear} selectN={selectN} />
+                            </>
+                        ) : (filters.mode == "report" ? (
+                            <>
+                                <div className="drag-here bg-gray-900 py-2 px-4 flex justify-between items-center">
+                                    <span className="text-white text-md">
+                                        Panel Laporan Kecelakaan
+                                    </span>
+                                    <MinBttn />
+                                </div>
+                                <ReportPanelComponent markerRef={markerRef} />
+                            </>
+                        ) : (null))}
+                    </div>
                 </div>
-            </div>
+            </Draggable>
             <div className="fixed bottom-2 z-1200 flex flex-col items-center max-w-1/2 w-fit h-[30px] bg-gray-700 shadow-lg rounded text-black">
                 <div className="w-full h-full grid grid-cols-2 text-white">
                     <div className="w-[70px] h-full flex flex-col items-center relative justify-self-center">
