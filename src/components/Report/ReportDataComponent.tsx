@@ -164,10 +164,11 @@ function ReportDataComponent() {
                     if (currentFilter.search == "") {
                         setCurrentFilter({ ...currentFilter, mode: "default", toggle: !currentFilter.toggle, page: 1 });
                         return;
-                    } else if (currentFilter.search.length <= 3) {
-                        setOptModal({ message: "Masukan 4 karakter atau lebih", status: "error", open: true })
-                        return;
                     }
+                    // else if (currentFilter.search.length <= 3) {
+                    //     setOptModal({ message: "Masukan 4 karakter atau lebih", status: "error", open: true })
+                    //     return;
+                    // }
                     setCurrentFilter({ ...currentFilter, sortFilter: "datetime_crash", sortOrder: true, mode: "search", toggle: !currentFilter.toggle, page: 1 });
                 }}>
                     Cari
