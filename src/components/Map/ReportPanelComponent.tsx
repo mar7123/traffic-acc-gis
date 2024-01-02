@@ -183,6 +183,7 @@ const ReportPanelComponent = ({
                     <div className="h-full w-full">
                         <div className="mb-2">
                             <Label htmlFor="name" value="Nama / Identifikasi" />
+                            <p className="text-xs font-light">Masukkan apapun agar laporan Anda bisa diidentifikasi</p>
                         </div>
                         <TextInput id="name" type="text" onChange={({ target }) => { setFormData({ ...formData, name: target.value }) }} value={formData.name} shadow required />
                     </div>

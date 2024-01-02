@@ -3,6 +3,9 @@ import prisma from ".";
 export async function getGeoLocsPerYear(tahun: number) {
     try {
         const geolocs = await prisma.geoLocation.findMany({
+            where: {
+                name: "Jawa Tengah"
+            },
             include: {
                 // geodatas: {
                 //     where: {
@@ -53,6 +56,19 @@ export async function getGeoLocsPerYear(tahun: number) {
     }
 }
 
+export async function findGeoLocsBound() {
+    try {
+        const res = await prisma.geoLocation.findFirst({
+            where:{
+                name2: "Jawa Tengah"
+            }
+        })
+        return { res };
+    } catch (error) {
+        return { error };
+    }
+}
+
 export async function findGeoCompByPoint(lat: number, lng: number) {
     try {
         const res = await prisma.geoLocation.findRaw({
@@ -65,6 +81,7 @@ export async function findGeoCompByPoint(lat: number, lng: number) {
                         }
                     }
                 },
+                name: "Jawa Tengah"
             },
             options: {
                 projection: {

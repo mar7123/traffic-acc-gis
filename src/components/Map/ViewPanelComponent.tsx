@@ -50,11 +50,12 @@ const ViewPanelComponent = ({
                             })}
                         </Select>
                     </div>
-                    <div className="flex items-center w-full">
-                        <div className="w-30 lg:w-35 ">
-                            <Label htmlFor="nval" value="n" />
+                    <div className=" w-full">
+                        <div className="w-full mb-2">
+                            <Label htmlFor="nval" value="Nilai n (Z-score batas klasifikasi)" />
+                            <p className="text-xs font-light">Ubah nilai n untuk melihat dampaknya!</p>
                         </div>
-                        <TextInput className="w-1/2 bg-white" id="nval" type="number" value={filters.n == 5 ? 0 : filters.n} min={0.1} onChange={({ target }) => {
+                        <TextInput className="w-full bg-white" id="nval" type="number" value={filters.n == 5 ? 0 : filters.n} min={0.1} onChange={({ target }) => {
                             selectN(target);
                         }} step={0.1} shadow disabled={filters.n == 5 ? true : false} />
                     </div>

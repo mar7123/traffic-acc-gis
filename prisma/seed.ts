@@ -1,5 +1,6 @@
 import prisma from "../lib/prisma";
 import bcrypt from "bcrypt";
+import provinsi from "./provinsi.json";
 import ind_kabkota from "./INDKabKota.json";
 import data_kecelakaan from "./data kecelakaan jawa tengah.json";
 import { Prisma, GeoLocation, GeoData, Reports } from "@prisma/client";
@@ -18,6 +19,23 @@ type GeoDataInput = Omit<GeoData, 'id' | 'geoloc_id' | 'createdAt' | 'datetime_c
  */
 function indjson() {
     const { features } = ind_kabkota as any;
+    const { features: prov } = provinsi;
+    const jateng = prov.reduce(function (filtered:any, option:any) {
+        if (option.properties.name == "JAWA TENGAH") {
+            const temp: GeoLocInput = {
+                geoId: 0,
+                geoId2: Number(option.properties.prov_id),
+                name: "",
+                name2: "Jawa Tengah",
+                geojs: option,
+                geodatas: {
+                    create: undefined
+                }
+            };
+            return filtered.concat(temp);
+        }
+        return filtered;
+    }, []);
     const ind = features.reduce(function (filtered: any, option: any) {
         if (option.properties.NAME_1 == "Jawa Tengah") {
             const temp: GeoLocInput = {
@@ -33,7 +51,7 @@ function indjson() {
             return filtered.concat(temp);
         }
         return filtered;
-    }, [])
+    }, [jateng[0]])
     return { ind };
 }
 /**
@@ -250,11 +268,23 @@ async function main() {
             },
         }
     });
+    const geopolyfind2 = await prisma.geoLocation.findRaw({
+        filter: {
+            "geojs.geometry": {
+                $geoIntersects: {
+                    $geometry: {
+                        type: "Point",
+                        coordinates: [110.37963867187501, -7.051830774037793]
+                    }
+                }
+            }
+        }
+    }) as any;
     await prisma.reports.create({
         data: {
             name: "example report 4",
-            latitude: replat,
-            longitude: replng,
+            latitude: -7.051830774037793,
+            longitude: 110.37963867187501,
             geojs: {
                 type: "Feature",
                 properties: {
@@ -273,16 +303,28 @@ async function main() {
             kerugian: 100000,
             geoloc: {
                 connect: {
-                    id: geopolyfind[0]._id.$oid
+                    id: geopolyfind2[0]._id.$oid
                 }
             },
         }
     });
+    const geopolyfind3 = await prisma.geoLocation.findRaw({
+        filter: {
+            "geojs.geometry": {
+                $geoIntersects: {
+                    $geometry: {
+                        type: "Point",
+                        coordinates: [109.89349365234376, -7.051830774037793]
+                    }
+                }
+            }
+        }
+    }) as any;
     await prisma.reports.create({
         data: {
             name: "example report 5",
-            latitude: replat,
-            longitude: replng,
+            latitude: -7.051830774037793,
+            longitude: 109.89349365234376,
             geojs: {
                 type: "Feature",
                 properties: {
@@ -301,16 +343,28 @@ async function main() {
             kerugian: 100000,
             geoloc: {
                 connect: {
-                    id: geopolyfind[0]._id.$oid
+                    id: geopolyfind3[0]._id.$oid
                 }
             },
         }
     });
+    const geopolyfind4 = await prisma.geoLocation.findRaw({
+        filter: {
+            "geojs.geometry": {
+                $geoIntersects: {
+                    $geometry: {
+                        type: "Point",
+                        coordinates: [109.63256835937501, -7.087264887963057]
+                    }
+                }
+            }
+        }
+    }) as any;
     await prisma.reports.create({
         data: {
             name: "example report 6",
-            latitude: replat,
-            longitude: replng,
+            latitude: -7.087264887963057,
+            longitude: 109.63256835937501,
             geojs: {
                 type: "Feature",
                 properties: {
@@ -329,14 +383,138 @@ async function main() {
             kerugian: 100000,
             geoloc: {
                 connect: {
-                    id: geopolyfind[0]._id.$oid
+                    id: geopolyfind4[0]._id.$oid
+                }
+            },
+        }
+    });
+    const geopolyfind5 = await prisma.geoLocation.findRaw({
+        filter: {
+            "geojs.geometry": {
+                $geoIntersects: {
+                    $geometry: {
+                        type: "Point",
+                        coordinates: [109.1514142, -6.8675955]
+                    }
+                }
+            }
+        }
+    }) as any;
+    await prisma.reports.create({
+        data: {
+            name: "example report 7",
+            latitude: -6.8675955,
+            longitude: 109.1514142,
+            geojs: {
+                type: "Feature",
+                properties: {
+                    name: "example report",
+                },
+                geometry: {
+                    type: "Point",
+                    coordinates: [109.1514142, -6.8675955]
+                }
+            },
+            datetime_crash: new Date("2018-03-03").toISOString(),
+            jumlah_kecelakaan: 1,
+            meninggal: 2,
+            luka_berat: 1,
+            luka_ringan: 0,
+            kerugian: 100000,
+            geoloc: {
+                connect: {
+                    id: geopolyfind5[0]._id.$oid
+                }
+            },
+        }
+    });
+    await prisma.reports.create({
+        data: {
+            name: "example report 8",
+            latitude: -6.8675955,
+            longitude: 109.1514142,
+            geojs: {
+                type: "Feature",
+                properties: {
+                    name: "example report",
+                },
+                geometry: {
+                    type: "Point",
+                    coordinates: [109.1514142, -6.8675955]
+                }
+            },
+            datetime_crash: new Date("2018-03-03").toISOString(),
+            jumlah_kecelakaan: 1,
+            meninggal: 2,
+            luka_berat: 1,
+            luka_ringan: 0,
+            kerugian: 100000,
+            geoloc: {
+                connect: {
+                    id: geopolyfind5[0]._id.$oid
+                }
+            },
+        }
+    });
+    await prisma.reports.create({
+        data: {
+            name: "example report 9",
+            latitude: -6.8675955,
+            longitude: 109.1514142,
+            geojs: {
+                type: "Feature",
+                properties: {
+                    name: "example report",
+                },
+                geometry: {
+                    type: "Point",
+                    coordinates: [109.1514142, -6.8675955]
+                }
+            },
+            datetime_crash: new Date("2018-03-03").toISOString(),
+            jumlah_kecelakaan: 1,
+            meninggal: 2,
+            luka_berat: 1,
+            luka_ringan: 0,
+            kerugian: 100000,
+            geoloc: {
+                connect: {
+                    id: geopolyfind5[0]._id.$oid
+                }
+            },
+        }
+    });
+    await prisma.reports.create({
+        data: {
+            name: "example report 10",
+            latitude: -6.8675955,
+            longitude: 109.1514142,
+            geojs: {
+                type: "Feature",
+                properties: {
+                    name: "example report",
+                },
+                geometry: {
+                    type: "Point",
+                    coordinates: [109.1514142, -6.8675955]
+                }
+            },
+            datetime_crash: new Date("2018-03-03").toISOString(),
+            jumlah_kecelakaan: 1,
+            meninggal: 2,
+            luka_berat: 1,
+            luka_ringan: 0,
+            kerugian: 100000,
+            geoloc: {
+                connect: {
+                    id: geopolyfind5[0]._id.$oid
                 }
             },
         }
     });
     await prisma.geoData.create({
         data: {
-            name: "example processed report 3",
+            name: "example processed report",
             wilayah: "",
             latitude: replat,
             longitude: replng,
@@ -365,7 +543,7 @@ async function main() {
     });
     await prisma.reports.create({
         data: {
-            name: "example report 4",
+            name: "example null location report",
             latitude: replat,
             longitude: replng,
             geojs: {

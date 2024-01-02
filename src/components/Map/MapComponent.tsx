@@ -389,10 +389,26 @@ const MapComponent = () => {
         }
         setLoading(false);
     }
+    const geoReportAPI = async () => {
+        const geobound = await fetch('/api/geoloc/boundary', {
+            method: "GET"
+        }).then(async (res) => {
+            const { data }: { data: Geolocs } = await res.json();
+            if (!data) {
+                return;
+            }
+            setGeolocs([data]);
+        })
+        setLoading(false)
+    }
 
     useEffect(() => {
         setLoading(true)
-        geolocsAPI()
+        if (filters.mode == "view") {
+            geolocsAPI()
+        } else if (filters.mode == "report") {
+            geoReportAPI()
+        }
     }, [filters.toggle])
 
     const MarkerOnClick = () => {
@@ -610,7 +626,28 @@ const MapComponent = () => {
                 {filters.mode == "view" ? (
                     <MapViewMode />
                 ) : (filters.mode == "report" ? (
-                    <MarkerOnClick />
+                    <>
+                        <MarkerOnClick />
+                        {geolocs?.map((item) => {
+                            return (
+                                <GeoJSON
+                                    key={JSON.stringify(item)}
+                                    data={item.geojs}
+                                    pathOptions={{
+                                        fillColor: "#f3f4f6",
+                                        fillOpacity: 0.3,
+                                        weight: 2,
+                                        opacity: 1,
+                                        color: "black"
+                                    }}
+                                    onEachFeature={(feature, layer) => {
+                                        layer.bindTooltip("<b>Mohon tekan peta hanya di sekitar batas wilayah</b>", { permanent: true, direction: "center" })
+                                    }}
+                                >
+                                </GeoJSON>
+                            )
+                        })}
+                    </>
                 ) : (null))}
             </MapContainer>
             <div className={"fixed right-auto sm:right-[3vw] top-[25vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[400px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black " + (showPanel ? "" : "hidden")}>
@@ -647,6 +684,7 @@ const MapComponent = () => {
                                     if (markerRef.marker) {
                                         markerRef.marker.remove();
                                     }
+                                    setGeolocs([]);
                                     setMarkerRef({ ...markerRef, marker: undefined });
                                     setFilters({ ...filters, n: 0, mode: "view", toggle: !filters.toggle });
                                     window.history.replaceState("", "", "/map?mode=view");
@@ -673,8 +711,8 @@ const MapComponent = () => {
                         <Tooltip content="Pelaporan Data" theme={{ target: "absolute w-[50px] h-[50px] flex flex-col items-center bg-green-400 rounded-full shadow-md " + ((filters.mode == "report" && showPanel) ? "bottom-4" : "bottom-3"), base: "absolute inline-block whitespace-nowrap z-10 rounded-lg py-2 px-3 text-sm font-medium shadow-sm" }}>
                             <button className="w-full h-full flex flex-col items-center" onClick={() => {
                                 if (filters.mode != "report") {
-                                    setFilters({ ...filters, mode: "report" });
                                     setGeolocs([]);
+                                    setFilters({ ...filters, mode: "report", toggle: !filters.toggle });
                                     window.history.replaceState("", "", "/map?mode=report");
                                     setShowPanel(true);
                                     return;
