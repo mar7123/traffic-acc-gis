@@ -107,7 +107,12 @@ export default function EditForm({ data }: { data: GeoData }) {
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="kerugian" value="Jumlah kerugian" />
                                 </div>
-                                <TextInput id="kerugian" name="kerugian" type="number" placeholder="Masukan jumlah kerugian" min={0} defaultValue={data.kerugian} onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} required shadow />
+                                <div className="relative h-fit w-full">
+                                    <div className="absolute flex h-full w-[40px] z-1">
+                                        <span className="text-sm m-auto">Rp</span>
+                                    </div>
+                                    <TextInput id="kerugian" name="kerugian" type="number" sizing={"md"} defaultValue={data.kerugian} theme={{ field: { input: { sizes: { md: "pl-8 text-sm" } } } }} step={1000} onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0} shadow required />
+                                </div>
                             </div>
                             <div className="relative flex w-full h-full flex-col">
                                 {disableEdit ? (

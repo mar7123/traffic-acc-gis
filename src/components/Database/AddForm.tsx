@@ -3,19 +3,24 @@
 import { Button, Label, TextInput } from 'flowbite-react';
 import ModalComponent from "@/components/Modal/ModalComponent";
 import { addDataAction } from "./DatabaseFormAction";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import MarkerIcon from "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { useRouter } from 'next/navigation'
+import { GeoLocation } from '@prisma/client';
+
+type GeoLocationMod = Omit<GeoLocation, 'geojs'> & {
+    geojs: GeoJSON.GeoJsonObject
+}
 
 const initialState = {
     message: null,
 }
 
-export default function AddForm() {
+export default function AddForm({ boundary }: { boundary?: GeoLocationMod | null }) {
     const router = useRouter()
     const center = {
         lat: -3.3675549,
@@ -149,6 +154,23 @@ export default function AddForm() {
                                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 />
+                                {boundary != null ? (
+                                    <GeoJSON
+                                        key={JSON.stringify(boundary)}
+                                        data={boundary.geojs}
+                                        pathOptions={{
+                                            fillColor: "#f3f4f6",
+                                            fillOpacity: 0.3,
+                                            weight: 2,
+                                            opacity: 1,
+                                            color: "black"
+                                        }}
+                                        onEachFeature={(feature, layer) => {
+                                            layer.bindTooltip("<b>Mohon tekan peta hanya di sekitar batas wilayah</b>", { permanent: false, direction: "center" })
+                                        }}
+                                    >
+                                    </GeoJSON>
+                                ) : (null)}
                                 <MarkerOnClick />
                             </MapContainer>
                         </div>
@@ -220,8 +242,14 @@ export default function AddForm() {
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="kerugian" value="Jumlah kerugian" />
+                                    <p className="text-xs font-light">Satuan Rp1000</p>
                                 </div>
-                                <TextInput id="kerugian" name="kerugian" type="number" min={0} placeholder="Masukan jumlah kerugian" required onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} shadow />
+                                <div className="relative h-fit w-full">
+                                    <div className="absolute flex h-full w-[40px] z-1">
+                                        <span className="text-sm m-auto">Rp</span>
+                                    </div>
+                                    <TextInput id="kerugian" name="kerugian" type="number" sizing={"md"} theme={{ field: { input: { sizes: { md: "pl-8 text-sm" } } } }} step={1000} onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0}  shadow required />
+                                </div>
                             </div>
                             <div className="relative flex w-full h-full flex-col">
                                 {disableAdd ? (

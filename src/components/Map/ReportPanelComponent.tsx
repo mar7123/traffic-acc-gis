@@ -208,8 +208,14 @@ const ReportPanelComponent = ({
                     <div className="h-full w-full">
                         <div className="mb-2">
                             <Label htmlFor="material_loss" value="Kerugian" />
+                            <p className="text-xs font-light">Satuan Rp1000</p>
                         </div>
-                        <TextInput id="material_loss" type="number" onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0} onChange={({ target }) => { setFormData({ ...formData, kerugian: Number(target.value) }) }} value={formData.kerugian} shadow required />
+                        <div className="relative h-fit w-full">
+                            <div className="absolute flex h-full w-[40px] z-1">
+                                <span className="text-sm m-auto">Rp</span>
+                            </div>
+                            <TextInput id="material_loss" type="number" sizing={"md"} theme={{ field: { input: { sizes: { md: "pl-8 text-sm" } } } }} step={1000} onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0} onChange={({ target }) => { setFormData({ ...formData, kerugian: Number(target.value) }) }} value={formData.kerugian} shadow required />
+                        </div>
                     </div>
                     <Button type="submit">Submit</Button>
                 </form>
