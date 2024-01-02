@@ -640,9 +640,6 @@ const MapComponent = () => {
                                         opacity: 1,
                                         color: "black"
                                     }}
-                                    onEachFeature={(feature, layer) => {
-                                        layer.bindTooltip("<b>Mohon tekan peta hanya di sekitar batas wilayah</b>", { permanent: false, direction: "center" })
-                                    }}
                                 >
                                 </GeoJSON>
                             )

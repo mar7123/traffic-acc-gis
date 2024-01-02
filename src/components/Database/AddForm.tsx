@@ -165,9 +165,6 @@ export default function AddForm({ boundary }: { boundary?: GeoLocationMod | null
                                             opacity: 1,
                                             color: "black"
                                         }}
-                                        onEachFeature={(feature, layer) => {
-                                            layer.bindTooltip("<b>Mohon tekan peta hanya di sekitar batas wilayah</b>", { permanent: false, direction: "center" })
-                                        }}
                                     >
                                     </GeoJSON>
                                 ) : (null)}
