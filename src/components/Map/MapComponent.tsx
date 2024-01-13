@@ -411,6 +411,13 @@ const MapComponent = () => {
         }
     }, [filters.toggle])
 
+    useEffect(() => {
+        const metaviewport = document.querySelector("meta[name=viewport]") as HTMLMetaElement;
+        const minwidth = 800;
+        const scale = (window.outerWidth > minwidth ? 1 : (window.outerWidth / minwidth))
+        metaviewport.content = "width=" + minwidth + ", initial-scale=" + scale;
+    }, [])
+
     const MarkerOnClick = () => {
         const map = useMapEvents({
             click: (e) => {
@@ -647,7 +654,7 @@ const MapComponent = () => {
                     </>
                 ) : (null))}
             </MapContainer>
-            <div className={"fixed right-auto sm:right-[3vw] top-[25vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[400px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black " + (showPanel ? "" : "hidden")}>
+            <div className={"fixed right-auto sm:right-[3vw] top-[33vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[380px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black " + (showPanel ? "" : "hidden")}>
                 <div className="h-full w-full grid grid-cols-1 content-start">
                     {filters.mode == "view" ? (
                         <>

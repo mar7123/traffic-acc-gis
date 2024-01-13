@@ -133,6 +133,13 @@ function DataComponent() {
         }
     }, [optModal])
 
+    useEffect(() => {
+        const metaviewport = document.querySelector("meta[name=viewport]") as HTMLMetaElement;
+        const minwidth = 800;
+        const scale = (window.outerWidth > minwidth ? 1 : (window.outerWidth / minwidth))
+        metaviewport.content = "width=" + minwidth + ", initial-scale=" + scale;
+    }, [])
+
     return (
         <>
             <div className="flex max-w-full w-full sm:w-5/6 gap-2 my-2">
