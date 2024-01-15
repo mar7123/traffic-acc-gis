@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Label, TextInput } from 'flowbite-react';
+import { Button, Label, TextInput, Textarea } from 'flowbite-react';
 import ModalComponent from "@/components/Modal/ModalComponent";
 import { addDataAction } from "./DatabaseFormAction";
 import { MapContainer, TileLayer, GeoJSON, useMapEvents } from "react-leaflet";
@@ -178,6 +178,12 @@ export default function AddForm({ boundary }: { boundary?: GeoLocationMod | null
                                     <Label className="text-md" htmlFor="nama" value="Nama / Identifier" />
                                 </div>
                                 <TextInput id="nama" name="nama" type="text" placeholder="Masukan nama" required shadow />
+                            </div>
+                            <div>
+                                <div className="mb-2 block">
+                                    <Label className="text-md" htmlFor="desc" value="Deskripsi Kecelakaan" />
+                                </div>
+                                <Textarea id="desc" name="desc" placeholder="Masukan deskripsi kecelakaan" required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">

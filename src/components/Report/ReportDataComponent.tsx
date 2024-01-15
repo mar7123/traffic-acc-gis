@@ -141,6 +141,13 @@ function ReportDataComponent() {
         }
     }, [optModal])
 
+    useEffect(() => {
+        const minwidth = 800;
+        const metaviewport = document.querySelector("meta[name=viewport]") as HTMLMetaElement;
+        const scale = (window.outerWidth > minwidth ? 1 : (window.outerWidth / minwidth))
+        metaviewport.content = "width=" + minwidth + ", initial-scale=" + scale + ", interactive-widget=overlays-content";
+    }, [])
+
     return (
         <>
             <div className="flex max-w-full w-full sm:w-5/6 gap-2 my-2">
@@ -152,10 +159,6 @@ function ReportDataComponent() {
                                 setCurrentFilter({ ...currentFilter, mode: "default", toggle: !currentFilter.toggle, page: 1 });
                                 return;
                             }
-                            // else if (currentFilter.search.length <= 3) {
-                            //     setOptModal({ message: "Masukan 4 karakter atau lebih", status: "error", open: true })
-                            //     return;
-                            // }
                             setCurrentFilter({ ...currentFilter, sortFilter: "datetime_crash", sortOrder: true, mode: "search", toggle: !currentFilter.toggle, page: 1 })
                         }
                     }} />
@@ -165,10 +168,6 @@ function ReportDataComponent() {
                         setCurrentFilter({ ...currentFilter, mode: "default", toggle: !currentFilter.toggle, page: 1 });
                         return;
                     }
-                    // else if (currentFilter.search.length <= 3) {
-                    //     setOptModal({ message: "Masukan 4 karakter atau lebih", status: "error", open: true })
-                    //     return;
-                    // }
                     setCurrentFilter({ ...currentFilter, sortFilter: "datetime_crash", sortOrder: true, mode: "search", toggle: !currentFilter.toggle, page: 1 });
                 }}>
                     Cari
@@ -184,9 +183,7 @@ function ReportDataComponent() {
                 </Select>
             </div>
             <div className="relative min-h-[96px] w-full">
-                {loading ? (<Loader />) : (
-                    <>
-                        <div className="overflow-x-auto my-2">
+                        <div className="overflow-x-auto my-2 min-h-[200px]">
                             <Modal className="z-9999" show={questionModal.open} size="md" onClose={() => setQuestionModal({ ...questionModal, open: false })} dismissible>
                                 <Modal.Header />
                                 <Modal.Body>
@@ -205,6 +202,7 @@ function ReportDataComponent() {
                                     </div>
                                 </Modal.Body>
                             </Modal>
+                            {loading ? (<Loader/>):(null)}
                             <Table striped>
                                 <Table.Head >
                                     <Table.HeadCell className="bg-black text-white dark:bg-white dark:text-black">
@@ -391,8 +389,6 @@ function ReportDataComponent() {
                         <div className="flex overflow-x-auto sm:justify-end mx-8">
                             <Pagination currentPage={currentFilter.page} totalPages={Math.ceil(reports.count / currentFilter.take)} onPageChange={onPageChange} />
                         </div>
-                    </>
-                )}
             </div>
         </>
     );

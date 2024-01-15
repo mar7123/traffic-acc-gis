@@ -75,10 +75,10 @@ model GeoData {
     geoloc_id         String      @db.ObjectId
     geoloc            GeoLocation @relation(fields: [geoloc_id], references: [id], onDelete: Cascade)
     name              String
+    desc              String
     latitude          Float
     longitude         Float
     geojs             Json
-    wilayah           String
     datetime_crash    DateTime
     jumlah_kecelakaan Float
     meninggal         Float
@@ -93,6 +93,7 @@ model Reports {
     geoloc_id         String?      @db.ObjectId
     geoloc            GeoLocation? @relation(fields: [geoloc_id], references: [id], onDelete: SetNull)
     name              String
+    desc              String
     latitude          Float
     longitude         Float
     geojs             Json

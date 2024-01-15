@@ -16,7 +16,7 @@ function NavbarComponent() {
     }
     return (
         <>
-            <div className={'min-h-fit flex items-center my-2'}>
+            <div className={'min-h-fit flex items-center my-1'}>
                 <Navbar className="w-full bg-transparent max-w-screen-2xl px-[4vw] sm:px-[4vw] lg:px-[7vw] text-white mx-auto" fluid rounded>
                     <Navbar.Brand href="/">
                         <svg className='w-[30px] h-[30px] sm:w-[40px] sm:h-[40px]' viewBox="0 0 24 24" fill="none" stroke='white' xmlns="http://www.w3.org/2000/svg">

@@ -11,6 +11,7 @@ type GeoLocInput = Omit<GeoLocation, 'id' | 'createdAt'> & {
 }
 type GeoDataInput = Omit<GeoData, 'id' | 'geoloc_id' | 'createdAt' | 'datetime_crash'> & {
     datetime_crash: string,
+    wilayah?: string,
 }
 
 /**
@@ -63,6 +64,7 @@ function datakecjson() {
     const res = data.map((item) => {
         const temp: GeoDataInput = {
             name: item.name,
+            desc: "",
             latitude: item.latitude,
             longitude: item.longitude,
             geojs: {
@@ -94,9 +96,9 @@ async function main() {
     const { res } = datakecjson();
 
     // Convert to prisma input
-    const prismageodata = res as Prisma.GeoDataCreateManyInput[];
     ind.forEach((element: any) => {
-        const resfilter = prismageodata.filter((elem) => elem.wilayah == element.name2);
+        const resfilter = res.filter((elem) => elem.wilayah == element.name2);
+        resfilter.forEach((elem)=>{delete elem['wilayah']})
         element.geodatas.create = resfilter;
     });
     const prismageoloc = ind as Prisma.GeoLocationCreateInput[];
@@ -186,6 +188,7 @@ async function main() {
     await prisma.reports.create({
         data: {
             name: "example report",
+            desc: "example report desc",
             latitude: replat,
             longitude: replng,
             geojs: {
@@ -214,6 +217,7 @@ async function main() {
     await prisma.reports.create({
         data: {
             name: "example report 2",
+            desc: "example report desc 2",
             latitude: replat,
             longitude: replng,
             geojs: {
@@ -243,6 +247,7 @@ async function main() {
     await prisma.reports.create({
         data: {
             name: "example report 3",
+            desc: "example report desc 3",
             latitude: replat,
             longitude: replng,
             geojs: {
@@ -283,6 +288,7 @@ async function main() {
     await prisma.reports.create({
         data: {
             name: "example report 4",
+            desc: "example report desc 4",
             latitude: -7.051830774037793,
             longitude: 110.37963867187501,
             geojs: {
@@ -323,6 +329,7 @@ async function main() {
     await prisma.reports.create({
         data: {
             name: "example report 5",
+            desc: "example report desc 5",
             latitude: -7.051830774037793,
             longitude: 109.89349365234376,
             geojs: {
@@ -363,6 +370,7 @@ async function main() {
     await prisma.reports.create({
         data: {
             name: "example report 6",
+            desc: "example report desc 6",
             latitude: -7.087264887963057,
             longitude: 109.63256835937501,
             geojs: {
@@ -403,6 +411,7 @@ async function main() {
     await prisma.reports.create({
         data: {
             name: "example report 7",
+            desc: "example report desc 7",
             latitude: -6.8675955,
             longitude: 109.1514142,
             geojs: {
@@ -431,6 +440,7 @@ async function main() {
     await prisma.reports.create({
         data: {
             name: "example report 8",
+            desc: "example report desc 8",
             latitude: -6.8675955,
             longitude: 109.1514142,
             geojs: {
@@ -459,6 +469,7 @@ async function main() {
     await prisma.reports.create({
         data: {
             name: "example report 9",
+            desc: "example report desc 9",
             latitude: -6.8675955,
             longitude: 109.1514142,
             geojs: {
@@ -487,6 +498,7 @@ async function main() {
     await prisma.reports.create({
         data: {
             name: "example report 10",
+            desc: "example report desc 10",
             latitude: -6.8675955,
             longitude: 109.1514142,
             geojs: {
@@ -515,7 +527,7 @@ async function main() {
     await prisma.geoData.create({
         data: {
             name: "example processed report",
-            wilayah: "",
+            desc: "example processed report desc",
             latitude: replat,
             longitude: replng,
             geojs: {
@@ -544,6 +556,7 @@ async function main() {
     await prisma.reports.create({
         data: {
             name: "example null location report",
+            desc: "example null location report desc",
             latitude: replat,
             longitude: replng,
             geojs: {

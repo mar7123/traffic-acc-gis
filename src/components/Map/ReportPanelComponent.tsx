@@ -1,4 +1,4 @@
-import { Button, Checkbox, Label, TextInput, Modal } from "flowbite-react";
+import { Button, Checkbox, Label, TextInput, Modal, Textarea } from "flowbite-react";
 import Loader from "@/components/common/Loader";
 import L from "leaflet";
 import { useEffect, useState } from "react";
@@ -38,6 +38,7 @@ const ReportPanelComponent = ({
     const [formData, setFormData] = useState<ReportInput>({
         datetime_crash: "",
         name: "",
+        desc: "",
         latitude: 0,
         longitude: 0,
         geojs: {},
@@ -86,6 +87,7 @@ const ReportPanelComponent = ({
                 setOptModal({ message: "Input data berhasil", status: "success", open: true })
                 setFormData({
                     datetime_crash: "",
+                    desc: "",
                     name: "",
                     latitude: 0,
                     longitude: 0,
@@ -186,6 +188,12 @@ const ReportPanelComponent = ({
                             <p className="text-xs font-light">Masukkan apapun agar laporan Anda bisa diidentifikasi</p>
                         </div>
                         <TextInput id="name" type="text" onChange={({ target }) => { setFormData({ ...formData, name: target.value }) }} value={formData.name} shadow required />
+                    </div>
+                    <div className="h-full w-full">
+                        <div className="mb-2">
+                            <Label htmlFor="desc" value="Deskripsi Kecelakaan" />
+                        </div>
+                        <Textarea id="desc" onChange={({ target }) => { setFormData({ ...formData, desc: target.value }) }} value={formData.desc} shadow required />
                     </div>
                     <div className="h-full w-full">
                         <div className="mb-2">

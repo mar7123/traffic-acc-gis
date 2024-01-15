@@ -19,6 +19,7 @@ export async function editDataAction(prevState: any, formData: FormData) {
         const dataID = formData.get('geodata_id')?.toString() ?? "";
         const rawFormData: GeoDataEdit = {
             name: formData.get('nama')?.toString() ?? "",
+            desc: formData.get('desc')?.toString() ?? "",
             datetime_crash: new Date(formData.get('waktu_kecelakaan')?.toString() ?? "").toISOString(),
             jumlah_kecelakaan: Number(formData.get('jumlah_kecelakaan')),
             meninggal: Number(formData.get('meninggal')),
@@ -48,10 +49,10 @@ export async function addDataAction(prevState: any, formData: FormData) {
         }
         const rawFormData: GeoDataAdd = {
             name: String(formData.get("nama") ?? ""),
+            desc: formData.get('desc')?.toString() ?? "",
             latitude: Number(formData.get("latitude") ?? ""),
             longitude: Number(formData.get("longitude") ?? ""),
             geojs: Object(formData.get("geojs") ?? {}),
-            wilayah: String(formData.get("wilayah") ?? ""),
             datetime_crash: new Date(formData.get('waktu_kecelakaan')?.toString() ?? "").toISOString(),
             jumlah_kecelakaan: Number(formData.get("jumlah_kecelakaan") ?? ""),
             meninggal: Number(formData.get("meninggal") ?? ""),

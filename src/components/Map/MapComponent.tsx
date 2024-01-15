@@ -11,7 +11,7 @@ import MarkerIcon from "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/leaflet.css";
 import { ChangeEvent, useEffect, useState } from "react";
 import { GeoLocation, GeoData, Reports } from "@prisma/client";
-import { Tooltip, Button } from "flowbite-react";
+import { Tooltip, Button, Modal } from "flowbite-react";
 
 type GeoLocationMod = Omit<GeoLocation, 'geojs'> & {
     geojs: GeoJSON.GeoJsonObject
@@ -111,7 +111,7 @@ const MapComponent = () => {
         },
         mean: 0,
         std: 0,
-        n: 0,
+        n: -1,
         max: 0,
         min: 0,
         upper: {
@@ -125,11 +125,18 @@ const MapComponent = () => {
         mode: ViewMode.indexOf(mode_val) !== -1 ? mode_val : "view",
         toggle: true
     });
+    const [openDetail, setOpenDetail] = useState<{
+        data: GeoDatas | ReportsData | undefined,
+        open: boolean,
+    }>({
+        data: undefined,
+        open: false
+    });
 
     const selectYear = (e: ChangeEvent<HTMLSelectElement>) => {
         if (String(year.selected) != e.currentTarget.value) {
             setYear({ ...year, selected: Number(e.currentTarget.value) });
-            setFilters({ ...filters, n: 0, toggle: !filters.toggle })
+            setFilters({ ...filters, n: -1, toggle: !filters.toggle })
             setFocusedGeolocs(undefined);
         }
     }
@@ -304,7 +311,7 @@ const MapComponent = () => {
     }
 
     const geolocsAPI = async () => {
-        if (filters.n <= 0) {
+        if (filters.n < 0) {
             const yearDB = await fetch('/api/geodata/year', {
                 method: "GET",
             }).then(async (year_res) => {
@@ -412,10 +419,10 @@ const MapComponent = () => {
     }, [filters.toggle])
 
     useEffect(() => {
-        const metaviewport = document.querySelector("meta[name=viewport]") as HTMLMetaElement;
         const minwidth = 800;
+        const metaviewport = document.querySelector("meta[name=viewport]") as HTMLMetaElement;
         const scale = (window.outerWidth > minwidth ? 1 : (window.outerWidth / minwidth))
-        metaviewport.content = "width=" + minwidth + ", initial-scale=" + scale;
+        metaviewport.content = "width=" + minwidth + ", initial-scale=" + scale + ", interactive-widget=overlays-content";
     }, [])
 
     const MarkerOnClick = () => {
@@ -446,10 +453,10 @@ const MapComponent = () => {
 
     const MinBttn = () => {
         return (
-            <Button type="submit" color="custom-link bg-transparent focus:ring-0" className="w-fit custom-link bg-transparent focus:ring-0" onClick={(e: any) => {
+            <Button type="submit" color="custom-link bg-transparent focus:ring-0" size={"md"} className="w-fit custom-link bg-transparent focus:ring-0" theme={{ size: { md: "text-sm py-1" } }} onClick={(e: any) => {
                 setShowPanel(false);
             }}>
-                <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M23 4C23 2.34315 21.6569 1 20 1H8C6.34315 1 5 2.34315 5 4V5H4C2.34315 5 1 6.34315 1 8V20C1 21.6569 2.34315 23 4 23H16C17.6569 23 19 21.6569 19 20V19H20C21.6569 19 23 17.6569 23 16V4ZM19 17H20C20.5523 17 21 16.5523 21 16V4C21 3.44772 20.5523 3 20 3H8C7.44772 3 7 3.44772 7 4V5H16C17.6569 5 19 6.34315 19 8V17ZM16 7C16.5523 7 17 7.44772 17 8V20C17 20.5523 16.5523 21 16 21H4C3.44772 21 3 20.5523 3 20V8C3 7.44772 3.44772 7 4 7H16Z" fill="#ffffff"></path> </g></svg>
+                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="#ffffff" strokeWidth="1.5"></path> <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round"></path> </g></svg>
             </Button>
         );
     };
@@ -482,7 +489,15 @@ const MapComponent = () => {
                                     <div className="max-w-[240px]">
                                         {geodata_item.name} <br />
                                         {new Date(geodata_item.datetime_crash).toUTCString()}<br />
-                                        {geodata_item.jumlah_kecelakaan} kecelakaan
+                                        {geodata_item.jumlah_kecelakaan} kecelakaan<br />
+                                        <Button color="bg-black text-white hover:bg-opacity-80" className="mx-auto bg-black text-white hover:bg-opacity-80" size="xs" onClick={(e) => {
+                                            setOpenDetail({
+                                                data: geodata_item,
+                                                open: true
+                                            });
+                                        }}>
+                                            Lihat Detail
+                                        </Button>
                                     </div>
                                 </Popup>
                             </Marker>
@@ -509,7 +524,15 @@ const MapComponent = () => {
                                     <div className="max-w-[240px]">
                                         {report_item.name} <br />
                                         {new Date(report_item.datetime_crash).toUTCString()}<br />
-                                        1 laporan
+                                        1 laporan<br />
+                                        <Button color="bg-black text-white hover:bg-opacity-80" className="mx-auto bg-black text-white hover:bg-opacity-80" size="xs" onClick={(e) => {
+                                            setOpenDetail({
+                                                data: report_item,
+                                                open: true
+                                            })
+                                        }}>
+                                            Lihat Detail
+                                        </Button>
                                     </div>
                                 </Popup>
                             </Marker>
@@ -617,6 +640,35 @@ const MapComponent = () => {
     return (
         <div className="relative flex flex-col items-center h-full">
             {loading ? (<Loader />) : (null)}
+            <Modal dismissible className="z-9999" show={openDetail.open} onClose={() => setOpenDetail({ ...openDetail, open: false })}>
+                <Modal.Header>Detail Data</Modal.Header>
+                <Modal.Body>
+                    <div>
+                        <p className="text-base md:text-lg text-gray-600 mb-6">
+                            <span className="inline-block w-50 font-semibold">Nama / Identifikasi</span>
+                            <span className="font-semibold">: {openDetail.data?.name}</span><br />
+                            <span className="inline-block w-50 font-semibold">Deskripsi Kecelakaan</span>
+                            <span className="font-semibold">: {openDetail.data?.desc}</span><br />
+                            <span className="inline-block w-50 font-semibold">Latitude</span>
+                            <span className="font-semibold">: {openDetail.data?.latitude}</span><br />
+                            <span className="inline-block w-50 font-semibold">Longitude</span>
+                            <span className="font-semibold">: {openDetail.data?.longitude}</span><br />
+                            <span className="inline-block w-50 font-semibold">Waktu</span>
+                            <span className="font-semibold">: {new Date(openDetail.data?.datetime_crash ?? "").toUTCString()}</span><br />
+                            <span className="inline-block w-50 font-semibold">Jumlah Kecelakaan</span>
+                            <span className="font-semibold">: {openDetail.data?.jumlah_kecelakaan}</span><br />
+                            <span className="inline-block w-50 font-semibold">Meninggal</span>
+                            <span className="font-semibold">: {openDetail.data?.meninggal}</span><br />
+                            <span className="inline-block w-50 font-semibold">Luka Berat</span>
+                            <span className="font-semibold">: {openDetail.data?.luka_berat}</span><br />
+                            <span className="inline-block w-50 font-semibold">Luka Ringan</span>
+                            <span className="font-semibold">: {openDetail.data?.luka_ringan}</span><br />
+                            <span className="inline-block w-50 font-semibold">Kerugian</span>
+                            <span className="font-semibold">: {openDetail.data?.kerugian.toLocaleString()}</span><br />
+                        </p>
+                    </div>
+                </Modal.Body>
+            </Modal>
             <MapContainer
                 center={defaultMapOptions.center}
                 zoom={defaultMapOptions.zoom}
@@ -654,11 +706,11 @@ const MapComponent = () => {
                     </>
                 ) : (null))}
             </MapContainer>
-            <div className={"fixed right-auto sm:right-[3vw] top-[33vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[380px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black " + (showPanel ? "" : "hidden")}>
+            <div className={"fixed left-auto sm:left-[3vw] top-[10vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[380px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black " + (showPanel ? "" : "hidden")}>
                 <div className="h-full w-full grid grid-cols-1 content-start">
                     {filters.mode == "view" ? (
                         <>
-                            <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
+                            <div className="bg-gray-900 px-4 flex justify-between items-center">
                                 <span className="text-white text-md">
                                     Panel Tampilan Data
                                 </span>
@@ -668,7 +720,7 @@ const MapComponent = () => {
                         </>
                     ) : (filters.mode == "report" ? (
                         <>
-                            <div className="bg-gray-900 py-2 px-4 flex justify-between items-center">
+                            <div className="bg-gray-900 px-4 flex justify-between items-center">
                                 <span className="text-white text-md">
                                     Panel Laporan Kecelakaan
                                 </span>
@@ -679,7 +731,7 @@ const MapComponent = () => {
                     ) : (null))}
                 </div>
             </div>
-            <div className="fixed bottom-2 z-1200 flex flex-col items-center max-w-1/2 w-fit h-[30px] bg-gray-700 shadow-lg rounded text-black">
+            <div className="fixed bottom-2 z-1200 flex flex-col items-center max-w-1/2 w-fit h-[30px] bg-gray-700 shadow-lg rounded text-black shadow-lg">
                 <div className="w-full h-full grid grid-cols-2 text-white">
                     <div className="w-[70px] h-full flex flex-col items-center relative justify-self-center">
                         <Tooltip content="Tampilan Data" theme={{ target: "absolute w-[50px] h-[50px] flex flex-col items-center bg-sky-400 rounded-full shadow-md " + ((filters.mode == "view" && showPanel) ? "bottom-4" : "bottom-3"), base: "absolute inline-block whitespace-nowrap z-10 rounded-lg py-2 px-3 text-sm font-medium shadow-sm" }}>
@@ -690,7 +742,7 @@ const MapComponent = () => {
                                     }
                                     setGeolocs([]);
                                     setMarkerRef({ ...markerRef, marker: undefined });
-                                    setFilters({ ...filters, n: 0, mode: "view", toggle: !filters.toggle });
+                                    setFilters({ ...filters, n: -1, mode: "view", toggle: !filters.toggle });
                                     window.history.replaceState("", "", "/map?mode=view");
                                     setShowPanel(true);
                                     return;

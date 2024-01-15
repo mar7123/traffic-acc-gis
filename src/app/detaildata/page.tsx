@@ -40,8 +40,10 @@ async function DetailData({
                                     <DetailMapComponent data={res} />
                                 </div>
                                 <p className="text-base md:text-lg text-gray-600 mb-6">
-                                    <span className="inline-block w-50 font-semibold">Nama</span>
+                                    <span className="inline-block w-50 font-semibold">Nama / Identifikasi</span>
                                     <span className="font-semibold">: {res.name}</span><br />
+                                    <span className="inline-block w-50 font-semibold">Deskripsi Kecelakaan</span>
+                                    <span className="font-semibold">: {res.desc}</span><br />
                                     <span className="inline-block w-50 font-semibold">Latitude</span>
                                     <span className="font-semibold">: {res.latitude}</span><br />
                                     <span className="inline-block w-50 font-semibold">Longitude</span>

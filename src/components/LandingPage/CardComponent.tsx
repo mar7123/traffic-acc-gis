@@ -6,7 +6,7 @@ import Image from "next/image";
 
 function CardComponent() {
     return (
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-10 content-center'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-y-10 content-center'>
             <Card className='w-5/6 h-full justify-self-center items-center hidden lg:flex'
                 renderImage={() => <Image className='my-8' width={180} height={180} src="/assets/cardimg1.svg" alt="image 1" />}>
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
