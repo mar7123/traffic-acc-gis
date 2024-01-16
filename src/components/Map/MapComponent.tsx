@@ -644,28 +644,58 @@ const MapComponent = () => {
                 <Modal.Header>Detail Data</Modal.Header>
                 <Modal.Body>
                     <div>
-                        <p className="text-base md:text-lg text-gray-600 mb-6">
-                            <span className="inline-block w-50 font-semibold">Nama / Identifikasi</span>
-                            <span className="font-semibold">: {openDetail.data?.name}</span><br />
-                            <span className="inline-block w-50 font-semibold">Deskripsi Kecelakaan</span>
-                            <span className="font-semibold">: {openDetail.data?.desc}</span><br />
-                            <span className="inline-block w-50 font-semibold">Latitude</span>
-                            <span className="font-semibold">: {openDetail.data?.latitude}</span><br />
-                            <span className="inline-block w-50 font-semibold">Longitude</span>
-                            <span className="font-semibold">: {openDetail.data?.longitude}</span><br />
-                            <span className="inline-block w-50 font-semibold">Waktu</span>
-                            <span className="font-semibold">: {new Date(openDetail.data?.datetime_crash ?? "").toUTCString()}</span><br />
-                            <span className="inline-block w-50 font-semibold">Jumlah Kecelakaan</span>
-                            <span className="font-semibold">: {openDetail.data?.jumlah_kecelakaan}</span><br />
-                            <span className="inline-block w-50 font-semibold">Meninggal</span>
-                            <span className="font-semibold">: {openDetail.data?.meninggal}</span><br />
-                            <span className="inline-block w-50 font-semibold">Luka Berat</span>
-                            <span className="font-semibold">: {openDetail.data?.luka_berat}</span><br />
-                            <span className="inline-block w-50 font-semibold">Luka Ringan</span>
-                            <span className="font-semibold">: {openDetail.data?.luka_ringan}</span><br />
-                            <span className="inline-block w-50 font-semibold">Kerugian</span>
-                            <span className="font-semibold">: {openDetail.data?.kerugian.toLocaleString()}</span><br />
-                        </p>
+                        <div className="text-base md:text-lg text-gray-600 mb-6">
+                            <div className="flex">
+                                <span className="inline-block max-w-[200px] w-[200px] font-semibold">Nama / Identifikasi</span>
+                                <span className="font-semibold inline-block">:&nbsp;</span>
+                                <span className="font-semibold inline-block max-w-[300px] w-[300px]">{openDetail.data?.name}</span>
+                            </div>
+                            <div className="flex">
+                                <span className="inline-block max-w-[200px] w-[200px] font-semibold">Deskripsi Kecelakaan</span>
+                                <span className="font-semibold inline-block">:&nbsp;</span>
+                                <span className="font-semibold inline-block max-w-[300px] w-[300px]">{openDetail.data?.desc}</span>
+                            </div>
+                            <div className="flex">
+                                <span className="inline-block max-w-[200px] w-[200px] font-semibold">Latitude</span>
+                                <span className="font-semibold inline-block">:&nbsp;</span>
+                                <span className="font-semibold inline-block max-w-[300px] w-[300px]">{openDetail.data?.latitude}</span>
+                            </div>
+                            <div className="flex">
+                                <span className="inline-block max-w-[200px] w-[200px] font-semibold">Longitude</span>
+                                <span className="font-semibold inline-block">:&nbsp;</span>
+                                <span className="font-semibold inline-block max-w-[300px] w-[300px]">{openDetail.data?.longitude}</span>
+                            </div>
+                            <div className="flex">
+                                <span className="inline-block max-w-[200px] w-[200px] font-semibold">Waktu</span>
+                                <span className="font-semibold inline-block">:&nbsp;</span>
+                                <span className="font-semibold inline-block max-w-[300px] w-[300px]">{new Date(openDetail.data?.datetime_crash ?? 0).toISOString()}</span>
+                            </div>
+                            <div className="flex">
+                                <span className="inline-block max-w-[200px] w-[200px] font-semibold">Jumlah Kecelakaan</span>
+                                <span className="font-semibold inline-block">:&nbsp;</span>
+                                <span className="font-semibold inline-block max-w-[300px] w-[300px]">{openDetail.data?.jumlah_kecelakaan}</span>
+                            </div>
+                            <div className="flex">
+                                <span className="inline-block max-w-[200px] w-[200px] font-semibold">Meninggal</span>
+                                <span className="font-semibold inline-block">:&nbsp;</span>
+                                <span className="font-semibold inline-block max-w-[300px] w-[300px]">{openDetail.data?.meninggal}</span>
+                            </div>
+                            <div className="flex">
+                                <span className="inline-block max-w-[200px] w-[200px] font-semibold">Luka Berat</span>
+                                <span className="font-semibold inline-block">:&nbsp;</span>
+                                <span className="font-semibold inline-block max-w-[300px] w-[300px]">{openDetail.data?.luka_berat}</span>
+                            </div>
+                            <div className="flex">
+                                <span className="inline-block max-w-[200px] w-[200px] font-semibold">Luka Ringan</span>
+                                <span className="font-semibold inline-block">:&nbsp;</span>
+                                <span className="font-semibold inline-block max-w-[300px] w-[300px]">{openDetail.data?.luka_ringan}</span>
+                            </div>
+                            <div className="flex">
+                                <span className="inline-block max-w-[200px] w-[200px] font-semibold">Kerugian</span>
+                                <span className="font-semibold inline-block">:&nbsp;</span>
+                                <span className="font-semibold inline-block max-w-[300px] w-[300px]">{openDetail.data?.kerugian.toLocaleString()}</span>
+                            </div>
+                        </div>
                     </div>
                 </Modal.Body>
             </Modal>
@@ -706,7 +736,7 @@ const MapComponent = () => {
                     </>
                 ) : (null))}
             </MapContainer>
-            <div className={"fixed left-auto sm:left-[3vw] top-[10vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[380px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black " + (showPanel ? "" : "hidden")}>
+            <div className={"absolute left-auto sm:left-[3vw] top-[10vh] z-1200 flex flex-col items-center max-w-1/2 w-[300px] sm:w-[380px] h-[350px] sm:h-[400px] bg-gray-100 shadow-lg rounded text-black " + (showPanel ? "" : "hidden")}>
                 <div className="h-full w-full grid grid-cols-1 content-start">
                     {filters.mode == "view" ? (
                         <>
@@ -731,7 +761,7 @@ const MapComponent = () => {
                     ) : (null))}
                 </div>
             </div>
-            <div className="fixed bottom-2 z-1200 flex flex-col items-center max-w-1/2 w-fit h-[30px] bg-gray-700 shadow-lg rounded text-black shadow-lg">
+            <div className="absolute bottom-2 z-1200 flex flex-col items-center max-w-1/2 w-fit h-[30px] bg-gray-700 shadow-lg rounded text-black shadow-lg">
                 <div className="w-full h-full grid grid-cols-2 text-white">
                     <div className="w-[70px] h-full flex flex-col items-center relative justify-self-center">
                         <Tooltip content="Tampilan Data" theme={{ target: "absolute w-[50px] h-[50px] flex flex-col items-center bg-sky-400 rounded-full shadow-md " + ((filters.mode == "view" && showPanel) ? "bottom-4" : "bottom-3"), base: "absolute inline-block whitespace-nowrap z-10 rounded-lg py-2 px-3 text-sm font-medium shadow-sm" }}>
