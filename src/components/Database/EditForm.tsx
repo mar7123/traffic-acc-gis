@@ -2,16 +2,55 @@
 import { editDataAction } from "./DatabaseFormAction";
 import { useEffect, useState } from "react";
 import { Button, Label, TextInput, Textarea } from 'flowbite-react';
+import { MapContainer, TileLayer, GeoJSON, useMapEvents, useMap } from "react-leaflet";
+import L from "leaflet";
+import MarkerIcon from "leaflet/dist/images/marker-icon.png";
+import "leaflet/dist/leaflet.css";
 import { useFormState } from "react-dom";
 import ModalComponent from "@/components/Modal/ModalComponent";
-import { GeoData } from "@prisma/client";
+import { GeoData, GeoLocation } from "@prisma/client";
 import { useRouter } from 'next/navigation'
+
+type GeoLocationMod = Omit<GeoLocation, 'geojs'> & {
+    geojs: GeoJSON.GeoJsonObject,
+}
+
+interface GeoDataMod extends GeoData {
+    geoloc: {
+        name2: string;
+    }
+}
 
 const initialState = {
     message: null,
 }
 
-export default function EditForm({ data }: { data: GeoData }) {
+export default function EditForm({ data, boundary }: { data: GeoDataMod, boundary?: GeoLocationMod | null }) {
+    const router = useRouter()
+    const center = {
+        lat: -7.2752731,
+        lng: 110.1234954
+    }
+    const [mapLocation, setMapLocation] = useState<{
+        markerRef: L.Marker<any>,
+        prov: string,
+        geoloc_id: string,
+    }>({
+        markerRef: new L.Marker(
+            [data.latitude, data.longitude],
+            {
+                icon: L.icon({
+                    iconUrl: MarkerIcon.src,
+                    iconRetinaUrl: MarkerIcon.src,
+                    iconSize: [25, 41],
+                    iconAnchor: [12.5, 41],
+                    popupAnchor: [0, -41],
+                }),
+            }
+        ),
+        prov: data.geoloc.name2,
+        geoloc_id: data.geoloc_id,
+    });
     const [state, editFormAction] = useFormState(editDataAction, initialState);
     const [disableEdit, setDisableEdit] = useState(false);
     const [optModal, setOptModal] = useState<{
@@ -23,10 +62,45 @@ export default function EditForm({ data }: { data: GeoData }) {
         status: "success",
         message: ""
     });
-    const router = useRouter()
+
+
+    const getMarkerGeoComp = async (markerRef: L.Marker<any>) => {
+        const res = await fetch('/api/geoloc/findarea?' + new URLSearchParams({
+            lat: markerRef ? markerRef.getLatLng().lat.toString() : "0",
+            lng: markerRef ? markerRef.getLatLng().lng.toString() : "0",
+        }), {
+            method: "GET",
+        })
+        const { data } = await res.json()
+        if (data.length != 0) {
+            setMapLocation({ markerRef: markerRef, geoloc_id: data[0]?._id.$oid, prov: data[0]?.name2 })
+        } else {
+            setMapLocation({ markerRef: markerRef, geoloc_id: "", prov: "" })
+        }
+    }
+
+    const MarkerOnClick = () => {
+        const mapready = useMap();
+        mapready.whenReady(() => {
+            mapLocation.markerRef.addTo(mapready);
+        })
+        const map = useMapEvents({
+            click: (e) => {
+                const { lat, lng } = e.latlng;
+                mapLocation.markerRef.setLatLng([lat, lng])
+                getMarkerGeoComp(mapLocation.markerRef)
+            },
+            load: (e) => {
+                mapLocation.markerRef.addTo(map);
+            }
+        });
+        return null;
+    }
+
     const setModal = ({ open, status, message }: { open: boolean, status: "success" | "error", message: string }) => {
         setOptModal({ open: open, status: status, message: message });
     }
+
     useEffect(() => {
         if (state.message == null) {
             return
@@ -38,7 +112,8 @@ export default function EditForm({ data }: { data: GeoData }) {
         }
         setDisableEdit(false);
         setOptModal({ open: true, status: "error", message: state.message });
-    }, [state])
+    }, [state, router])
+
     useEffect(() => {
         if (optModal.open) {
             setTimeout(() => { setOptModal({ ...optModal, open: false }) }, 1500)
@@ -59,6 +134,38 @@ export default function EditForm({ data }: { data: GeoData }) {
                                 Edit Data
                             </h3>
                         </div>
+                        <div className="h-96">
+                            <MapContainer
+                                center={[center.lat, center.lng]}
+                                zoom={8}
+                                scrollWheelZoom={true}
+                                style={{
+                                    width: "100%",
+                                    height: "100%"
+                                }}
+                            >
+                                <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                                {boundary != null ? (
+                                    <GeoJSON
+                                        key={JSON.stringify(boundary)}
+                                        data={boundary.geojs}
+                                        pathOptions={{
+                                            fillColor: "#f3f4f6",
+                                            fillOpacity: 0.3,
+                                            weight: 2,
+                                            opacity: 1,
+                                            color: "black"
+                                        }}
+                                    >
+                                    </GeoJSON>
+                                ) : (null)}
+                                <MarkerOnClick />
+                            </MapContainer>
+                        </div>
+
                         <form className="flex w-full flex-col gap-4 py-4 px-8" action={editFormAction} onSubmit={(e) => {
                             setDisableEdit(true);
                         }}>
@@ -75,6 +182,26 @@ export default function EditForm({ data }: { data: GeoData }) {
                                 </div>
                                 <Textarea id="desc" name="desc" placeholder="Masukan deskripsi kecelakaan" defaultValue={data.name} required shadow />
                             </div>
+                            <div>
+                                <div className="mb-2 block">
+                                    <Label className="text-md" htmlFor="latitude" value="Latitude" />
+                                </div>
+                                <TextInput id="latitude" name="latitude" type="number" readOnly value={mapLocation.markerRef ? mapLocation.markerRef.getLatLng().lat : ""} required shadow />
+                            </div>
+                            <div>
+                                <div className="mb-2 block">
+                                    <Label className="text-md" htmlFor="longitude" value="Longitude" />
+                                </div>
+                                <TextInput id="longitude" name="longitude" type="number" readOnly value={mapLocation.markerRef ? mapLocation.markerRef.getLatLng().lng : ""} required shadow />
+                            </div>
+                            <div>
+                                <div className="mb-2 block">
+                                    <Label className="text-md" htmlFor="wilayah" value="Wilayah" />
+                                </div>
+                                <TextInput id="wilayah" name="wilayah" type="text" readOnly value={mapLocation.prov} required shadow />
+                                <TextInput id="geoloc_id" name="geoloc_id" type="hidden" value={mapLocation.geoloc_id} required />
+                            </div>
+
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="waktu_kecelakaan" value="Waktu Kecelakaan" />

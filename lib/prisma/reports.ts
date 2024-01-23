@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import prisma from ".";
 import { SortableReportKeys, SortReportWithGeoLocs } from "@/types/reports";
 
-export async function getReports(take: number, page: number, sortFilter: SortableReportKeys, sortOrder: 'asc' | 'desc') {
+export async function getReports(filter: string, take: number, page: number, sortFilter: SortableReportKeys, sortOrder: 'asc' | 'desc') {
     try {
         let sorter: SortReportWithGeoLocs = {};
         sorter[sortFilter] = sortOrder;
@@ -31,6 +31,22 @@ export async function getReports(take: number, page: number, sortFilter: Sortabl
                     }
                 }
             },
+            where: {
+                OR: [{
+                    geoloc: {
+                        name2: {
+                            contains: filter,
+                            mode: "insensitive"
+                        }
+                    }
+                }, {
+                    name: {
+                        contains: filter,
+                        mode: "insensitive"
+                    }
+                },
+                ]
+            },
             orderBy: [
                 sorter,
                 {
@@ -38,69 +54,18 @@ export async function getReports(take: number, page: number, sortFilter: Sortabl
                 },
             ]
         })
-        const count = await prisma.reports.count();
-        return { res, count };
-    } catch (error) {
-        return { error };
-    }
-}
-
-export async function getReportsByName(name: string, take: number, page: number) {
-    try {
-        const res = await prisma.reports.findMany({
-            skip: (page - 1) * take,
-            take: take,
-            select: {
-                id: true,
-                name: true,
-                datetime_crash: true,
-                latitude: true,
-                longitude: true,
-                jumlah_kecelakaan: true,
-                processed: true,
-                geoloc: {
-                    select: {
-                        name2: true
-                    }
-                }
-            },
-            where: {
-                OR: [{
-                    geoloc: {
-                        name2: {
-                            contains: name,
-                            mode: "insensitive"
-                        }
-                    }
-                }, {
-                    name: {
-                        contains: name,
-                        mode: "insensitive"
-                    }
-                },
-                ]
-            },
-            orderBy: [
-                {
-                    datetime_crash: 'asc',
-                },
-                {
-                    id: 'asc',
-                },
-            ]
-        });
         const count = await prisma.reports.count({
             where: {
                 OR: [{
                     geoloc: {
                         name2: {
-                            contains: name,
+                            contains: filter,
                             mode: "insensitive"
                         }
                     }
                 }, {
                     name: {
-                        contains: name,
+                        contains: filter,
                         mode: "insensitive"
                     }
                 },

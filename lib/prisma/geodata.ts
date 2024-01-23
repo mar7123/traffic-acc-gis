@@ -1,7 +1,7 @@
 import prisma from ".";
 import { SortGeoDataWithGeoLocs, SortableGeoDataKeys } from "@/types/geodata";
 
-export async function getGeoDatas(take: number, page: number, sortFilter: SortableGeoDataKeys, sortOrder: 'asc' | 'desc') {
+export async function getGeoDatas(filter: string, take: number, page: number, sortFilter: SortableGeoDataKeys, sortOrder: 'asc' | 'desc') {
     try {
         let sorter: SortGeoDataWithGeoLocs = {};
         sorter[sortFilter] = sortOrder;
@@ -28,6 +28,22 @@ export async function getGeoDatas(take: number, page: number, sortFilter: Sortab
                     }
                 }
             },
+            where: {
+                OR: [{
+                    geoloc: {
+                        name2: {
+                            contains: filter,
+                            mode: "insensitive"
+                        }
+                    }
+                }, {
+                    name: {
+                        contains: filter,
+                        mode: "insensitive"
+                    }
+                },
+                ]
+            },
             orderBy: [
                 sorter,
                 {
@@ -35,7 +51,24 @@ export async function getGeoDatas(take: number, page: number, sortFilter: Sortab
                 },
             ],
         })
-        const count = await prisma.geoData.count();
+        const count = await prisma.geoData.count({
+            where: {
+                OR: [{
+                    geoloc: {
+                        name2: {
+                            contains: filter,
+                            mode: "insensitive"
+                        }
+                    }
+                }, {
+                    name: {
+                        contains: filter,
+                        mode: "insensitive"
+                    }
+                },
+                ]
+            },
+        });
         return { res, count };
     } catch (error) {
         return { error };
@@ -57,80 +90,6 @@ export async function getGeoDataByID(id: string) {
             }
         })
         return { res };
-    } catch (error) {
-        return { error };
-    }
-}
-
-export async function getGeoDataByName(name: string, take: number, page: number, sortFilter: SortableGeoDataKeys, sortOrder: 'asc' | 'desc') {
-    try {
-        let sorter: SortGeoDataWithGeoLocs = {};
-        sorter[sortFilter] = sortOrder;
-        if (sortFilter == 'wilayah') {
-            sorter = {
-                geoloc: {
-                    name2: sortOrder
-                }
-            }
-        }
-        const res = await prisma.geoData.findMany({
-            skip: (page - 1) * take,
-            take: take,
-            select: {
-                id: true,
-                name: true,
-                datetime_crash: true,
-                latitude: true,
-                longitude: true,
-                jumlah_kecelakaan: true,
-                geoloc: {
-                    select: {
-                        name2: true
-                    }
-                }
-            },
-            where: {
-                OR: [{
-                    geoloc: {
-                        name2: {
-                            contains: name,
-                            mode: "insensitive"
-                        }
-                    }
-                }, {
-                    name: {
-                        contains: name,
-                        mode: "insensitive"
-                    }
-                },
-                ]
-            },
-            orderBy: [
-                sorter,
-                {
-                    id: 'asc',
-                },
-            ],
-        });
-        const count = await prisma.geoData.count({
-            where: {
-                OR: [{
-                    geoloc: {
-                        name2: {
-                            contains: name,
-                            mode: "insensitive"
-                        }
-                    }
-                }, {
-                    name: {
-                        contains: name,
-                        mode: "insensitive"
-                    }
-                },
-                ]
-            },
-        });
-        return { res, count };
     } catch (error) {
         return { error };
     }

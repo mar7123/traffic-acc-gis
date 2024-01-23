@@ -23,20 +23,18 @@ const initialState = {
 export default function AddForm({ boundary }: { boundary?: GeoLocationMod | null }) {
     const router = useRouter()
     const center = {
-        lat: -3.3675549,
-        lng: 117.1377759,
+        lat: -7.2752731,
+        lng: 110.1234954
     }
 
     const [mapLocation, setMapLocation] = useState<{
         markerRef: L.Marker<any> | undefined,
-        toggle: boolean,
         prov: string,
-        prov_id: string,
+        geoloc_id: string,
     }>({
         markerRef: undefined,
-        toggle: true,
         prov: "",
-        prov_id: "",
+        geoloc_id: "",
     });
     const [state, addFormAction] = useFormState(addDataAction, initialState);
     const [disableAdd, setDisableAdd] = useState(false);
@@ -59,13 +57,28 @@ export default function AddForm({ boundary }: { boundary?: GeoLocationMod | null
         setOptModal({ open: open, status: status, message: message });
     }
 
+    const getMarkerGeoComp = async (markerRef: L.Marker<any> | undefined) => {
+        const res = await fetch('/api/geoloc/findarea?' + new URLSearchParams({
+            lat: markerRef ? markerRef.getLatLng().lat.toString() : "0",
+            lng: markerRef ? markerRef.getLatLng().lng.toString() : "0",
+        }), {
+            method: "GET",
+        })
+        const { data } = await res.json()
+        if (data.length != 0) {
+            setMapLocation({ markerRef: markerRef, geoloc_id: data[0]?._id.$oid, prov: data[0]?.name2 })
+        } else {
+            setMapLocation({ markerRef: markerRef, geoloc_id: "", prov: "" })
+        }
+    }
+
     const MarkerOnClick = () => {
         const map = useMapEvents({
             click: (e) => {
                 const { lat, lng } = e.latlng;
                 if (mapLocation.markerRef) {
                     mapLocation.markerRef.setLatLng([lat, lng])
-                    setMapLocation({ ...mapLocation, toggle: !mapLocation.toggle })
+                    getMarkerGeoComp(mapLocation.markerRef)
                     return
                 }
                 const marker = L.marker([lat, lng],
@@ -78,34 +91,12 @@ export default function AddForm({ boundary }: { boundary?: GeoLocationMod | null
                             popupAnchor: [0, -41],
                         }),
                     });
-                setMapLocation({ ...mapLocation, markerRef: marker, toggle: !mapLocation.toggle });
+                getMarkerGeoComp(marker)
                 marker.addTo(map);
             }
         });
         return null;
     }
-
-    const getMarkerGeoComp = async () => {
-        const res = await fetch('/api/geoloc/findarea?' + new URLSearchParams({
-            lat: mapLocation.markerRef ? mapLocation.markerRef.getLatLng().lat.toString() : "0",
-            lng: mapLocation.markerRef ? mapLocation.markerRef.getLatLng().lng.toString() : "0",
-        }), {
-            method: "GET",
-        })
-        const { data } = await res.json()
-        if (data.length != 0) {
-            setMapLocation({ ...mapLocation, prov_id: data[0]?._id.$oid, prov: data[0]?.name2 })
-        } else {
-            setMapLocation({ ...mapLocation, prov_id: "", prov: "" })
-        }
-    }
-
-    useEffect(() => {
-        if (mapLocation.markerRef == undefined) {
-            return
-        }
-        getMarkerGeoComp()
-    }, [mapLocation.toggle])
 
     useEffect(() => {
         if (state.message == null || state.message == "Success") {
@@ -118,7 +109,7 @@ export default function AddForm({ boundary }: { boundary?: GeoLocationMod | null
         }
         setDisableAdd(false);
         setOptModal({ open: true, status: "error", message: state.message });
-    }, [state])
+    }, [state, router])
 
     useEffect(() => {
         if (optModal.open) {
@@ -143,7 +134,7 @@ export default function AddForm({ boundary }: { boundary?: GeoLocationMod | null
                         <div className="h-96">
                             <MapContainer
                                 center={[center.lat, center.lng]}
-                                zoom={5}
+                                zoom={8}
                                 scrollWheelZoom={true}
                                 style={{
                                     width: "100%",
@@ -172,7 +163,6 @@ export default function AddForm({ boundary }: { boundary?: GeoLocationMod | null
                             </MapContainer>
                         </div>
                         <form className="flex w-full flex-col gap-4 py-4 px-8" action={addFormAction}>
-                            <TextInput id="geodata_id" name="geodata_id" type="hidden" required />
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="nama" value="Nama / Identifier" />
@@ -195,18 +185,14 @@ export default function AddForm({ boundary }: { boundary?: GeoLocationMod | null
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="longitude" value="Longitude" />
                                 </div>
-                                <TextInput id="longitude" name="longitude" type="number" readOnly value={mapLocation.markerRef ? mapLocation.markerRef.getLatLng().lng : ""} onChange={(e) => {
-                                    if (e.target.value != "" && new Date(e.target.value) > new Date()) {
-                                        e.target.value = new Date().toLocaleString('sv-SE').substring(0, 16);
-                                    }
-                                }} required shadow />
+                                <TextInput id="longitude" name="longitude" type="number" readOnly value={mapLocation.markerRef ? mapLocation.markerRef.getLatLng().lng : ""} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="wilayah" value="Wilayah" />
                                 </div>
                                 <TextInput id="wilayah" name="wilayah" type="text" readOnly value={mapLocation.prov} required shadow />
-                                <TextInput id="geoloc_id" name="geoloc_id" type="hidden" value={mapLocation.prov_id} required />
+                                <TextInput id="geoloc_id" name="geoloc_id" type="hidden" value={mapLocation.geoloc_id} required />
                             </div>
                             <div>
                                 <div className="mb-2 block">
@@ -251,7 +237,7 @@ export default function AddForm({ boundary }: { boundary?: GeoLocationMod | null
                                     <div className="absolute flex h-full w-[40px] z-1">
                                         <span className="text-sm m-auto">Rp</span>
                                     </div>
-                                    <TextInput id="kerugian" name="kerugian" type="number" sizing={"md"} theme={{ field: { input: { sizes: { md: "pl-8 text-sm" } } } }} step={1000} onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0}  shadow required />
+                                    <TextInput id="kerugian" name="kerugian" type="number" sizing={"md"} theme={{ field: { input: { sizes: { md: "pl-8 text-sm" } } } }} step={1000} onKeyDown={(e) => { ["e", "E", "+", "-"].includes(e.key) && e.preventDefault() }} min={0} shadow required />
                                 </div>
                             </div>
                             <div className="relative flex w-full h-full flex-col">

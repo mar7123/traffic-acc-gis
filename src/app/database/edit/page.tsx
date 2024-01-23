@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getGeoDataByID } from "@/lib/prisma/geodata";
 import EditForm from "@/components/Database/EditForm";
+import { findGeoLocsBound } from "@/lib/prisma/geoloc";
 
 export const metadata: Metadata = {
     title: "Edit Form | TRASK",
@@ -16,9 +17,11 @@ const EditFormPage = async ({
     if (typeof (searchParams.id) == "string") {
         const { res } = await getGeoDataByID(searchParams.id);
         if (res) {
+            const { res: boundary, error } = await findGeoLocsBound();
+            const data = boundary as any;
             return (
                 <div className="flex flex-col items-center min-h-screen h-fit w-full px-[3vw] sm:px-[5vw] lg:px-[8vw] py-5 sm:py-10 lg:py-15 bg-gray-100">
-                    <EditForm data={res} />
+                    <EditForm data={res} boundary={data} />
                 </div>
             )
         }
