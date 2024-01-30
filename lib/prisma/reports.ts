@@ -207,7 +207,7 @@ export async function approveReport(id: string) {
         });
         if (report && report.geoloc_id) {
             const { id, geoloc_id, geojs, processed, ...deletedReport } = report;
-            const reportMod = { ...deletedReport, geojs: geojs as Prisma.InputJsonValue, wilayah: "" };
+            const reportMod = { ...deletedReport, geojs: geojs as Prisma.InputJsonValue };
             const res = await prisma.geoLocation.update({
                 where: {
                     id: geoloc_id
