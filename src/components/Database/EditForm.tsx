@@ -180,7 +180,7 @@ export default function EditForm({ data, boundary }: { data: GeoDataMod, boundar
                                 <div className="mb-2 block">
                                     <Label className="text-md" htmlFor="desc" value="Deskripsi Kecelakaan" />
                                 </div>
-                                <Textarea id="desc" name="desc" placeholder="Masukan deskripsi kecelakaan" defaultValue={data.name} required shadow />
+                                <Textarea id="desc" name="desc" placeholder="Masukan deskripsi kecelakaan" defaultValue={data.desc} required shadow />
                             </div>
                             <div>
                                 <div className="mb-2 block">
